@@ -216,17 +216,17 @@ First let's add what the user sees - the `playlists_new.html` form input field.
             <input id='playlist-title' type='text' name='title' />
         </p>
 >
-        <!-- MOVIE TITLE -->
+        <!-- DESCRIPTION -->
         <p>
             <label for='description'>Description</label><br>
             <input id='description' type='text' name='description' />
         </p>
 >
-        <!-- DESCRIPTION -->
+        <!-- VIDEO LINKS -->
         <p>
-            <label for='video-urls-text'>Videos</label><br>
-            <p class='text-muted'>Add videos in the form of 'https://youtube.com/embed/#KEY'. Separate with a newline.</p>
-            <textarea id='video-urls-text' name='video-urls' rows='10' /></textarea>
+            <label for='playlist-videos'>Videos</label><br>
+            <p>Add videos in the form of 'https://youtube.com/embed/#KEY'. Separate with a newline.</p>
+            <textarea id='playlist-videos' name='videos' rows='10' /></textarea>
         </p>
     </fieldset>
 >
@@ -234,7 +234,6 @@ First let's add what the user sees - the `playlists_new.html` form input field.
     <p>
         <button type='submit'>Save Playlist</button>
     </p>
->
 </form>
 {% endblock %}
 ```

@@ -14,14 +14,14 @@ You need to define a route. Here is the list of the current routes with a new on
 | URL              | HTTP Verb | Action  |
 |------------------|-----------|---------|
 | /                | GET       | index   |
-| /reviews/new     | GET       | new     |
-| /reviews         | POST      | create  |
-| /reviews/:id     | GET       | show    |
-| /reviews/:id/edit| GET       | edit    |
-| /reviews/:id     | PUT/PATCH | update  |
-| /reviews/:id     | DELETE    | destroy |
-| /reviews/comments | POST      | create  |
-| /reviews/comments/:id | DELETE      | destroy  |
+| /playlists/new     | GET       | new     |
+| /playlists         | POST      | create  |
+| /playlists/:id     | GET       | show    |
+| /playlists/:id/edit| GET       | edit    |
+| /playlists/:id     | PUT/PATCH | update  |
+| /playlists/:id     | DELETE    | destroy |
+| /playlists/comments | POST      | create  |
+| /playlists/comments/:id | DELETE      | destroy  |
 
 We'll use the `<comment_id>` url parameter to look up the comment we want to destroy.
 
@@ -43,7 +43,7 @@ We can't set an `<a>` tag's method (it is always GET) so we are going to use a f
         <h4 class='card-title'>{{ comment.title }}</h4>
         <p class='card-text'>{{ comment.content }}</p>
         <!-- Delete link -->
-        <p><form method='POST' action='/reviews/comments/{{ comment._id }}'>
+        <p><form method='POST' action='/playlists/comments/{{ comment._id }}'>
             <input type='hidden' name='_method' value='DELETE' />
             <button class='btn btn-link' type='submit'>Delete</button>
         </form></p>
@@ -53,7 +53,7 @@ We can't set an `<a>` tag's method (it is always GET) so we are going to use a f
 
 # Adding the Destroy Route
 
-Now we need a delete action route. After deleting the comment, it should redirect back to the parent review (`reviews_show`).
+Now we need a delete action route. After deleting the comment, it should redirect back to the parent playlist (`playlists_show`).
 
 > [action]
 >
@@ -62,13 +62,13 @@ Now we need a delete action route. After deleting the comment, it should redirec
 ```python
 # app.py
 ...
-@app.route('/reviews/comments/<comment_id>', methods=['POST'])
+@app.route('/playlists/comments/<comment_id>', methods=['POST'])
 def comments_delete(comment_id):
     """Action to delete a comment."""
     if request.form.get('_method') == 'DELETE':
         comment = comments.find_one({'_id': ObjectId(comment_id)})
         comments.delete_one({'_id': ObjectId(comment_id)})
-        return redirect(url_for('reviews_show', review_id=comment.get('review_id')))
+        return redirect(url_for('playlists_show', playlist_id=comment.get('playlist_id')))
     else:
         raise NotFound()
 ```
@@ -79,15 +79,15 @@ Ok, so now try deleting a comment.
 
 So now we've completed all our user stories:
 
-1. Users can view all reviews (index)
-1. Users can create a review (new/create)
-1. Users can view one review (show)
-1. Users can delete a review (destroy)
-1. Users can edit a review (edit/update)
-1. Users can comment on reviews (comments#create)
+1. Users can view all playlists (index)
+1. Users can create a playlist (new/create)
+1. Users can view one playlist (show)
+1. Users can delete a playlist (destroy)
+1. Users can edit a playlist (edit/update)
+1. Users can comment on playlists (comments#create)
 1. Users can delete comments (comments#destroy)
 
-You used **Resource Based Development** and **Resourceful Routing** to build a review app!
+You used **Resource Based Development** and **Resourceful Routing** to build a playlist app!
 
 Congrats! You got Rotten Potatoes all set up! The following chapter has some extra challenges if you're looking to improve RP even more.
 
@@ -95,7 +95,7 @@ Congrats! You got Rotten Potatoes all set up! The following chapter has some ext
 >
 > Reflect on what you've learned so far. How does it relate to the content in the rest of the course? What will you take with you?
 
-# Feedback and Review - 2 minutes
+# Feedback and Playlist - 2 minutes
 
 **We promise this won't take longer than 2 minutes!**
 

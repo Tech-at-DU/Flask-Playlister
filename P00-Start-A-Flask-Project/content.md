@@ -3,7 +3,7 @@ title: "Making A Plan & Starting a Flask Project"
 slug: start-a-flask-project
 ---
 
-You might have heard of the video site [YouTube](https://youtube.com) where millions of people have watched billions of hours of music, vlogs, how-tos, and of course, cats... acting like cats. We are going to piggyback on their success and create a **YouTube Video Playlist app**, so that you can keep track of your favorites and share with your friends.
+You might have heard of the video site [YouTube](https://youtube.com) where millions of people have watched billions of hours of music, vlogs, how-tos, and of course, cats... acting like cats. We are going to piggyback on their success and create a **YouTube Video Playlist app**, aka **Playlistr**, so that you can keep track of your favorites and share with your friends.
 
 # Why is this important?
 

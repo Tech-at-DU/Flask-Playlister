@@ -155,9 +155,12 @@ from bson.objectid import ObjectId
 >
 sample_playlist_id = ObjectId('5d55cffc4a3d4031f42827a3')
 sample_playlist = {
-    'title': 'Super Sweet Playlist',
-    'movieTitle': 'La La Land',
-    'description': 'A great playlist of a lovely movie.'
+    'title': 'Cat Videos',
+    'description': 'Cats acting weird',
+    'videos': [
+        'https://youtube.com/embed/hY7m5jjJ9mM',
+        'https://www.youtube.com/embed/CQ85sUNBK7w'
+    ]
 }
 ```
 

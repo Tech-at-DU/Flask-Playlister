@@ -1,4 +1,4 @@
-    ---
+---
 title: "Edit Route: Editing and Updating a Resource"
 slug: editing-and-deleting-a-playlist
 ---
@@ -31,8 +31,10 @@ We want people to be able to edit and update playlists, so let's again start fro
 >
 {% block content %}
 <h1>{{ playlist.title }}</h1>
-<h2>{{ playlist.movieTitle }}</h2>
-<p>{{ playlist.description }}</p>
+<h2>{{ playlist.description }}</h2>
+{% for video in playlist.videos %}
+    <iframe width='420' height='315' src='{{ video }}'></iframe>
+{% endfor %}
 >
 <p><a href='/playlists/{{ playlist._id }}/edit'>Edit</a></p>
 {% endblock %}
@@ -49,9 +51,10 @@ Ok, now if we click that edit link, we'll see that the route is not found. So le
 ...
 @app.route('/playlists/<id>/edit')
 def playlists_edit(playlist_id):
-    """Show the edit form for a playlist."""
-    playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
-    return render_template('playlists_edit.html', playlist=playlist)
+"""Show the edit form for a playlist."""
+playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
+video_links = '\n'.join(playlist.get('videos'))
+return render_template('playlists_edit.html', playlist=playlist)
 ```
 
 And of course we'll need that `playlists_edit` template. This template is a bit weird for three reasons:
@@ -70,31 +73,33 @@ And of course we'll need that `playlists_edit` template. This template is a bit 
 >
 {% block content %}
 <form method='POST' action='/playlists/{{playlist._id}}'>
-  <input type='hidden' name='_method' value='PUT'/>
-  <fieldset>
-    <legend>Edit Playlist</legend>
-    <!-- TITLE -->
-    <p>
-      <label for='playlist-title'>Title</label><br>
-      <input id='playlist-title' type='text' name='title' value='{{playlist.title}}'/>
-    </p>
+    <input type='hidden' name='_method' value='PUT'/>
+    <fieldset>
+        <legend>Edit Playlist</legend>
+        <!-- TITLE -->
+        <p>
+            <label for='playlist-title'>Title</label><br>
+            <input id='playlist-title' type='text' name='title' value='{{ playlist.title }}'/>
+        </p>
 >
-    <!-- MOVIE TITLE -->
-    <p>
-      <label for='movie-title'>Movie Title</label><br>
-      <input id='movie-title' type='text' name='movieTitle' value='{{playlist.movieTitle}}' />
-    </p>
+        <!-- DESCRIPTION -->
+        <p>
+            <label for='description'>Description</label><br>
+            <input id='description' type='text' name='description' value='{{ playlist.description }}' />
+        </p>
 >
-    <!-- DESCRIPTION -->
+        <!-- VIDEO LINKS -->
+        <p>
+            <label for='playlist-videos'>Videos</label><br>
+            <p>Add videos in the form of 'https://youtube.com/embed/#KEY'. Separate with a newline.</p>
+            <textarea id='playlist-videos' name='videos' rows='10' />{{ "\n".join(playlist.videos) }}</textarea>
+        </p>
+    </fieldset>
+>
+    <!-- BUTTON -->
     <p>
-      <label for='playlist-description'>Description</label><br>
-      <textarea id='playlist-description' name='description' rows='10' />{{playlist.description}}</textarea>
+        <button type='submit'>Save Playlist</button>
     </p>
-  </fieldset>
-  <!-- BUTTON -->
-  <p>
-    <button type='submit'>Save Playlist</button>
-  </p>
 </form>
 {% endblock %}
 ```
@@ -119,19 +124,19 @@ from werkzeug.exceptions import NotFound
 ...
 @app.route('/playlists/<playlist_id>', methods=['POST'])
 def playlists_update(playlist_id):
-    """Submit an edited playlist."""
-    if request.form.get('_method') == 'PUT':
-        updated_playlist = {
-            'title': request.form.get('title'),
-            'movieTitle': request.form.get('movieTitle'),
-            'description': request.form.get('description')
-        }
-        playlists.update_one(
-            {'_id': ObjectId(playlist_id)},
-            {'$set': updated_playlist})
-        return redirect(url_for('playlists_show', playlist_id=playlist_id))
-    else:
-        raise NotFound()
+"""Submit an edited playlist."""
+if request.form.get('_method') == 'PUT':
+    updated_playlist = {
+        'title': request.form.get('title'),
+        'description': request.form.get('description'),
+        'videos': request.form.get('videos').split()
+    }
+    playlists.update_one(
+        {'_id': ObjectId(playlist_id)},
+        {'$set': updated_playlist})
+    return redirect(url_for('playlists_show', playlist_id=playlist_id))
+else:
+    raise NotFound()
 ```
 
 # DRY Code & Sub Templates
@@ -146,24 +151,25 @@ Did you notice that the code of our `playlists_new` and `playlists_edit` have a 
 <!-- templates/partials/playlists_form.html -->
 >
 <fieldset>
-    <legend>{{ title }}</legend>
-    <!-- TITLE -->
-    <p>
-        <label for='playlist-title'>Title</label><br>
-        <input id='playlist-title' type='text' name='title' value='{{ playlist.title }}'/>
-    </p>
+<legend>{{ title }}</legend>
+<!-- TITLE -->
+<p>
+    <label for='playlist-title'>Title</label><br>
+    <input id='playlist-title' type='text' name='title' value='{{ playlist.title }}'/>
+</p>
 >
-    <!-- MOVIE TITLE -->
-    <p>
-        <label for='movie-title'>Movie Title</label><br>
-        <input id='movie-title' type='text' name='movieTitle' value='{{ playlist.movieTitle }}' />
-    </p>
+<!-- DESCRIPTION -->
+<p>
+  <label for='description'>Description</label><br>
+  <input id='description' type='text' name='description' value='{{ playlist.description }}' />
+</p>
 >
-    <!-- DESCRIPTION -->
-    <p>
-        <label for='playlist-description'>Description</label><br>
-        <textarea id='playlist-description' name='description' rows='10' />{{ playlist.description }}</textarea>
-    </p>
+<!-- VIDEO LINKS -->
+<p>
+  <label for='playlist-videos'>Videos</label><br>
+  <p>Add videos in the form of 'https://youtube.com/embed/#KEY'. Separate with a newline.</p>
+  <textarea id='playlist-description' name='description' rows='10' />{{ "\n".join(playlist.videos) }}</textarea>
+</p>
 </fieldset>
 ```
 
@@ -179,12 +185,12 @@ And now we can use this partial to replace that information in both our new and 
 >
 {% block content %}
 <form method='POST' action='/playlists'>
-    {% include 'partials/playlists_form.html' %}
+{% include 'partials/playlists_form.html' %}
 >
-    <!-- BUTTON -->
-    <p>
-        <button type='submit'>Save Playlist</button>
-    </p>
+<!-- BUTTON -->
+<p>
+    <button type='submit'>Save Playlist</button>
+</p>
 >
 </form>
 {% endblock %}
@@ -196,12 +202,12 @@ And now we can use this partial to replace that information in both our new and 
 >
 {% block content %}
 <form method='POST' action='/playlists/{{playlist._id}}'>
-    <input type='hidden' name='_method' value='PUT'/>
-    {% include 'partials/playlists_form.html' %}
-    <!-- BUTTON -->
-    <p>
-        <button type='submit'>Save Playlist</button>
-    </p>
+<input type='hidden' name='_method' value='PUT'/>
+{% include 'partials/playlists_form.html' %}
+<!-- BUTTON -->
+<p>
+    <button type='submit'>Save Playlist</button>
+</p>
 </form>
 {% endblock %}
 ```
@@ -218,16 +224,16 @@ Finally, notice how we included a `{{ title }}` in `templates/partials/playlists
 >
 @app.route('/playlists/new')
 def playlists_new():
-    """Create a new playlist."""
-    return render_template('playlists_new.html', playlist={}, title='New Playlist')
+"""Create a new playlist."""
+return render_template('playlists_new.html', playlist={}, title='New Playlist')
 >
 ...
 >
 @app.route('/playlists/<playlist_id>/edit')
 def playlists_edit(playlist_id):
-    """Show the edit form for a playlist."""
-    playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
-    return render_template('playlists_edit.html', playlist=playlist, title='Edit Playlist')
+"""Show the edit form for a playlist."""
+playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
+return render_template('playlists_edit.html', playlist=playlist, title='Edit Playlist')
 ```
 
 Triumph! DRY code. (Don't Repeat Yourself)

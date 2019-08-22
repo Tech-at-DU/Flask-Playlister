@@ -3,7 +3,7 @@ title: "Push to Production with Heroku"
 slug: push-to-heroku
 ---
 
-Time to ship some code! Since we've built and styled our Rotten Potatoes app, let's show it to the world by putting it online. We'll use a service called [Heroku](https://www.heroku.com) that is free, but it does require a **credit card** to be on file.
+Time to ship some code! Since we've built and styled our Playlistr app, let's show it to the world by putting it online. We'll use a service called [Heroku](https://www.heroku.com) that is free, but it does require a **credit card** to be on file.
 
 # Sign Up For and Install Heroku
 
@@ -72,14 +72,14 @@ $ git add .
 $ git commit -m 'adding Procfile'
 ```
 
-Now let's use the `heroku` command to create a heroku app and name it with "rotten-potatoes" and then our initials. So someone named Samantha Bee would be "rotten-potatoes-sb". This `heroku create` command will add our heroku app as a git remote repository that we will be able to push to using the git command `git push`. We can see our remote repos by using the command `git remote -v`.
+Now let's use the `heroku` command to create a heroku app and name it with "playlistr" and then our initials. So someone named Samantha Bee would be "playlistr-sb". This `heroku create` command will add our heroku app as a git remote repository that we will be able to push to using the git command `git push`. We can see our remote repos by using the command `git remote -v`.
 
 > [action]
 >
 > Create your heroku app, replacing `MY-INITIALS` with your initials
 >
 ```bash
-$ heroku create rotten-potatoes-MY-INITIALS
+$ heroku create playlistr-MY-INITIALS
 $ git remote -v
 ```
 
@@ -128,7 +128,7 @@ What error are we seeing in heroku now? What do we need to do?
 
 # Adding a Production Database
 
-It looks like the error is that we cannot connect to our mongodb database. That's because it is looking at the `'mongodb://localhost/rotten_potatoes'` URI, but that is on our local computer and heroku, which is remote, doesn't have access to that. So we have to add a mongodb heroku add-on called [mLabs](https://mlab.com/).
+It looks like the error is that we cannot connect to our mongodb database. That's because it is looking at the `'mongodb://localhost/playlistr'` URI, but that is on our local computer and heroku, which is remote, doesn't have access to that. So we have to add a mongodb heroku add-on called [mLabs](https://mlab.com/).
 
 > [action]
 >
@@ -148,7 +148,7 @@ Then we have to point to this production mongodb database URI in our `app.py` fi
 # app.py
 import os
 ...
-host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/rotten_potatoes')
+host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/playlistr')
 client = MongoClient(host=host)
 db = client.get_default_database()
 playlists = db.playlists

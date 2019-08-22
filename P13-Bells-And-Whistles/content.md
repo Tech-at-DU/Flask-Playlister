@@ -7,51 +7,51 @@ If you're looking for some extra challenges, there are a few more things we can 
 
 # Displaying "Created At" Time
 
-Let's display a "timestamp" for when a Review was created that looks like this: "Created on August 18, 2019 at 2:03 PM".
+Let's display a "timestamp" for when a Playlist was created that looks like this: "Created on August 18, 2019 at 2:03 PM".
 
-First we will need to add a 'created_at' field to our data model and store it in MongoDB when a review is created. Let's do that now.
+First we will need to add a 'created_at' field to our data model and store it in MongoDB when a playlist is created. Let's do that now.
 
 > [action]
 >
-> Update the 'show' route in `app.py` to add a timestamp indicating when the review was created:
+> Update the 'show' route in `app.py` to add a timestamp indicating when the playlist was created:
 >
 ```python
-@app.route('/reviews', methods=['POST'])
-def reviews_submit():
-    """Submit a new review."""
-    review = {
+@app.route('/playlists', methods=['POST'])
+def playlists_submit():
+    """Submit a new playlist."""
+    playlist = {
         'title': request.form.get('title'),
-        'movieTitle': request.form.get('movieTitle'),
         'description': request.form.get('description'),
+        'videos': request.form.get('videos').split(),
         'created_at': datetime.now()
     }
-    print(review)
-    review_id = reviews.insert_one(review).inserted_id
-    return redirect(url_for('reviews_show', review_id=review_id))
+    print(playlist)
+    playlist_id = playlists.insert_one(playlist).inserted_id
+    return redirect(url_for('playlists_show', playlist_id=playlist_id))
 ```
 
 Now we can display that `created_at` timestamp in our html:
 
 > [action]
 >
-> Update `templates/reviews_show.html` to include the `created_at` field right below the `title`:
+> Update `templates/playlists_show.html` to include the `created_at` field right below the `title`:
 >
 ```HTML
 ...
 >
-<h1>{{ review.title }}</h1>
-<p class='text-muted'>Created on: {{ review.created_at }}</p>
+<h1>{{ playlist.title }}</h1>
+<p class='text-muted'>Created on: {{ playlist.created_at }}</p>
 >
 ...
 ```
 
-Now create a new review and see what is displayed.
+Now create a new playlist and see what is displayed.
 
 Uh-oh - what you see there is called a Unix timestamp.
 
 `2019-08-19 05:14:58.038000`
 
-It *technically* says the date and time when the review was created, but it isn't very readable for humans!
+It *technically* says the date and time when the playlist was created, but it isn't very readable for humans!
 
 # Formatting Timestamps
 
@@ -59,15 +59,15 @@ To parse our `datetime` object into something more readable, let's use its `strf
 
 > [action]
 >
-> Update the `reviews_show` template:
+> Update the `playlists_show` template:
 >
 >
 ```html
-<!-- templates/reviews_show.html -->
+<!-- templates/playlists_show.html -->
 >
-<h1>{{review.title}}</h1>
-<p class='text-muted'>Created on {{ review.created_at.strftime('%A, %d %B, %Y') }}
-    at {{ review.created_at.strftime('%I:%M %p') }}</p>
+<h1>{{playlist.title}}</h1>
+<p class='text-muted'>Created on {{ playlist.created_at.strftime('%A, %d %B, %Y') }}
+    at {{ playlist.created_at.strftime('%I:%M %p') }}</p>
 ```
 
 Reload your browser and check the timestamp. Pretty cool, huh?

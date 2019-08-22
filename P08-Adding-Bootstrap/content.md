@@ -63,7 +63,7 @@ Add the most common navigational component - a top navbar. We'll have it have a 
     <div class='container-fluid'>
         <div class='navbar-header'>
             <a class='navbar-brand' href='/'>
-                Rotten Potatoes
+                Playlistr
             </a>
         </div>
         <div class='pull-right'>
@@ -127,7 +127,7 @@ Now that you have a container, style your `playlists_index` template to have eac
     {% for playlist in playlists %}
         <div class='col-md-3'>
             <h2><a href='/playlists/{{ playlist._id }}'>{{ playlist.title }}</a></h2>
-            <small>{{ playlist.movieTitle }}</small>
+            <small>{{ playlist.description }}</small>
         </div>
     {% endfor %}
 </div>
@@ -157,10 +157,15 @@ The show template should make the text relatively narrow, because people don't l
 <div class='row'>
     <div class='col-sm-6 col-sm-offset-3'>
         <h1>{{ playlist.title }}</h1>
-        <h2>{{ playlist.movieTitle }}</h2>
-        <p>{{ playlist.description }}</p>
-        <p><a href='/playlists/{{playlist._id}}/edit'>Edit</a></p>
-        <p><form method='POST' action='/playlists/{{playlist._id}}?_method=DELETE'>
+        <h2>{{ playlist.description }}</h2>
+        {% for video in playlist.videos %}
+            <div class="card"><div class="card-body">
+                <iframe width="420" height="315" src="{{ video }}"></iframe>
+            </div></div>
+        {% endfor %}
+        <p><a href='/playlists/{{ playlist._id }}/edit'>Edit</a></p>
+        <p><form method='POST' action='/playlists/{{ playlist._id }}'>
+            <input type='hidden' name='_method' value='DELETE'>
             <button class='btn btn-primary' type='submit'>Delete</button>
         </form></p>
     </div>
@@ -202,7 +207,8 @@ The show template should make the text relatively narrow, because people don't l
 {% block content %}
 <div class='row'>
     <div class='col-sm-6 col-sm-offset-3'>
-        <form method='POST' action='/playlists/{{playlist._id}}?_method=PUT'>
+        <form method='POST' action='/playlists/{{playlist._id}}'>
+            <input type='hidden' name='_method' value='PUT'/>
             {% include 'partials/playlists_form.html' %}
             <!-- BUTTON -->
             <div class='form-group'>
@@ -229,16 +235,17 @@ Now add some Bootstrap classes to the `playlists-form.handlebars` partial. These
         <input class='form-control' id='playlist-title' type='text' name='title' value='{{ playlist.title }}'/>
     </div>
 >
-    <!-- MOVIE TITLE -->
+    <!-- DESCRIPTION -->
     <div class='form-group'>
-        <label for='movie-title'>Movie Title</label><br>
-        <input class='form-control' id='movie-title' type='text' name='movieTitle' value='{{ playlist.movieTitle }}' />
+        <label for='description'>Description</label><br>
+        <input class='form-control' id='description' type='text' name='description' value='{{ playlist.description }}' />
     </div>
 >
     <!-- DESCRIPTION -->
     <div class='form-group'>
-        <label for='playlist-description'>Description</label><br/>
-        <textarea class='form-control' id='playlist-description' name='description' rows='10' />{{ playlist.description }}</textarea>
+        <label for='playlist-videos'>Videos</label><br/>
+        <p class='text-muted'>Add videos in the form of 'https://youtube.com/embed/#KEY'. Separate with a newline.</p>
+        <textarea class='form-control' id='playlist-videos' name='videos' rows='10' />{{ "\n".join(playlist.videos) }}</textarea>
     </div>
 </fieldset>
 ```
