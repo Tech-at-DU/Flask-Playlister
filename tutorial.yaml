@@ -1,0 +1,4 @@
+title: "Rotten Potatoes - Movie Reviews with Express.js"
+cover: cover.jpg
+teaser_text: |
+    Learn the fundamentals of Model View Controller server architecture and RESTful and Resourceful routing with Flask, Jinja, and MongoDB.
