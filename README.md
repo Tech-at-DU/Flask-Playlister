@@ -1,4 +1,4 @@
-# Video Playlist App
+# Playlistr (Video Playlist) App
 
 ## What you will learn
 
