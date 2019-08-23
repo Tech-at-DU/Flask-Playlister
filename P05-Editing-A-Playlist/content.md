@@ -15,7 +15,7 @@ Now we're checking off the seven **Resourceful Routes**. But we're not done unti
 | /playlists/:id     | PUT/PATCH | update  |
 | /playlists/:id     | DELETE    | Destroy |
 
-Normally in a site like Rotten Potatoes, we would only want authors of playlists to have the permission to edit or delete a playlist. However, because we do not have authentication yet, we're just going to let anyone edit and delete playlists.
+Normally in a site like YouTube, we would only want authors of playlists to have the permission to edit or delete a playlist. However, because we do not have authentication yet, we're just going to let anyone edit and delete playlists.
 
 # Edit Link
 

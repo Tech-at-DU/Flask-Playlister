@@ -257,7 +257,7 @@ Now we'll add some boilerplate code to the `base.html` template. Having a base t
 <html>
 <head>
   <meta charset='utf-8'>
-  <title>Rotten Potatoes</title>
+  <title>Playlistr</title>
 </head>
 <body>
 >
@@ -320,7 +320,7 @@ $ git commit -m 'init'
 $ git status
 ```
 >
-> Now go to GitHub and create a public repository called `Rotten-Potatoes-Tutorial`.
+> Now go to GitHub and create a public repository called `Playlistr-Tutorial`.
 >
 > Once you've done that, associate it as a remote for your local git project and then push to it:
 >

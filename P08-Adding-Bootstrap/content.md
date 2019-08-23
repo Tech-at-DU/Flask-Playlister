@@ -32,7 +32,7 @@ We'll add the `<link>` to bootstrap's css in our `<head>` tag in the `base.html`
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>Rotten Potatoes</title>
+    <title>Playlistr</title>
     <!-- Latest compiled and minified CSS -->
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
 </head>
