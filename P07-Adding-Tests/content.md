@@ -120,7 +120,7 @@ What was the error message?
 
 Now put it back to 200 and see if it is green again.
 
-If you don't do this step with tests, you might just be testing an **Identity** like that `4 = 4`. That's not a very good test!
+If you don't do this step with tests, you might just be testing an **Identity** like that `4 == 4`. That's not a very good test!
 
 # Next Test: New
 
@@ -176,7 +176,7 @@ class PlaylistsTest(TestCase):
     def test_show_playlist(self, mock_find):
         """Test showing a single playlist."""
         mock_find.return_value = sample_playlist
-
+>
         result = self.client.get(f'/playlists/{sample_playlist_id}')
         self.assertEqual(result.status, '200 OK')
         self.assertIn(b'La La Land', result.data)
@@ -189,7 +189,7 @@ class PlaylistsTest(TestCase):
     def test_edit_playlist(self, mock_find):
         """Test editing a single playlist."""
         mock_find.return_value = sample_playlist
-
+>
         result = self.client.get(f'/playlists/{sample_playlist_id}/edit')
         self.assertEqual(result.status, '200 OK')
         self.assertIn(b'La La Land', result.data)
@@ -210,7 +210,7 @@ We can also verify that the data we send is inserted into PyMongo with `assert_c
     def test_submit_playlist(self, mock_insert):
         """Test submitting a new playlist."""
         result = self.client.post('/playlists', data=sample_playlist)
-
+>
         # After submitting, should redirect to that playlist's page
         self.assertEqual(result.status, '302 FOUND')
         mock_insert.assert_called_with(sample_playlist)

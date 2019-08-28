@@ -20,7 +20,7 @@ Now let's setup the **show** action so we give each single playlist its own page
 
 Remember always start with what the user will see and do. To create the show action, you will want to start by making a link to the playlist from our index action template. Your route has to follow the `/playlists/:id` structure.
 
-MongoDB automatically creates an `_id` attribute on anything you save. So we can use that `_id` attribute for our `:id` in the route. This is called the **Url or Request Parameter** and we access it in Express using the `req.params` parameter inside a controller route.
+MongoDB automatically creates an `_id` attribute on anything you save. So we can use that `_id` attribute for our `:id` in the route. This is called the **Url or Request Parameter** and we access it in Flask using a parameter inside of the controller route.
 
 > [action]
 >
