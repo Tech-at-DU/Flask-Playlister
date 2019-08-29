@@ -32,7 +32,7 @@ We'll add the `<link>` to bootstrap's css in our `<head>` tag in the `base.html`
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>Playlistr</title>
+    <title>Playlister</title>
     <!-- Latest compiled and minified CSS -->
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
 </head>
@@ -63,7 +63,7 @@ Add the most common navigational component - a top navbar. We'll have it have a 
     <div class='container-fluid'>
         <div class='navbar-header'>
             <a class='navbar-brand' href='/'>
-                Playlistr
+                Playlister
             </a>
         </div>
         <div class='pull-right'>

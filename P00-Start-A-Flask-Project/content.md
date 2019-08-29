@@ -3,7 +3,7 @@ title: "Making A Plan & Starting a Flask Project"
 slug: start-a-flask-project
 ---
 
-You might have heard of the video site [YouTube](https://youtube.com) where millions of people have watched billions of hours of music, vlogs, how-tos, and of course, cats... acting like cats. We are going to piggyback on their success and create a **YouTube Video Playlist app**, aka **Playlistr**, so that you can keep track of your favorites and share with your friends.
+You might have heard of the video site [YouTube](https://youtube.com) where millions of people have watched billions of hours of music, vlogs, how-tos, and of course, cats... acting like cats. We are going to piggyback on their success and create a **YouTube Video Playlist app**, aka **Playlister**, so that you can keep track of your favorites and share with your friends.
 
 # Why is this important?
 
@@ -257,7 +257,7 @@ Now we'll add some boilerplate code to the `base.html` template. Having a base t
 <html>
 <head>
   <meta charset='utf-8'>
-  <title>Playlistr</title>
+  <title>Playlister</title>
 </head>
 <body>
 >
@@ -320,7 +320,7 @@ $ git commit -m 'init'
 $ git status
 ```
 >
-> Now go to GitHub and create a public repository called `Playlistr-Tutorial`.
+> Now go to GitHub and create a public repository called `Playlister-Tutorial`.
 >
 > Once you've done that, associate it as a remote for your local git project and then push to it:
 >

@@ -106,7 +106,7 @@ Now initialize MongoDB in `app.py` and connect to our database that we'll name a
 from pymongo import MongoClient
 >
 client = MongoClient()
-db = client.playlistr
+db = client.Playlister
 playlists = db.playlists
 >
 ...
