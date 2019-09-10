@@ -95,8 +95,8 @@ Congrats! You got your Video Playlist app all set up! The following chapter has 
 >
 > Reflect on what you've learned so far. How does it relate to the content in the rest of the course? What will you take with you?
 
-# Feedback and Playlist - 2 minutes
+# Feedback and Review - 2 minutes
 
 **We promise this won't take longer than 2 minutes!**
 
-Please take a moment to rate your understanding of learning outcomes from this tutorial, and how we can improve it via our [tutorial feedback form](https://forms.gle/QfXYziDcSTAynG448)
+Please take a moment to rate your understanding of learning outcomes from this tutorial, and how we can improve it via our [tutorial feedback form](https://forms.gle/kXt4Y8w2LpWSN6eU6)

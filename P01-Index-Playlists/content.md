@@ -33,7 +33,7 @@ All resources have a few actions in common that are called **Resourceful Routes*
 | /playlists/:id      | PATCH/PUT | update  | Update a playlist |
 | /playlists/:id      | DELETE    | destroy | Delete a playlist |
 
-The table above shows the resources, routes, and actions that might be used on a photo sharing site like Instagram.
+The table above shows the resources, routes, and actions that might be used on a playlist creating site like Playlister.
 
 We're going to start with the index action and then show, and then we'll look at the create, edit, update, and delete.
 
