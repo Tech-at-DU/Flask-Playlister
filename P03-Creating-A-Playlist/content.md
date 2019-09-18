@@ -77,8 +77,6 @@ Now we have to make a route to the `/playlists/new` path, and have it render a `
 > Make a `/playlists/new` route in `app.py`:
 >
 ```python
-# app.py
->
 @app.route('/playlists/new')
 def playlists_new():
     """Create a new playlist."""
@@ -109,7 +107,7 @@ If we navigate our browsers to `/playlists/new` we'll get a friendly little erro
         <input type='text' name='description' />
     </p>
     </fieldset>
-    >
+>
     <!-- BUTTON -->
     <p>
         <button type='submit'>Save Playlist</button>
@@ -152,8 +150,6 @@ Now we can create a new route in `app.py` to accept a `POST` request.
 > Add a new route for `/playlists`.
 >
 ```python
-# app.py
->
 @app.route('/playlists', methods=['POST'])
 def playlists_submit():
     """Submit a new playlist."""
@@ -177,8 +173,6 @@ So now let's use that form data to save a new playlist to our MongoDB database u
 > Write the `submit` route in `app.py`:
 >
 ```python
-# app.py
->
 @app.route('/playlists', methods=['POST'])
 def playlists_submit():
     """Submit a new playlist."""
@@ -226,7 +220,7 @@ First let's add what the user sees - the `playlists_new.html` form input field.
         <p>
             <label for='playlist-videos'>Videos</label><br>
             <p>Add videos in the form of 'https://youtube.com/embed/#KEY'. Separate with a newline.</p>
-            <textarea id='playlist-videos' name='videos' rows='10' /></textarea>
+            <textarea id='playlist-videos' name='videos' rows='10'></textarea>
         </p>
     </fieldset>
 >
@@ -245,8 +239,6 @@ We'll have to change the `playlists_submit` route as well so that it takes in ou
 > Change the `submit` route in `app.py` to include a `videos` field:
 >
 ```python
-# app.py
->
 @app.route('/playlists', methods=['POST'])
 def playlists_submit():
     """Submit a new playlist."""

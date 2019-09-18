@@ -49,10 +49,6 @@ What happens if you click on one of those links? A friendly error! Let's do what
 > Add the `/playlists/<playlist_id>` route to `app.py`:
 >
 ```python
-# app.py
->
-...
->
 @app.route('/playlists/<playlist_id>')
 def playlists_show(playlist_id):
     """Show a single playlist."""
@@ -70,13 +66,10 @@ Ok, time to add a template with an actual `playlist` object! To get the playlist
 > Update the `/playlists/<playlist_id>` route in `app.py` to the following:
 >
 ```python
-# app.py
->
 from bson.objectid import ObjectId
 >
 ...
 >
-# SHOW
 @app.route('/playlists/<playlist_id>')
 def playlists_show(playlist_id):
     """Show a single playlist."""
@@ -124,6 +117,7 @@ This is good, the show action is working, but there is a bit of a problem. Once 
 <h5>{{ playlist.description }}</h5>
 {% for video in playlist.videos %}
     <iframe width='420' height='315' src='{{ video }}'></iframe>
+{% endfor %}
 {% endblock %}
 ```
 
@@ -138,7 +132,6 @@ It makes sense from the user's perspective that after we create a new playlist, 
 > Change the create route to redirect to the show path in `app.py`:
 >
 ```python
-# CREATE
 @app.route('/playlists', methods=['POST'])
 def playlists_submit():
     """Submit a new playlist."""

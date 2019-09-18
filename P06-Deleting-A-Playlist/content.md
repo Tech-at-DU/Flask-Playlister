@@ -39,7 +39,6 @@ We can't set an `<a>` tag's method (it is always GET) so we are going to use a f
 <p><a href='/playlists/{{ playlist._id }}/edit'>Edit</a></p>
 <!-- Delete button -->
 <p><form method='POST' action='/playlists/{{ playlist._id }}/delete'>
-    <input type='hidden' name='_method' value='DELETE'>
     <button type='submit'>Delete</button>
 </form></p>
 {% endblock %}
@@ -57,11 +56,8 @@ Now we need a delete action route. After deleting the playlist, it should redire
 @app.route('/playlists/<playlist_id>/delete', methods=['POST'])
 def playlists_delete(playlist_id):
     """Delete one playlist."""
-    if request.form.get('_method') == 'DELETE':
-        playlists.delete_one({'_id': ObjectId(playlist_id)})
-        return redirect(url_for('playlists_index'))
-    else:
-        raise NotFound()
+    playlists.delete_one({'_id': ObjectId(playlist_id)})
+    return redirect(url_for('playlists_index'))
 ```
 
 We did it! All **Resourceful Routes** for the `Playlist` resource are complete!

@@ -83,21 +83,21 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 Next, we need to set up a Python **virtual environment**. This is kind of like a sandbox where we can install Python **packages** that will be active only for this particular project. If we install packages without a virtual environment, they are installed **globally** on your machine. Sometimes a new version of a package will be incompatible with the old version, so if you need to install the new version for your new project, it could unintentionally break one of your old projects. A virtual environment keeps us from polluting our other projects with potentially incompatible code.
 
-Make a new directory called 'video-playlist', then navigate into that directory, and finally create a new virtual environment.
+Make a new directory called 'playlister', then navigate into that directory, and finally create a new virtual environment.
 
 > [action]
 >
 > Use the terminal commands below to execute the above instructions:
 >
 ```bash
-$ mkdir video-playlist
-$ cd video-playlist
+$ mkdir playlister
+$ cd playlister
 $ python3 -m venv env
 ```
 
 Virtual environment support is included with Python3, so by running `python3 -m venv env`, we are telling Python to execute the 'venv' module (the 'm' is short for 'module'), and put the resulting virtual environment in a directory called 'env'.
 
-When you open the 'video-playlist' directory in Atom, you will see a directory called 'env' which contains several sub-directories. No need to worry about these for now!
+When you open the 'playlister' directory in Atom, you will see a directory called 'env' which contains several sub-directories. No need to worry about these for now!
 
 > [action]
 >
@@ -110,18 +110,13 @@ $ source env/bin/activate
 > Finally, we can install Flask in our virtual environment so that we can get started with our project.
 >
 ```bash
-(env) $ pip install Flask
+(env) $ pip3 install flask
 ```
 
 <!-- -->
 
 > [info]
 > If you ever want to deactivate your virtual environment, just type `deactivate` in your terminal window.
->
-```bash
-(env) $ deactivate
-$ _
-```
 
 # Freeze Your Dependencies with Pip Freeze
 
@@ -131,7 +126,7 @@ Using a virtual environment also makes it easy for someone reading your code to 
 > In your project directory, create a `requirements.txt` file by entering the following in your terminal window:
 >
 ```bash
-(env) $ pip freeze > requirements.txt
+(env) $ pip3 freeze > requirements.txt
 ```
 
 If you open up the `requirements.txt` file we generated, you should see something like:
@@ -146,9 +141,9 @@ Werkzeug==0.15.5
 ```
 
 > [info]
-> It's good to rerun the `pip freeze` command whenever you add or upgrade your packages. That way, others reading your code can re-install your dependencies without too much pain! If you ever want to install packages from a `requirements.txt` file, you can do so with:
+> It's good to re-run the `pip freeze` command whenever you add or upgrade your packages. That way, others reading your code can re-install your dependencies without too much pain! If you ever want to install packages from a `requirements.txt` file, you can do so with:
 ```
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 # Adding a Flask server
@@ -191,7 +186,7 @@ def index():
     return 'Hello, world!'
 >
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)
 ```
 
 At this point, you can now try running your project!
@@ -201,7 +196,7 @@ At this point, you can now try running your project!
 > Go to your terminal and enter:
 >
 ```bash
-(env) $ python3 app.py
+(env) $ export FLASK_ENV=development; flask run
 ```
 
 Navigate your browser to `http://localhost:5000`, and you should see "Hello World". Remember that we still haven't added a template engine yet! We are just sending text back to the browser.
@@ -272,7 +267,7 @@ Now we'll add some boilerplate code to the `base.html` template. Having a base t
 > Update `templates/home.html` to the following so that it will render the message from our root route:
 >
 ```html
-<!-- home.html -->
+<!-- templates/home.html -->
 {% extends 'base.html' %}
 >
 {% block content %}
@@ -298,14 +293,14 @@ $ git status
 
 Before we commit our changes, we want to tell Git to ignore the `env` directory, since it's not necessary for anyone else who is reading or running our code. (That's what the `requirements.txt` file is for!) Let's add a **.gitignore** file, which will specify any file types, files, or folders that we do not want to include in our Git repository.
 
-We also want Git to ignore any Python **generated files**, which end in a `.pyc` extension.
+We also want Git to ignore any Python **generated files**, which are contained in the `__pycache__` directory.
 
 > [action]
 > In your project directory, create a file called '.gitignore' with the following content:
 >
 ```
 env
-*.pyc
+__pycache__
 ```
 
 Now we can stage all the files to commit, then commit them adding a commit message, and then double check our status. We should see we have no files to commit because we just committed them all.

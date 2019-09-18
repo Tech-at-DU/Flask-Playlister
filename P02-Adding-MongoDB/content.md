@@ -91,7 +91,7 @@ To read from MongoDB in our server code, we'll be using PyMongo. Let's install i
 > First, install the PyMongo library using pip:
 >
 ```bash
-(env) $ pip install pymongo
+(env) $ pip3 install pymongo
 ```
 
 Remember to run `pip freeze > requirements.txt` to update your list of installed packages!
@@ -100,7 +100,7 @@ Now initialize MongoDB in `app.py` and connect to our database that we'll name a
 
 > [action]
 >
-> Add the following to `app.py`:
+> Add the following to the beginning of `app.py`:
 >
 ```python
 from pymongo import MongoClient
@@ -112,6 +112,11 @@ playlists = db.playlists
 ...
 >
 ```
+
+<!-- -->
+
+> [info]
+> Whenever you see a `...` in a code snippet, that means that the rest of your code should be contained below! Be sure **not** to type the `...`.
 
 Voila, you are connected to your database! But wait, you haven't written or read from it yet! To do that, we'll have to make a database query.
 

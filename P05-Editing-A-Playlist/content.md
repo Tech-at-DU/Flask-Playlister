@@ -48,7 +48,9 @@ Ok, now if we click that edit link, we'll see that the route is not found. So le
 >
 ```python
 # app.py
+>
 ...
+>
 @app.route('/playlists/<id>/edit')
 def playlists_edit(playlist_id):
 """Show the edit form for a playlist."""
@@ -59,7 +61,7 @@ return render_template('playlists_edit.html', playlist=playlist)
 
 And of course we'll need that `playlists_edit` template. This template is a bit weird for three reasons:
 
-1. **PUT vs. POST** - Although our update action will be expecting a PUT HTTP action, HTML forms cannot take an action attribute of `PUT`. This makes no sense, but nevertheless we must find a sensible workaround to HTML's shortcomings. So what we'll do is add a hidden input field with `name='_method'` and `value='PUT'`, and then on the server we'll be able to tell if we intended to do a PUT action.
+1. **PUT vs. POST** - Although our update action will be expecting a PUT HTTP action, HTML forms cannot take an action attribute of `PUT`. Therefore, we'll make it a `POST` action instead.
 1. **`value=''`** - we are using the `value` html attribute to pass in the values of the playlist we are trying to edit.
 1. **`<textarea>{{}}</textarea>`** - the `<textarea>` HTML tag does not have a `value` attribute, so its contents must go between its open and close tags.
 
@@ -73,7 +75,6 @@ And of course we'll need that `playlists_edit` template. This template is a bit 
 >
 {% block content %}
 <form method='POST' action='/playlists/{{playlist._id}}'>
-    <input type='hidden' name='_method' value='PUT'/>
     <fieldset>
         <legend>Edit Playlist</legend>
         <!-- TITLE -->
@@ -106,27 +107,20 @@ And of course we'll need that `playlists_edit` template. This template is a bit 
 
 # Update Route
 
-Remember that we need to make sure our POST request is processed as a PUT request. We can do this by checking the `_method` field in the `request.form`.
-
-However, what should we do if the `_method` field is not set to 'PUT'? In that case, we should throw an error. We can use the [werkzeug.exceptions](https://werkzeug.palletsprojects.com/en/0.15.x/exceptions/) library to do so.
+We can now add our `update` route:
 
 > [action]
->
-> Add the following import line to the top of `app.py`:
->
-```python
-from werkzeug.exceptions import NotFound
-```
 >
 > Add the update route to `app.py`:
 >
 ```python
 # app.py
+>
 ...
+>
 @app.route('/playlists/<playlist_id>', methods=['POST'])
 def playlists_update(playlist_id):
-"""Submit an edited playlist."""
-if request.form.get('_method') == 'PUT':
+    """Submit an edited playlist."""
     updated_playlist = {
         'title': request.form.get('title'),
         'description': request.form.get('description'),
@@ -136,8 +130,6 @@ if request.form.get('_method') == 'PUT':
         {'_id': ObjectId(playlist_id)},
         {'$set': updated_playlist})
     return redirect(url_for('playlists_show', playlist_id=playlist_id))
-else:
-    raise NotFound()
 ```
 
 # DRY Code & Sub Templates
@@ -203,7 +195,6 @@ And now we can use this partial to replace that information in both our new and 
 >
 {% block content %}
 <form method='POST' action='/playlists/{{playlist._id}}'>
-<input type='hidden' name='_method' value='PUT'/>
 {% include 'partials/playlists_form.html' %}
 <!-- BUTTON -->
 <p>

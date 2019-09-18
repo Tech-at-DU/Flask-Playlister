@@ -98,9 +98,6 @@ If you refresh `localhost:5000/playlists` now what do you see?
 > Let's update the `/playlists` route to be our root route. Just change the path from `/playlists` to `/` and delete or comment out the hello world root route we made before.
 >
 ```python
-// app.py
->
-# INDEX
 @app.route('/')
 def playlists_index():
     """Show all playlists."""
