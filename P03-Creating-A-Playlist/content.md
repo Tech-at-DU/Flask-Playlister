@@ -7,7 +7,7 @@ Remember we are doing Resourceful and RESTful architecture to our MVC structured
 
 As for the **Resourceful Routes**, we've created just one: the index action for our `Playlist` resource.
 
-Remember the previous table that showed a hypothetical set of routes for service like Instagram?
+Remember the previous table that showed a set of routes for Playlister?
 
 Here it is again for playlist:
 
@@ -254,6 +254,8 @@ def playlists_submit():
 You can create any attributes you like for your model and use various data types, such as strings, numbers, and dates.
 
 Can you resubmit the form? What happens now?
+
+If all went well, you should have created a playlist and can view it from the `playlists_index` page! Great work! Let's keep building this out by diving into showing individual playlists beyond the `playlists_index`page.
 
 
 # Now Commit
