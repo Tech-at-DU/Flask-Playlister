@@ -49,7 +49,8 @@ Our web server is going to save documents in MongoDB, but MongoDB itself has to 
 >
 ```bash
 $ brew update
-$ brew install mongodb
+$ brew tap mongodb/brew
+$ brew install mongodb-community@4.2
 ```
 >
 > You also need to create a folder to save your databases on your computer.
