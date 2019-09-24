@@ -219,7 +219,7 @@ First let's add what the user sees - the `playlists_new.html` form input field.
         <!-- VIDEO LINKS -->
         <p>
             <label for='playlist-videos'>Videos</label><br>
-            <p>Add videos in the form of 'https://youtube.com/embed/#KEY'. Separate with a newline.</p>
+            <p>Add videos in the form of 'https://youtube.com/embed/KEY'. Separate with a newline.</p>
             <textarea id='playlist-videos' name='videos' rows='10'></textarea>
         </p>
     </fieldset>

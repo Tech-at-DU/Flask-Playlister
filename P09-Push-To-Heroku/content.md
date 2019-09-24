@@ -159,6 +159,7 @@ Now if we try to open our heroku app via the terminal using `heroku open`, what 
 > [action]
 >
 > You may need to add `?retryWrites=false` to your MongoDB URL. If so, change the 'host=' line above to:
+>
 ```python
 client = MongoClient(host=f'{host}?retryWrites=false')
 ```

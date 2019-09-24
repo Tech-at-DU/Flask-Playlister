@@ -244,7 +244,7 @@ Now add some Bootstrap classes to the `playlists-form.handlebars` partial. These
     <!-- DESCRIPTION -->
     <div class='form-group'>
         <label for='playlist-videos'>Videos</label><br/>
-        <p class='text-muted'>Add videos in the form of 'https://youtube.com/embed/#KEY'. Separate with a newline.</p>
+        <p class='text-muted'>Add videos in the form of 'https://youtube.com/embed/KEY'. Separate with a newline.</p>
         <textarea class='form-control' id='playlist-videos' name='videos' rows='10' />{{ "\n".join(playlist.videos) }}</textarea>
     </div>
 </fieldset>
