@@ -172,8 +172,8 @@ Another error! This is a weird one. First it just hangs for a while, then times 
 >
 > Let's fix that by setting the port also with the `os.environ.get`. Then we have to point to this production mongodb database URI in our `app.py` file.
 >
-```js
-// app.js
+```python
+# app.py
 >
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))

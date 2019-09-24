@@ -44,7 +44,7 @@ Ok, now if we click that edit link, we'll see that the route is not found. So le
 
 > [action]
 >
-> Add an edit route in `app.js`:
+> Add an edit route in `app.py`:
 >
 ```python
 # app.py

@@ -3,7 +3,7 @@ title: "Create Route: Saving a New Resource"
 slug: creating-a-playlist
 ---
 
-Remember we are doing Resourceful and RESTful architecture to our MVC structured app. We've made some views in the `views` folder, instantiated a model, and put our controller logic (our routes) into the `app.js` file. As our model and controller logic grows we can move them into other files. For this app it is so simple, that we'll just leave all that logic in the `app.js` file.
+Remember we are doing Resourceful and RESTful architecture to our MVC structured app. We've made some views in the `templates` folder, instantiated a model, and put our controller logic (our routes) into the `app.py` file. As our model and controller logic grows we can move them into other files. For this app it is so simple, that we'll just leave all that logic in the `app.py` file.
 
 As for the **Resourceful Routes**, we've created just one: the index action for our `Playlist` resource.
 
