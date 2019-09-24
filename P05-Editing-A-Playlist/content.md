@@ -51,7 +51,7 @@ Ok, now if we click that edit link, we'll see that the route is not found. So le
 >
 ...
 >
-@app.route('/playlists/<id>/edit')
+@app.route('/playlists/<playlist_id>/edit')
 def playlists_edit(playlist_id):
 """Show the edit form for a playlist."""
 playlist = playlists.find_one({'_id': ObjectId(playlist_id)})

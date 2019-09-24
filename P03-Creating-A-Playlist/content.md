@@ -137,7 +137,7 @@ First, you need to get ready to accept form data using Flask's built-in `request
 
 > [action]
 >
-> Add the following to `app.py` in place of your existing import:
+> Add the following to `app.py` in place of your existing Flask import:
 >
 ```python
 from flask import Flask, render_template, request, redirect, url_for
