@@ -161,7 +161,7 @@ Did you notice that the code of our `playlists_new` and `playlists_edit` have a 
 <p>
   <label for='playlist-videos'>Videos</label><br>
   <p>Add videos in the form of 'https://youtube.com/embed/#KEY'. Separate with a newline.</p>
-  <textarea id='playlist-description' name='description' rows='10' />{{ "\n".join(playlist.videos) }}</textarea>
+  <textarea id='playlist-videos' name='videos' rows='10' />{{ "\n".join(playlist.videos) }}</textarea>
 </p>
 </fieldset>
 ```
