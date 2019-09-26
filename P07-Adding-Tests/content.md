@@ -92,7 +92,7 @@ class PlaylistsTests(TestCase):
         """Test the playlists homepage."""
         result = self.client.get('/')
         self.assertEqual(result.status, '200 OK')
-        self.assertIn(b'Playlists', result.data)
+        self.assertIn(b'Playlist', result.data)
 ```
 >
 > Now go to your terminal window and run your tests again.
@@ -162,6 +162,11 @@ sample_playlist = {
         'https://www.youtube.com/embed/CQ85sUNBK7w'
     ]
 }
+sample_form_data = {
+    'title': sample_playlist['title'],
+    'description': sample_playlist['description'],
+    'videos': '\n'.join(sample_playlist['videos'])
+}
 ```
 
 Now we can use the mock **decorator** to tell our test function that we'll be using a fake version of PyMongo's `find_one` operation. We can set its return value to our sample playlist, and voila! We'll see that sample data in the Flask result for the `playlists_show` route.
@@ -179,7 +184,7 @@ class PlaylistsTest(TestCase):
 >
         result = self.client.get(f'/playlists/{sample_playlist_id}')
         self.assertEqual(result.status, '200 OK')
-        self.assertIn(b'La La Land', result.data)
+        self.assertIn(b'Cat Videos', result.data)
 ```
 >
 > The edit route is the same. Add that now:
@@ -192,7 +197,7 @@ class PlaylistsTest(TestCase):
 >
         result = self.client.get(f'/playlists/{sample_playlist_id}/edit')
         self.assertEqual(result.status, '200 OK')
-        self.assertIn(b'La La Land', result.data)
+        self.assertIn(b'Cat Videos', result.data)
 ```
 
 # Next Test: Create
@@ -209,7 +214,7 @@ We can also verify that the data we send is inserted into PyMongo with `assert_c
     @mock.patch('pymongo.collection.Collection.insert_one')
     def test_submit_playlist(self, mock_insert):
         """Test submitting a new playlist."""
-        result = self.client.post('/playlists', data=sample_playlist)
+        result = self.client.post('/playlists', data=sample_form_data)
 >
         # After submitting, should redirect to that playlist's page
         self.assertEqual(result.status, '302 FOUND')
@@ -229,8 +234,8 @@ For update we have to create the sample playlist, then send in a PUT message wit
 ```python
     @mock.patch('pymongo.collection.Collection.update_one')
     def test_update_playlist(self, mock_update):
-        form_data = {'_method': 'PUT', **sample_playlist}
-        result = self.client.post(f'/playlists/{sample_playlist_id}', data=form_data)
+        result = self.client.post(f'/playlists/{sample_playlist_id}', data=sample_form_data)
+>
         self.assertEqual(result.status, '302 FOUND')
         mock_update.assert_called_with({'_id': sample_playlist_id}, {'$set': sample_playlist})
 ```
