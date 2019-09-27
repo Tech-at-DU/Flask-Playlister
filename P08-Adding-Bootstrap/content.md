@@ -164,7 +164,7 @@ The show template should make the text relatively narrow, because people don't l
             </div></div>
         {% endfor %}
         <p><a href='/playlists/{{ playlist._id }}/edit'>Edit</a></p>
-        <p><form method='POST' action='/playlists/{{ playlist._id }}'>
+        <p><form method='POST' action='/playlists/{{ playlist._id }}/delete'>
             <input type='hidden' name='_method' value='DELETE'>
             <button class='btn btn-primary' type='submit'>Delete</button>
         </form></p>
