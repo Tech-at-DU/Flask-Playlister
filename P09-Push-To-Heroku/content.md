@@ -79,7 +79,7 @@ Now let's use the `heroku` command to create a heroku app and name it with "Play
 > Create your heroku app, replacing `MY-INITIALS` with your initials
 >
 ```bash
-$ heroku create Playlister-MY-INITIALS
+$ heroku create playlister-MY-INITIALS
 $ git remote -v
 ```
 
