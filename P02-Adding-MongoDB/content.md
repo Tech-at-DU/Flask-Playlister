@@ -129,7 +129,7 @@ First let's comment out our `playlists` variable that we hard coded. We're gonna
 
 > [action]
 >
-> Comment out the mock data and update the root route in `app.js` to the following:
+> Comment out the mock data and update the root route in `app.py` to the following:
 >
 ```python
 # app.py
