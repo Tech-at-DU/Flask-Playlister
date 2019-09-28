@@ -181,7 +181,7 @@ A partial will be a good way to keep your code clean and organized.
 >
     ...
 >
-    {% include 'partials/comment_form.html %}
+    {% include 'partials/comment_form.html' %}
 >
     <hr>
 >
