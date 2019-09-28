@@ -44,7 +44,6 @@ We can't set an `<a>` tag's method (it is always GET) so we are going to use a f
         <p class='card-text'>{{ comment.content }}</p>
         <!-- Delete link -->
         <p><form method='POST' action='/playlists/comments/{{ comment._id }}'>
-            <input type='hidden' name='_method' value='DELETE' />
             <button class='btn btn-link' type='submit'>Delete</button>
         </form></p>
     </div>
@@ -65,12 +64,9 @@ Now we need a delete action route. After deleting the comment, it should redirec
 @app.route('/playlists/comments/<comment_id>', methods=['POST'])
 def comments_delete(comment_id):
     """Action to delete a comment."""
-    if request.form.get('_method') == 'DELETE':
-        comment = comments.find_one({'_id': ObjectId(comment_id)})
-        comments.delete_one({'_id': ObjectId(comment_id)})
-        return redirect(url_for('playlists_show', playlist_id=comment.get('playlist_id')))
-    else:
-        raise NotFound()
+    comment = comments.find_one({'_id': ObjectId(comment_id)})
+    comments.delete_one({'_id': ObjectId(comment_id)})
+    return redirect(url_for('playlists_show', playlist_id=comment.get('playlist_id')))
 ```
 
 Ok, so now try deleting a comment.

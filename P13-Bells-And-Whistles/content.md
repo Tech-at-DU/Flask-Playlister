@@ -16,6 +16,8 @@ First we will need to add a 'created_at' field to our data model and store it in
 > Update the 'show' route in `app.py` to add a timestamp indicating when the playlist was created:
 >
 ```python
+from datetime import datetime
+...
 @app.route('/playlists', methods=['POST'])
 def playlists_submit():
     """Submit a new playlist."""
@@ -40,7 +42,9 @@ Now we can display that `created_at` timestamp in our html:
 ...
 >
 <h1>{{ playlist.title }}</h1>
+{% if playlist.created_at %}
 <p class='text-muted'>Created on: {{ playlist.created_at }}</p>
+{% endif %}
 >
 ...
 ```
@@ -66,8 +70,10 @@ To parse our `datetime` object into something more readable, let's use its `strf
 <!-- templates/playlists_show.html -->
 >
 <h1>{{playlist.title}}</h1>
+{% if playlist.created_at %}
 <p class='text-muted'>Created on {{ playlist.created_at.strftime('%A, %d %B, %Y') }}
     at {{ playlist.created_at.strftime('%I:%M %p') }}</p>
+{% endif %}
 ```
 
 Reload your browser and check the timestamp. Pretty cool, huh?
