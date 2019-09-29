@@ -53,7 +53,7 @@ Next, we need to insert the command to run our application on Heroku.
 > Paste the following into your new `Procfile` and save:
 >
 ```bash
-web: gunicorn app:app
+(env) $ web: gunicorn app:app
 ```
 
 Great! When we push to Heroku, it'll know how to run our application. Keep going!
@@ -68,8 +68,8 @@ Let's start by committing what we have so far so that we have that `Procfile`.
 > Commit the `Procfile`
 >
 ```bash
-$ git add .
-$ git commit -m 'adding Procfile'
+(env) $ git add .
+(env) $ git commit -m 'adding Procfile'
 ```
 
 Now let's use the `heroku` command to create a heroku app and name it with "Playlister" and then our initials. So someone named Samantha Bee would be "Playlister-sb". This `heroku create` command will add our heroku app as a git remote repository that we will be able to push to using the git command `git push`. We can see our remote repos by using the command `git remote -v`.
@@ -79,8 +79,8 @@ Now let's use the `heroku` command to create a heroku app and name it with "Play
 > Create your heroku app, replacing `MY-INITIALS` with your initials
 >
 ```bash
-$ heroku create playlister-MY-INITIALS
-$ git remote -v
+(env) $ heroku create playlister-MY-INITIALS
+(env) $ git remote -v
 ```
 
 Alright, now we can push our code to heroku and open our new website!
@@ -90,8 +90,8 @@ Alright, now we can push our code to heroku and open our new website!
 > Push to Heroku!
 >
 ```bash
-$ git push heroku master
-$ heroku open
+(env) $ git push heroku master
+(env) $ heroku open
 ```
 
 You are probably seeing an error screen right now! Bit of a let down maybe. But also a good lesson - **Things never work the first time**. Let's debug our issues.
@@ -105,7 +105,7 @@ We need to run an additional command that tells Heroku to assign a free worker t
 > Run the `ps:scale` command:
 >
 ```bash
-$ heroku ps:scale web=1
+(env) $ heroku ps:scale web=1
 ```
 
 **Just like `heroku create`, you only need to execute this command once per project**!
@@ -154,6 +154,8 @@ db = client.get_default_database()
 playlists = db.playlists
 ```
 
+Next, follow the steps again to `git add`, `git commit`, and `git push heroku master` to ensure that our changes are reflected in Heroku.
+
 Now if we try to open our heroku app via the terminal using `heroku open`, what happens?
 
 > [action]
@@ -178,6 +180,8 @@ Another error! This is a weird one. First it just hangs for a while, then times 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))
 ```
+
+Once again, you will need to commit your `app.py` and run `git push heroku master`.
 
 Now if we try to open our heroku app, what happens?
 
