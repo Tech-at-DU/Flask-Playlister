@@ -243,7 +243,7 @@ Now add some Bootstrap classes to the `playlists-form.handlebars` partial. These
         <input class='form-control' id='description' type='text' name='description' value='{{ playlist.description }}' />
     </div>
 >
-    <!-- DESCRIPTION -->
+    <!-- VIDEO LINKS -->
     <div class='form-group'>
         <label for='playlist-videos'>Videos</label><br/>
         <p class='text-muted'>Add videos in the form of 'https://youtube.com/embed/KEY'. Separate with a newline.</p>
