@@ -30,6 +30,8 @@ We want people to be able to edit and update playlists, so let's again start fro
 {% extends 'base.html' %}
 >
 {% block content %}
+<a href='/'>Back to Home</a>
+>
 <h1>{{ playlist.title }}</h1>
 <h2>{{ playlist.description }}</h2>
 {% for video in playlist.videos %}
@@ -53,10 +55,9 @@ Ok, now if we click that edit link, we'll see that the route is not found. So le
 >
 @app.route('/playlists/<playlist_id>/edit')
 def playlists_edit(playlist_id):
-"""Show the edit form for a playlist."""
-playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
-video_links = '\n'.join(playlist.get('videos'))
-return render_template('playlists_edit.html', playlist=playlist)
+    """Show the edit form for a playlist."""
+    playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
+    return render_template('playlists_edit.html', playlist=playlist)
 ```
 
 And of course we'll need that `playlists_edit` template. This template is a bit weird for three reasons:
@@ -164,6 +165,11 @@ Did you notice that the code of our `playlists_new` and `playlists_edit` have a 
   <textarea id='playlist-videos' name='videos' rows='10'>{{ "\n".join(playlist.videos) }}</textarea>
 </p>
 </fieldset>
+>
+<!-- BUTTON -->
+<p>
+    <button type='submit'>Save Playlist</button>
+</p>
 ```
 
 And now we can use this partial to replace that information in both our new and edit templates.
@@ -178,13 +184,7 @@ And now we can use this partial to replace that information in both our new and 
 >
 {% block content %}
 <form method='POST' action='/playlists'>
-{% include 'partials/playlists_form.html' %}
->
-<!-- BUTTON -->
-<p>
-    <button type='submit'>Save Playlist</button>
-</p>
->
+    {% include 'partials/playlists_form.html' %}
 </form>
 {% endblock %}
 ```
@@ -195,11 +195,7 @@ And now we can use this partial to replace that information in both our new and 
 >
 {% block content %}
 <form method='POST' action='/playlists/{{playlist._id}}'>
-{% include 'partials/playlists_form.html' %}
-<!-- BUTTON -->
-<p>
-    <button type='submit'>Save Playlist</button>
-</p>
+    {% include 'partials/playlists_form.html' %}
 </form>
 {% endblock %}
 ```
@@ -216,16 +212,16 @@ Finally, notice how we included a `{{ title }}` in `templates/partials/playlists
 >
 @app.route('/playlists/new')
 def playlists_new():
-"""Create a new playlist."""
-return render_template('playlists_new.html', playlist={}, title='New Playlist')
+    """Create a new playlist."""
+    return render_template('playlists_new.html', playlist={}, title='New Playlist')
 >
 ...
 >
 @app.route('/playlists/<playlist_id>/edit')
 def playlists_edit(playlist_id):
-"""Show the edit form for a playlist."""
-playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
-return render_template('playlists_edit.html', playlist=playlist, title='Edit Playlist')
+    """Show the edit form for a playlist."""
+    playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
+    return render_template('playlists_edit.html', playlist=playlist, title='Edit Playlist')
 ```
 
 Triumph! DRY code. (Don't Repeat Yourself)

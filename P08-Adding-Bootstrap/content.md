@@ -41,6 +41,8 @@ We'll add the `<link>` to bootstrap's css in our `<head>` tag in the `base.html`
     {% block content %}{% endblock %}
 >
     <!-- Latest compiled and minified JavaScript -->
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
 </body>
 </html>
@@ -164,7 +166,7 @@ The show template should make the text relatively narrow, because people don't l
             </div></div>
         {% endfor %}
         <p><a href='/playlists/{{ playlist._id }}/edit'>Edit</a></p>
-        <p><form method='POST' action='/playlists/{{ playlist._id }}'>
+        <p><form method='POST' action='/playlists/{{ playlist._id }}/delete'>
             <input type='hidden' name='_method' value='DELETE'>
             <button class='btn btn-primary' type='submit'>Delete</button>
         </form></p>

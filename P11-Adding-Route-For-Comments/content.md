@@ -124,7 +124,7 @@ def comments_new():
     }
     print(comment)
     comment_id = comments.insert_one(comment).inserted_id
-    return redirect(url_for('playlists_show', playlist_id=playlist_id))
+    return redirect(url_for('playlists_show', playlist_id=request.form.get('playlist_id')))
 ```
 
 Test your work. Write a comment and submit the form. The `console.log` call will allow you to see your comment in the console. If there are any errors they should also appear in the console.
@@ -137,7 +137,7 @@ This is a chicken and egg problem. We'd like to see comments but can't see any i
 
 > [action]
 >
-> Open `controllers/playlists.js` and make these changes to the route that shows a single playlist by id. Make sure to also require the `Comment` model in this controller, since we'll be using it now too!
+> Open `app.py` and make these changes to the route that shows a single playlist by id. Make sure to also require the `Comment` model in this controller, since we'll be using it now too!
 >
 ```python
 # app.py
@@ -181,7 +181,7 @@ A partial will be a good way to keep your code clean and organized.
 >
     ...
 >
-    {% include 'partials/comment_form.html %}
+    {% include 'partials/comment_form.html' %}
 >
     <hr>
 >

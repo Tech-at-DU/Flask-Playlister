@@ -30,6 +30,8 @@ We can't set an `<a>` tag's method (it is always GET) so we are going to use a f
 {% extends 'base.html' %}
 >
 {% block content %}
+<a href='/'>Back to Home</a>
+>
 <h1>{{ playlist.title }}</h1>
 <h2>{{ playlist.description }}</h2>
 {% for video in playlist.videos %}

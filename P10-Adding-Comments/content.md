@@ -40,7 +40,7 @@ Putting the comment form in a partial will make your code modular and help keep 
                 id='comment-content'
                 name='content'
                 rows='10'
-                placeholder='Your comment...'/></textarea>
+                placeholder='Your comment...'></textarea>
         </div>
     </fieldset>
 >
