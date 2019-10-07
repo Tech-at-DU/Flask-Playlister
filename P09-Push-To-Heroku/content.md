@@ -53,7 +53,7 @@ Next, we need to insert the command to run our application on Heroku.
 > Paste the following into your new `Procfile` and save:
 >
 ```bash
-(env) $ web: gunicorn app:app
+web: gunicorn app:app
 ```
 
 Great! When we push to Heroku, it'll know how to run our application. Keep going!
