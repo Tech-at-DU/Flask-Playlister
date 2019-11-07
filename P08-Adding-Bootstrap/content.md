@@ -33,22 +33,30 @@ We'll add the `<link>` to bootstrap's css in our `<head>` tag in the `base.html`
 <head>
     <meta charset='utf-8'>
     <title>Playlister</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+    <!-- We'll use the compiled and minified CSS from version 4.3.1 for this tutorial -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 >
     {% block content %}{% endblock %}
 >
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+    <!-- We'll use jquery version 3.3.1 for this tutorial -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- We'll use popper.js version 1.14.7 for this tutorial -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <!-- We'll use the compiled and minified JavaScript from version 4.3.1 for this tutorial -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
 ```
 
 Just after doing that, refresh your page. The typography and layout should change just a tiny bit if it worked.
+
+> [info]
+>
+> For ease of linkage in this tutorial, we will be using version 4.3.1 of Bootstrap, and the appropriate resources that are needed to support that version of Bootstrap.
+>
+> If you would like to use the latest version of Bootstrap, visit their [website](https://getbootstrap.com) to find the latest version and the resources that it needs to use the BootstrapCDN.
 
 # Adding a Navbar
 
@@ -140,7 +148,7 @@ Now that you have a container, style your `playlists_index` template to have eac
 
 > [challenge]
 >
-> Can you wrap each of the playlists in a `card` class? Use the [Cards Documentation](https://getbootstrap.com/docs/4.1/components/card/) for help.
+> Can you wrap each of the playlists in a `card` class? Use the [Cards Documentation](https://getbootstrap.com/docs/4.3/components/card/) for help. Again this  is the 4.3.1 specific documentation, but you can get the latest version by visiting  the [Bootstrap website](https://getbootstrap.com) and clicking  on their **Documentation** (the documentation URL changes with each version, so we can't link the latest here).
 
 # Styling the Show Template
 
