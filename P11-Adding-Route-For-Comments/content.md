@@ -137,7 +137,7 @@ This is a chicken and egg problem. We'd like to see comments but can't see any i
 
 > [action]
 >
-> Open `app.py` and make these changes to the route that shows a single playlist by id. Make sure to also require the `Comment` model in this controller, since we'll be using it now too!
+> Open `app.py` and make these changes to the route that shows comments for a single playlist by id.
 >
 ```python
 # app.py
