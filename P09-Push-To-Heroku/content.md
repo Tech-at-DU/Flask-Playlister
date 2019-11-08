@@ -21,7 +21,7 @@ Heroku does not provide a web server, and the Flask web server is not well-suite
 > Install gunicorn in your project directory:
 >
 ```bash
-(env) $ pip install gunicorn
+(env) $ pip3 install gunicorn
 ```
 
 We'll then need to update our `requirements.txt` file so that it reflects all of the Python modules that we have installed so far. Heroku will use this file to understand which modules need to be installed when starting our production server.
