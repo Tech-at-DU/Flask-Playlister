@@ -219,6 +219,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     """Return homepage."""
+    # change the original return statement you wrote to the one below
     return render_template('home.html', msg='Flask is Cool!!')
 ```
 
@@ -264,7 +265,7 @@ Now we'll add some boilerplate code to the `base.html` template. Having a base t
 </html>
 ```
 >
-> Update `templates/home.html` to the following so that it will render the message from our root route:
+> Add the following to `templates/home.html` so that it will render the message from our root route:
 >
 ```html
 <!-- templates/home.html -->

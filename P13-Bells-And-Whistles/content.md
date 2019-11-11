@@ -28,7 +28,7 @@ def playlists_submit():
         'description': request.form.get('description'),
         'videos': videos,
         'video_ids': video_ids,
-        # Updated line below
+        # Add the following line:
         'created_at': datetime.now()
     }
     print(playlist)
@@ -46,6 +46,7 @@ Now we can display that `created_at` timestamp in our html:
 ...
 >
 <h1>{{ playlist.title }}</h1>
+<!--Add the following conditional and paragraph: -->
 {% if playlist.created_at %}
     <p class='text-muted'>Created on: {{ playlist.created_at }}</p>
 {% endif %}
@@ -75,6 +76,7 @@ To parse our `datetime` object into something more readable, let's use its `strf
 >
 <h1>{{playlist.title}}</h1>
 {% if playlist.created_at %}
+    <!-- Edit the paragraph to use the strftime formatting -->
     <p class='text-muted'>Created on {{ playlist.created_at.strftime('%A, %d %B, %Y') }} at {{ playlist.created_at.strftime('%I:%M %p') }}</p>
 {% endif %}
 ```

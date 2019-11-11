@@ -59,6 +59,7 @@ Let's include the `_id` of the playlist with the form. One way you can accomplis
 <!-- templates/partials/comment_form.html -->
 >
 <form action='/playlists/comments' method='POST'>
+    <!-- Add the hidden input -->
     <input type='hidden' value='{{ playlist._id }}' name='playlist_id'/>
     <fieldset>
         ...
@@ -74,7 +75,7 @@ Define a new route in express to handle this new form. We can do this inside of 
 
 > [action]
 >
-> Add to `app.py`:
+> Create a submit route for comments in `app.py`:
 >
 ```python
 >
@@ -99,6 +100,7 @@ So far, we only have one collection in our MongoDB database: the `playlists` col
 ...
 db = client.get_default_database()
 playlists = db.playlists
+# Add this line:
 comments = db.comments
 ```
 
@@ -109,14 +111,16 @@ Every Comment will need to have reference to a Playlist. This reference is the `
 
 > [action]
 >
-> Open `app.py` and modify your `comments_new` route:
+> Open `app.py` and modify your Submit route for comments:
 >
 ```python
+# Add this header to distinguish Comment routes from Playlist routes
 ########## COMMENT ROUTES ##########
 >
 @app.route('/playlists/comments', methods=['POST'])
 def comments_new():
     """Submit a new comment."""
+    # Replace the one liner from before with the below code:
     comment = {
         'title': request.form.get('title'),
         'content': request.form.get('content'),
@@ -137,7 +141,7 @@ This is a chicken and egg problem. We'd like to see comments but can't see any i
 
 > [action]
 >
-> Open `app.py` and make these changes to the route that shows comments for a single playlist by id.
+> Open `app.py` and make these changes to a playlist's show route, so that it also shows comments for a single playlist:
 >
 ```python
 # app.py
@@ -145,7 +149,9 @@ This is a chicken and egg problem. We'd like to see comments but can't see any i
 def playlists_show(playlist_id):
     """Show a single playlist."""
     playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
+    # Add the below line:
     playlist_comments = comments.find({'playlist_id': ObjectId(playlist_id)})
+    # Edit the return statement to be the following:
     return render_template('playlists_show.html', playlist=playlist, comments=playlist_comments)
 ```
 
@@ -185,6 +191,7 @@ A partial will be a good way to keep your code clean and organized.
 >
     <hr>
 >
+    <!-- Add the below code -->
     <!-- Show Comments -->
     {% for comment in comments %}
         {% include 'partials/comment.html' %}

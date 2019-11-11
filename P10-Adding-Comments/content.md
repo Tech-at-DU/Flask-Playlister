@@ -84,6 +84,7 @@ Notice you used the same class names and markup used in the Playlists Form. This
 >
         <hr>
 >
+    <!-- Add your new partial here: -->
     <!-- Comment form -->
     {% include 'partials/comment_form.html' %}
 >

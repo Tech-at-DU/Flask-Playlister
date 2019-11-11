@@ -146,8 +146,11 @@ Then we have to point to this production mongodb database URI in our `app.py` fi
 >
 ```python
 # app.py
+# Add the following import
 import os
 ...
+# update the client, db, and playlists assignments to the following,
+# including the new host variable
 host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/Playlister')
 client = MongoClient(host=host)
 db = client.get_default_database()
@@ -178,7 +181,8 @@ Another error! This is a weird one. First it just hangs for a while, then times 
 # app.py
 >
 if __name__ == '__main__':
-  app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))
+    # update the below line to the following:
+    app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))
 ```
 
 Once again, you will need to commit your `app.py` and run `git push heroku master`.

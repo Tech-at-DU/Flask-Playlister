@@ -55,6 +55,7 @@ The user will have to click "New Playlist" to create a new playlist. So let's pu
 {% block content %}
 <h1>Playlists</h1>
 >
+<!-- New link here -->
 <a href='/playlists/new'>New Playlist</a>
 >
 {% for playlist in playlists %}
@@ -194,7 +195,7 @@ First let's add what the user sees - the `playlists_new.html` form input field.
 
 > [action]
 >
-> Add a section for description in `templates/playlists_new.html`:
+> Create the `templates/playlists_new.html` file:
 >
 ```html
 <!-- templates/playlists_new.html -->
@@ -265,9 +266,10 @@ We'll need to use our helper function to create a list of videos from our video 
 
 > [action]
 >
-> Change the `submit` route in `app.py` to include a `videos` field:
+> Create the `submit` route in `app.py`:
 >
 ```python
+# Note the methods parameter that explicitly tells the route that this is a POST
 @app.route('/playlists', methods=['POST'])
 def playlists_submit():
     """Submit a new playlist."""

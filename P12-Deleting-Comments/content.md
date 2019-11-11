@@ -42,7 +42,7 @@ We can't set an `<a>` tag's method (it is always GET) so we are going to use a f
     <div class='card-block'>
         <h4 class='card-title'>{{ comment.title }}</h4>
         <p class='card-text'>{{ comment.content }}</p>
-        <!-- Delete link -->
+        <!-- Add this Delete link -->
         <p><form method='POST' action='/playlists/comments/{{ comment._id }}'>
             <button class='btn btn-link' type='submit'>Delete</button>
         </form></p>

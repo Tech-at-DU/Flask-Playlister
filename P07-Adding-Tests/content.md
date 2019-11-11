@@ -153,6 +153,7 @@ We'll also need to import the `video_url_creator` function, since `tests.py` has
 >
 ```python
 from unittest import TestCase, main as unittest_main
+# Add an additional import here
 from app import app, video_url_creator
 >
 sample_id_list = ['hY7m5jjJ9mM','CQ85sUNBK7w']
@@ -172,7 +173,7 @@ def test_video_url_creator(self):
     self.assertEqual(expected_list, output_list)
 ```
 
-Now run your tests!
+Now run your test! Add a red-green refactor to make sure it's comprehensive.
 
 # Next Test: Show & Edit
 

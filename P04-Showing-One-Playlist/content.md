@@ -36,6 +36,7 @@ MongoDB automatically creates an `_id` attribute on anything you save. So we can
 <a href='/playlists/new'>New Playlist</a>
 >
 {% for playlist in playlists %}
+    # Edit this line to include a link
     <h2><a href='/playlists/{{ playlist._id }}'>{{ playlist.title }}</a></h2>
     <small>{{ playlist.description }}</small>
 {% endfor %}
@@ -63,9 +64,10 @@ Ok, time to add a template with an actual `playlist` object! To get the playlist
 
 > [action]
 >
-> Update the `/playlists/<playlist_id>` route in `app.py` to the following:
+> Create the `/playlists/<playlist_id>` route in `app.py`:
 >
 ```python
+# Add this with the rest of your import statements
 from bson.objectid import ObjectId
 >
 ...
@@ -111,6 +113,7 @@ This is good, the show action is working, but there is a bit of a problem. Once 
 {% extends 'base.html' %}
 >
 {% block content %}
+<!--Add the below link to go back -->
 <a href='/'>Back to Home</a>
 >
 <h1>{{ playlist.title }}</h1>
@@ -141,7 +144,6 @@ def playlists_submit():
         'title': request.form.get('title'),
         'description': request.form.get('description'),
         'videos': videos,
-        'created_at': datetime.now(),
         'video_ids': video_ids
     }
     playlist_id = playlists.insert_one(playlist).inserted_id

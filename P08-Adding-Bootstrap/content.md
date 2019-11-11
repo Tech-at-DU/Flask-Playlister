@@ -89,6 +89,7 @@ Add the most common navigational component - a top navbar. We'll have it have a 
 ...
 <body>
 >
+    <!-- add in the navbar -->
     {% include 'partials/navbar.html' %}
 >
     {% block content %}
@@ -108,6 +109,7 @@ People argue about the usefulness of some of the more complex parts of Bootstrap
 ...
 <body>
     ...
+    <!-- Add the container class below  -->
     <div class='container'>
         {% block content %}{% endblock %}
     </div>
@@ -133,6 +135,7 @@ Now that you have a container, style your `playlists_index` template to have eac
 {% block content %}
 <h1>Playlists</h1>
 >
+<!-- Add the following classes to their appropriate elements  -->
 <div class='row'>
     {% for playlist in playlists %}
         <div class='col-md-3'>
@@ -187,7 +190,7 @@ The show template should make the text relatively narrow, because people don't l
 
 > [action]
 >
-> Now let's add some bootstrap styling to `templates/playlists_new.html`:
+> Now let's add some bootstrap styling to `templates/playlists_new.html` Add the following classes to the file:
 >
 ```html
 <!-- templates/playlists_new.html -->
@@ -208,7 +211,7 @@ The show template should make the text relatively narrow, because people don't l
 {% endblock %}
 ```
 >
-> Make the same changes to `templates/playlists_edit.html`:
+> Make the same changes (adding classes) to `templates/playlists_edit.html`:
 >
 ```html
 <!-- templates/playlists_edit.html -->
@@ -234,7 +237,7 @@ Now add some Bootstrap classes to the `playlists-form.handlebars` partial. These
 
 > [action]
 >
-> Update `templates/partials/playlists_form.html` to the following:
+> Update `templates/partials/playlists_form.html` to have the following classes:
 >
 ```html
 <fieldset>

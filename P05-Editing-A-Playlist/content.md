@@ -38,6 +38,7 @@ We want people to be able to edit and update playlists, so let's again start fro
     <iframe width='420' height='315' src='{{ video }}'></iframe>
 {% endfor %}
 >
+# Add this link
 <p><a href='/playlists/{{ playlist._id }}/edit'>Edit</a></p>
 {% endblock %}
 ```
@@ -151,25 +152,25 @@ Did you notice that the code of our `playlists_new` and `playlists_edit` have a 
 <!-- templates/partials/playlists_form.html -->
 >
 <fieldset>
-<legend>{{ title }}</legend>
-<!-- TITLE -->
-<p>
-    <label for='playlist-title'>Title</label><br>
-    <input id='playlist-title' type='text' name='title' value='{{ playlist.title }}'/>
-</p>
->
-<!-- DESCRIPTION -->
-<p>
-  <label for='description'>Description</label><br>
-  <input id='description' type='text' name='description' value='{{ playlist.description }}' />
-</p>
->
-<!-- VIDEO LINKS -->
-<p>
-  <label for='playlist-videos'>Videos</label><br>
-  <p>Add the ID of the videos you want to include in your playlist. Separate with a newline.</p>
-  <textarea id='playlist-videos' name='videos' rows='10'>{{ "\n".join(playlist.video_ids) }}</textarea>
-</p>
+    <legend>{{ title }}</legend>
+    <!-- TITLE -->
+    <p>
+        <label for='playlist-title'>Title</label><br>
+        <input id='playlist-title' type='text' name='title' value='{{ playlist.title }}'/>
+    </p>
+    >
+    <!-- DESCRIPTION -->
+    <p>
+      <label for='description'>Description</label><br>
+      <input id='description' type='text' name='description' value='{{ playlist.description }}' />
+    </p>
+    >
+    <!-- VIDEO LINKS -->
+    <p>
+      <label for='playlist-videos'>Videos</label><br>
+      <p>Add the ID of the videos you want to include in your playlist. Separate with a newline.</p>
+      <textarea id='playlist-videos' name='videos' rows='10'>{{ "\n".join(playlist.video_ids) }}</textarea>
+    </p>
 </fieldset>
 >
 <!-- BUTTON -->
@@ -190,6 +191,7 @@ And now we can use this partial to replace that information in both our new and 
 >
 {% block content %}
 <form method='POST' action='/playlists'>
+    <!-- Add this line instead of all the form code -->
     {% include 'partials/playlists_form.html' %}
 </form>
 {% endblock %}
@@ -201,6 +203,7 @@ And now we can use this partial to replace that information in both our new and 
 >
 {% block content %}
 <form method='POST' action='/playlists/{{playlist._id}}'>
+    <!-- Add this line instead of all the form code -->
     {% include 'partials/playlists_form.html' %}
 </form>
 {% endblock %}
@@ -219,6 +222,7 @@ Finally, notice how we included a `{{ title }}` in `templates/partials/playlists
 @app.route('/playlists/new')
 def playlists_new():
     """Create a new playlist."""
+    # Add the title parameter here
     return render_template('playlists_new.html', playlist={}, title='New Playlist')
 >
 ...
@@ -227,6 +231,7 @@ def playlists_new():
 def playlists_edit(playlist_id):
     """Show the edit form for a playlist."""
     playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
+    # Add the title parameter here
     return render_template('playlists_edit.html', playlist=playlist, title='Edit Playlist')
 ```
 

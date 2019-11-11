@@ -142,6 +142,7 @@ First let's comment out our `playlists` variable that we hard coded. We're gonna
 @app.route('/')
 def playlists_index():
     """Show all playlists."""
+    # Update this line
     return render_template('playlists_index.html', playlists=playlists.find())
 ```
 
