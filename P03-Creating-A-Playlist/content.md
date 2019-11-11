@@ -219,7 +219,7 @@ First let's add what the user sees - the `playlists_new.html` form input field.
         <!-- VIDEO LINKS -->
         <p>
             <label for='playlist-videos'>Videos</label><br>
-            <p>Add videos in the form of 'https://youtube.com/embed/KEY'. Separate with a newline.</p>
+            <p>Add the ID of the videos you want to include in your playlist. Separate with a newline.</p>
             <textarea id='playlist-videos' name='videos' rows='10'></textarea>
         </p>
     </fieldset>
@@ -232,7 +232,36 @@ First let's add what the user sees - the `playlists_new.html` form input field.
 {% endblock %}
 ```
 
-We'll have to change the `playlists_submit` route as well so that it takes in our new data field.
+# URL Helper Function
+
+We'll have to change the `playlists_submit` route as well so that it takes in our new data field. But there's a bit of a problem: right now we're only taking in IDs, and the route doesn't know how to construct a URL. But we do!!
+
+> [action]
+>
+> at the top of `app.py` (after we've defined what `app` is), write a helper function called `video_url_creator` that takes in a list of IDs as input and outputs a list of YouTube embed links:
+>
+```py
+def video_url_creator(id_lst):
+    videos = []
+    for vid_id in id_lst:
+        # We know that embedded YouTube videos always have this format
+        video = 'https://youtube.com/embed/' + vid_id
+        videos.append(video)
+    return videos
+```
+
+<!-- -->
+
+
+> [challenge]
+>
+> Is there a way to optimize the above function? How would you improve it?
+
+Alright, now that we can create YouTube links, let's finish up that Submit route!
+
+# Finish the Submit Route
+
+We'll need to use our helper function to create a list of videos from our video IDs we collected in the form. Once we do that, we can create our playlist object with a proper `videos` field.
 
 > [action]
 >
@@ -242,10 +271,16 @@ We'll have to change the `playlists_submit` route as well so that it takes in ou
 @app.route('/playlists', methods=['POST'])
 def playlists_submit():
     """Submit a new playlist."""
+    # Grab the video IDs and make a list out of them
+    video_ids = request.form.get('videos').split()
+    # call our helper function to create the list of links
+    videos = video_url_creator(video_ids)
     playlist = {
         'title': request.form.get('title'),
         'description': request.form.get('description'),
-        'videos': request.form.get('videos').split()
+        'videos': videos,
+        # storing the IDs in here for now, we'll use them later!
+        'video_ids': video_ids
     }
     playlists.insert_one(playlist)
     return redirect(url_for('playlists_index'))
@@ -256,6 +291,10 @@ You can create any attributes you like for your model and use various data types
 Can you resubmit the form? What happens now?
 
 If all went well, you should have created a playlist and can view it from the `playlists_index` page! Great work! Let's keep building this out by diving into showing individual playlists beyond the `playlists_index`page.
+
+> [info]
+>
+> Confused why we added a `video_ids` field to the playlist? We'll come back to that in a couple chapters.
 
 
 # Now Commit

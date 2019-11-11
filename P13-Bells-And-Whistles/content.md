@@ -21,10 +21,14 @@ from datetime import datetime
 @app.route('/playlists', methods=['POST'])
 def playlists_submit():
     """Submit a new playlist."""
+    video_ids = request.form.get('videos').split()
+    videos = video_url_creator(video_ids)
     playlist = {
         'title': request.form.get('title'),
         'description': request.form.get('description'),
-        'videos': request.form.get('videos').split(),
+        'videos': videos,
+        'video_ids': video_ids,
+        # Updated line below
         'created_at': datetime.now()
     }
     print(playlist)
@@ -43,7 +47,7 @@ Now we can display that `created_at` timestamp in our html:
 >
 <h1>{{ playlist.title }}</h1>
 {% if playlist.created_at %}
-<p class='text-muted'>Created on: {{ playlist.created_at }}</p>
+    <p class='text-muted'>Created on: {{ playlist.created_at }}</p>
 {% endif %}
 >
 ...
@@ -71,8 +75,7 @@ To parse our `datetime` object into something more readable, let's use its `strf
 >
 <h1>{{playlist.title}}</h1>
 {% if playlist.created_at %}
-<p class='text-muted'>Created on {{ playlist.created_at.strftime('%A, %d %B, %Y') }}
-    at {{ playlist.created_at.strftime('%I:%M %p') }}</p>
+    <p class='text-muted'>Created on {{ playlist.created_at.strftime('%A, %d %B, %Y') }} at {{ playlist.created_at.strftime('%I:%M %p') }}</p>
 {% endif %}
 ```
 

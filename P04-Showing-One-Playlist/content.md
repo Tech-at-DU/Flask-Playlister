@@ -135,12 +135,17 @@ It makes sense from the user's perspective that after we create a new playlist, 
 @app.route('/playlists', methods=['POST'])
 def playlists_submit():
     """Submit a new playlist."""
+    video_ids = request.form.get('videos').split()
+    videos = video_url_creator(video_ids)
     playlist = {
         'title': request.form.get('title'),
         'description': request.form.get('description'),
-        'videos': request.form.get('videos').split()
+        'videos': videos,
+        'created_at': datetime.now(),
+        'video_ids': video_ids
     }
     playlist_id = playlists.insert_one(playlist).inserted_id
+    # The below line is the one that changed!
     return redirect(url_for('playlists_show', playlist_id=playlist_id))
 ```
 

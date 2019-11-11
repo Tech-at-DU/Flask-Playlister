@@ -142,30 +142,68 @@ class PlaylistsTests(TestCase):
 
 Now run your tests!
 
+# Next Test: Helper Function
+
+Let's test our helper function for creating YouTube URLs. The first thing we'll need to do is create some sample data. We don't want to use the actual data that's on our PyMongo server for our tests, because if the data were to change because someone deleted a playlist, it would break our tests! Instead, we'll be using a mock list of IDs.
+
+We'll also need to import the `video_url_creator` function, since `tests.py` has no idea  what that is
+
+> [action]
+> Modify your import statement to import the `video_url_creator` function into your test file, and add a sample list of ids at the top of the file, before the PlaylistsTests class.
+>
+```python
+from unittest import TestCase, main as unittest_main
+from app import app, video_url_creator
+>
+sample_id_list = ['hY7m5jjJ9mM','CQ85sUNBK7w']
+```
+
+Now that we have our sample IDs, let's write our test!
+
+> [action]
+>
+> Create a test for your `video_url_creator` function:
+>
+```python
+def test_video_url_creator(self):
+    """Test the video_url_creator function"""
+    expected_list = ['https://youtube.com/embed/hY7m5jjJ9mM', 'https://youtube.com/embed/CQ85sUNBK7w']
+    output_list = video_url_creator(sample_id_list)
+    self.assertEqual(expected_list, output_list)
+```
+
+Now run your tests!
+
 # Next Test: Show & Edit
 
-To test the rest of the tests, we'll need to create some sample data. We don't want to use the actual data that's on our PyMongo server for our tests, because if the data were to change because someone deleted a playlist, it would break our tests! Instead, we'll be using `unittest.mock` to send mock data to our routes.
+To test the rest of the tests, we'll need to create some more sample data. We don't want to use the actual data that's on our PyMongo server for our tests, because if the data were to change because someone deleted a playlist, it would break our tests! Instead, we'll be using `unittest.mock` to send mock data to our routes.
 
 > [action]
 > Modify your import statement to import the mock object library into your test file, and add a sample playlist at the top of the file, before the PlaylistsTests class.
 >
 ```python
+# We add the mock import
 from unittest import TestCase, main as unittest_main, mock
+# Add this new import
 from bson.objectid import ObjectId
+from app import app, video_url_creator
 >
+sample_id_list = ['hY7m5jjJ9mM','CQ85sUNBK7w']
+# All of these are new mock data that we'll use
 sample_playlist_id = ObjectId('5d55cffc4a3d4031f42827a3')
 sample_playlist = {
     'title': 'Cat Videos',
     'description': 'Cats acting weird',
     'videos': [
         'https://youtube.com/embed/hY7m5jjJ9mM',
-        'https://www.youtube.com/embed/CQ85sUNBK7w'
-    ]
+        'https://youtube.com/embed/CQ85sUNBK7w'
+    ],
+    'video_ids': ['hY7m5jjJ9mM','CQ85sUNBK7w']
 }
 sample_form_data = {
     'title': sample_playlist['title'],
     'description': sample_playlist['description'],
-    'videos': '\n'.join(sample_playlist['videos'])
+    'videos': '\n'.join(sample_playlist['video_ids'])
 }
 ```
 

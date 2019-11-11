@@ -66,6 +66,9 @@ And of course we'll need that `playlists_edit` template. This template is a bit 
 1. **`value=''`** - we are using the `value` html attribute to pass in the values of the playlist we are trying to edit.
 1. **`<textarea>{{}}</textarea>`** - the `<textarea>` HTML tag does not have a `value` attribute, so its contents must go between its open and close tags.
 
+
+Remember that `video_ids` property we saved from earlier? We'll use it now to make sure our `videos` field is populated by only the video IDs. Otherwise if we just used the `videos` property, the full links will be displayed instead of just the IDs, and then the user would have to manually edit those links to just be the IDs. Let's save them some trouble with just one line of code!
+
 > [action]
 >
 > Add a `templates/playlists_edit.html` template:
@@ -93,8 +96,8 @@ And of course we'll need that `playlists_edit` template. This template is a bit 
         <!-- VIDEO LINKS -->
         <p>
             <label for='playlist-videos'>Videos</label><br>
-            <p>Add videos in the form of 'https://youtube.com/embed/KEY'. Separate with a newline.</p>
-            <textarea id='playlist-videos' name='videos' rows='10'>{{ "\n".join(playlist.videos) }}</textarea>
+            <p>Add the ID of the videos you want to include in your playlist. Separate with a newline.</p>
+            <textarea id='playlist-videos' name='videos' rows='10'>{{ "\n".join(playlist.video_ids) }}</textarea>
         </p>
     </fieldset>
 >
@@ -122,10 +125,13 @@ We can now add our `update` route:
 @app.route('/playlists/<playlist_id>', methods=['POST'])
 def playlists_update(playlist_id):
     """Submit an edited playlist."""
+    video_ids = request.form.get('videos').split()
+    videos = video_url_creator(video_ids)
     updated_playlist = {
         'title': request.form.get('title'),
         'description': request.form.get('description'),
-        'videos': request.form.get('videos').split()
+        'videos': videos,
+        'video_ids': video_ids
     }
     playlists.update_one(
         {'_id': ObjectId(playlist_id)},
@@ -161,8 +167,8 @@ Did you notice that the code of our `playlists_new` and `playlists_edit` have a 
 <!-- VIDEO LINKS -->
 <p>
   <label for='playlist-videos'>Videos</label><br>
-  <p>Add videos in the form of 'https://youtube.com/embed/KEY'. Separate with a newline.</p>
-  <textarea id='playlist-videos' name='videos' rows='10'>{{ "\n".join(playlist.videos) }}</textarea>
+  <p>Add the ID of the videos you want to include in your playlist. Separate with a newline.</p>
+  <textarea id='playlist-videos' name='videos' rows='10'>{{ "\n".join(playlist.video_ids) }}</textarea>
 </p>
 </fieldset>
 >
