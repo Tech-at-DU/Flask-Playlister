@@ -189,7 +189,7 @@ When you submit your form, what do you see?
 
 # Adding a New Attribute to our Playlist
 
-The new action will be our form for making a new playlist. For now playlists just have two attributes: `title` and `description`. We can always add more! Let's add an attribute called `video_urls` so that we can save links to the videos themselves.
+The new action will be our form for making a new playlist. For now playlists just have two attributes: `title` and `description`. We can always add more! Let's add an attribute called `videos` so that we can save links to the videos themselves.
 
 First let's add what the user sees - the `playlists_new.html` form input field.
 
@@ -217,11 +217,11 @@ First let's add what the user sees - the `playlists_new.html` form input field.
             <input id='description' type='text' name='description' />
         </p>
 >
-        <!-- VIDEO LINKS -->
+        <!-- VIDEO IDS -->
         <p>
-            <label for='playlist-videos'>Videos</label><br>
+            <label for='playlist-video-ids'>Videos</label><br>
             <p>Add the ID of the videos you want to include in your playlist. Separate with a newline.</p>
-            <textarea id='playlist-videos' name='videos' rows='10'></textarea>
+            <textarea id='playlist-video-ids' name='video_ids' rows='10'></textarea>
         </p>
     </fieldset>
 >
@@ -262,7 +262,7 @@ Alright, now that we can create YouTube links, let's finish up that Submit route
 
 # Finish the Submit Route
 
-We'll need to use our helper function to create a list of videos from our video IDs we collected in the form. Once we do that, we can create our playlist object with a proper `videos` field.
+We'll need to use our helper function to create a list of videos from our video IDs we collected in the form. Once we do that, we can create our playlist object with a proper `videos` field. We'll also create a `video_ids` field to store our ids.
 
 > [action]
 >
@@ -274,7 +274,7 @@ We'll need to use our helper function to create a list of videos from our video 
 def playlists_submit():
     """Submit a new playlist."""
     # Grab the video IDs and make a list out of them
-    video_ids = request.form.get('videos').split()
+    video_ids = request.form.get('video_ids').split()
     # call our helper function to create the list of links
     videos = video_url_creator(video_ids)
     playlist = {

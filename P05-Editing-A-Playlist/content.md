@@ -94,11 +94,11 @@ Remember that `video_ids` property we saved from earlier? We'll use it now to ma
             <input id='description' type='text' name='description' value='{{ playlist.description }}' />
         </p>
 >
-        <!-- VIDEO LINKS -->
+        <!-- VIDEO IDS -->
         <p>
-            <label for='playlist-videos'>Videos</label><br>
+            <label for='playlist-video-ids'>Videos</label><br>
             <p>Add the ID of the videos you want to include in your playlist. Separate with a newline.</p>
-            <textarea id='playlist-videos' name='videos' rows='10'>{{ "\n".join(playlist.video_ids) }}</textarea>
+            <textarea id='playlist-video-ids' name='video_ids' rows='10'>{{ "\n".join(playlist.video_ids) }}</textarea>
         </p>
     </fieldset>
 >
@@ -126,7 +126,7 @@ We can now add our `update` route:
 @app.route('/playlists/<playlist_id>', methods=['POST'])
 def playlists_update(playlist_id):
     """Submit an edited playlist."""
-    video_ids = request.form.get('videos').split()
+    video_ids = request.form.get('video_ids').split()
     videos = video_url_creator(video_ids)
     updated_playlist = {
         'title': request.form.get('title'),
@@ -165,11 +165,11 @@ Did you notice that the code of our `playlists_new` and `playlists_edit` have a 
       <input id='description' type='text' name='description' value='{{ playlist.description }}' />
     </p>
     >
-    <!-- VIDEO LINKS -->
+    <!-- VIDEO IDS -->
     <p>
-      <label for='playlist-videos'>Videos</label><br>
+      <label for='playlist-video-ids'>Videos</label><br>
       <p>Add the ID of the videos you want to include in your playlist. Separate with a newline.</p>
-      <textarea id='playlist-videos' name='videos' rows='10'>{{ "\n".join(playlist.video_ids) }}</textarea>
+      <textarea id='playlist-video-ids' name='video_ids' rows='10'>{{ "\n".join(playlist.video_ids) }}</textarea>
     </p>
 </fieldset>
 >

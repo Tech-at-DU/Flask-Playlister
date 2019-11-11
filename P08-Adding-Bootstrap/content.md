@@ -254,11 +254,11 @@ Now add some Bootstrap classes to the `playlists-form.handlebars` partial. These
         <input class='form-control' id='description' type='text' name='description' value='{{ playlist.description }}' />
     </div>
 >
-    <!-- VIDEO LINKS -->
+    <!-- VIDEO IDS -->
     <div class='form-group'>
-        <label for='playlist-videos'>Videos</label><br/>
+        <label for='playlist-video-ids'>Videos</label><br/>
         <p class='text-muted'>Add the ID of the videos you want to include in your playlist. Separate with a newline.</p>
-        <textarea class='form-control' id='playlist-videos' name='videos' rows='10' />{{ "\n".join(playlist.video_ids) }}</textarea>
+        <textarea class='form-control' id='playlist-video-ids' name='video_ids' rows='10' />{{ "\n".join(playlist.video_ids) }}</textarea>
     </div>
 </fieldset>
 ```
