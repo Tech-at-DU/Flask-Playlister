@@ -187,7 +187,7 @@ def playlists_submit():
 
 When you submit your form, what do you see?
 
-# Adding a New Attribute to our Model
+# Adding a New Attribute to our Playlist
 
 The new action will be our form for making a new playlist. For now playlists just have two attributes: `title` and `description`. We can always add more! Let's add an attribute called `video_urls` so that we can save links to the videos themselves.
 
@@ -298,6 +298,12 @@ If all went well, you should have created a playlist and can view it from the `p
 >
 > Confused why we added a `video_ids` field to the playlist? We'll come back to that in a couple chapters.
 
+<!-- -->
+
+> [challenge]
+>
+> 1. Instead of having one textarea for all video IDs and separating by newline, create one textarea for each video ID. Start with one textarea, and allow users to be able to add one additional textarea for each ID they want to add
+> 1. Add a way for users to delete textareas if they make a mistake, or no longer want to add that video to their playlist
 
 # Now Commit
 
