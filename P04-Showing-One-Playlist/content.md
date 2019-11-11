@@ -117,7 +117,7 @@ This is good, the show action is working, but there is a bit of a problem. Once 
 <a href='/'>Back to Home</a>
 >
 <h1>{{ playlist.title }}</h1>
-<h5>{{ playlist.description }}</h5>
+<h2>{{ playlist.description }}</h2>
 {% for video in playlist.videos %}
     <iframe width='420' height='315' src='{{ video }}'></iframe>
 {% endfor %}
