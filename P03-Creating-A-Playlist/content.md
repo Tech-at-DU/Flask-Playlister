@@ -189,7 +189,15 @@ When you submit your form, what do you see?
 
 # Adding a New Attribute to our Playlist
 
-The new action will be our form for making a new playlist. For now playlists just have two attributes: `title` and `description`. We can always add more! Let's add an attribute called `videos` so that we can save links to the videos themselves.
+The new action will be our form for making a new playlist. For now playlists just have two attributes: `title` and `description`. We can always add more! Let's add an attribute called `video_ids` so that we can use the ids to construct YouTube URLs in order to save links to the videos themselves.
+
+First, how do we find a video ID for a YouTube video?
+
+> [action]
+>
+> Watch this quick video to see where to find them:
+>
+> ![ms-video](assets/youtube_id.mov)
 
 First let's add what the user sees - the `playlists_new.html` form input field.
 
