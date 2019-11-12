@@ -108,10 +108,11 @@ comments = db.comments
 
 Every Comment will need to have reference to a Playlist. This reference is the `_id` of the Playlist. Remember, id's are unique so every Playlist can ask for all Comments that reference its id. Or conversely, any Comment will be able to refer to the Playlist the Comment was written for through the the playlist id it owns.
 
+You're going to build this next route on your own. It's going to be very similar to submit route you built for playlists, so refer to that if you need help! You got this!
 
 > [action]
 >
-> Open `app.py` and modify your Submit route for comments:
+> Open `app.py` and modify your Submit route for comments to actually submit a comment. We've given you the return statement, you need to fill in the rest to build the comment object and then insert it into the MongoDB `comments` collection:
 >
 ```python
 # Add this header to distinguish Comment routes from Playlist routes
@@ -120,14 +121,8 @@ Every Comment will need to have reference to a Playlist. This reference is the `
 @app.route('/playlists/comments', methods=['POST'])
 def comments_new():
     """Submit a new comment."""
-    # Replace the one liner from before with the below code:
-    comment = {
-        'title': request.form.get('title'),
-        'content': request.form.get('content'),
-        'playlist_id': ObjectId(request.form.get('playlist_id'))
-    }
-    print(comment)
-    comment_id = comments.insert_one(comment).inserted_id
+    # TODO: Fill in the code here to build the comment object,
+    # and then insert it into the MongoDB comments collection
     return redirect(url_for('playlists_show', playlist_id=request.form.get('playlist_id')))
 ```
 
@@ -177,31 +172,13 @@ A partial will be a good way to keep your code clean and organized.
     </div>
 </div>
 ```
->
-> Now display comments using this partial in `templates/playlists_show.html`.
->
-```HTML
-<!-- templates/playlists_show.html -->
->
-<a href='/'>Back to Home</a>
->
-    ...
->
-    {% include 'partials/comment_form.html' %}
->
-    <hr>
->
-    <!-- Add the below code -->
-    <!-- Show Comments -->
-    {% for comment in comments %}
-        {% include 'partials/comment.html' %}
-    {% endfor %}
->
-  </div>
-</div>
-```
 
-Use a `{% for %}` block to display one copy of the `comment.html` partial for **each** item in the comments array.
+Now display comments using this partial in `templates/playlists_show.html` Try this one on your own, refer to how you used partials before! Your solution shouldn't be more than 3 lines:
+
+> [action]
+> Add comments to display in `templates/playlists_show.html`
+>
+> **Hint:** Use a `{% for %}` block to display one copy of the `comment.html` partial for **each** item in the comments array.
 
 Test your work! Navigate to a single Playlist and add a comment. Submitting the comment should display a new comment below the Comment form.
 

@@ -45,16 +45,11 @@ MongoDB automatically creates an `_id` attribute on anything you save. So we can
 
 What happens if you click on one of those links? A friendly error! Let's do what it says and make the route.
 
+Try this one yourself!
+
 > [action]
 >
-> Add the `/playlists/<playlist_id>` route to `app.py`:
->
-```python
-@app.route('/playlists/<playlist_id>')
-def playlists_show(playlist_id):
-    """Show a single playlist."""
-    return f'My ID is {playlist_id}'
-```
+> Add the `/playlists/<playlist_id>` route to `app.py`. For now, we just want it to return the string "My ID is P_ID", but replace P_ID with the actual `playlist_id`:
 
 Now what happens if you go to that route?
 
@@ -104,25 +99,11 @@ Now what do you see? All the links to playlists should work now!
 
 This is good, the show action is working, but there is a bit of a problem. Once you are on the show action page, you can't get back home.
 
+Try this one on your own!
+
 > [action]
 >
-> Let's fix that by putting in a "Back" link in `templates/playlists_show.html`:
->
-```html
-<!-- templates/playlists_show.html -->
-{% extends 'base.html' %}
->
-{% block content %}
-<!--Add the below link to go back -->
-<a href='/'>Back to Home</a>
->
-<h1>{{ playlist.title }}</h1>
-<h2>{{ playlist.description }}</h2>
-{% for video in playlist.videos %}
-    <iframe width='420' height='315' src='{{ video }}'></iframe>
-{% endfor %}
-{% endblock %}
-```
+> Let's fix that by putting in a "Back" link in `templates/playlists_show.html`. Above the `title`, place an `<a>` element that links back to the home page, and has the text "Back to Home"
 
 That's better. What else could we do now that we have this show route?
 
@@ -130,26 +111,11 @@ That's better. What else could we do now that we have this show route?
 
 It makes sense from the user's perspective that after we create a new playlist, we should be automatically redirected to it, no?
 
+Try this one on your own too!
+
 > [action]
 >
-> Change the create route to redirect to the show path in `app.py`:
->
-```python
-@app.route('/playlists', methods=['POST'])
-def playlists_submit():
-    """Submit a new playlist."""
-    video_ids = request.form.get('video_ids').split()
-    videos = video_url_creator(video_ids)
-    playlist = {
-        'title': request.form.get('title'),
-        'description': request.form.get('description'),
-        'videos': videos,
-        'video_ids': video_ids
-    }
-    playlist_id = playlists.insert_one(playlist).inserted_id
-    # The below line is the one that changed!
-    return redirect(url_for('playlists_show', playlist_id=playlist_id))
-```
+> Change the create route (`'/playlists', methods=['POST']`) to redirect to the `playlists_show` path in `app.py`
 
 # Now Commit
 

@@ -39,6 +39,8 @@ We can't set an `<a>` tag's method (it is always GET) so we are going to use a f
 {% endfor %}
 >
 <p><a href='/playlists/{{ playlist._id }}/edit'>Edit</a></p>
+
+<!-- New code to add below -->
 <!-- Delete button -->
 <p><form method='POST' action='/playlists/{{ playlist._id }}/delete'>
     <button type='submit'>Delete</button>
@@ -63,6 +65,12 @@ def playlists_delete(playlist_id):
 ```
 
 We did it! All **Resourceful Routes** for the `Playlist` resource are complete!
+
+> [info]
+>
+> Careful readers may have noticed that for our delete route, we're using `POST`, even though our HTTP Verb says to use `DELETE`. Why is that?
+>
+> HTML forms (for now) only understand `POST` and `GET`. Since deleting a resource is still updating/changing it (to no longer exist), we use `POST` as our method to change the resource to no longer exist. In the future, HTML forms may offer more support for using the `DELETE` HTTP method.
 
 # Now Commit
 

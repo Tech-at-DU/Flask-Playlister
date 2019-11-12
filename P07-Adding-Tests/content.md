@@ -226,18 +226,7 @@ class PlaylistsTest(TestCase):
         self.assertIn(b'Cat Videos', result.data)
 ```
 >
-> The edit route is the same. Add that now:
->
-```python
-    @mock.patch('pymongo.collection.Collection.find_one')
-    def test_edit_playlist(self, mock_find):
-        """Test editing a single playlist."""
-        mock_find.return_value = sample_playlist
->
-        result = self.client.get(f'/playlists/{sample_playlist_id}/edit')
-        self.assertEqual(result.status, '200 OK')
-        self.assertIn(b'Cat Videos', result.data)
-```
+> The edit route will be the same as the show test, but with a different function name (`test_edit_playlist`), and the client needs to get the `/playlists/{sample_playlist_id}/edit` route. Try making the Edit test on your own!
 
 # Next Test: Create
 

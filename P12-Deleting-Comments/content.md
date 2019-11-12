@@ -7,6 +7,8 @@ Finally, since we are creating comments, we should also be able to delete them.
 
 Remember that currently we do not have authentication so we'll just be letting any user create and delete comments. As we developed this project for a go live, we would probably add authentication and only allow people to delete their own comments!
 
+**For this chapter, you will be writing all the code on your own. Refer back to similar code you did for playlists to guide you. You can do this!**
+
 # Deleting Comments
 
 You need to define a route. Here is the list of the current routes with a new one added for the comment form at the bottom.
@@ -29,26 +31,11 @@ We'll use the `<comment_id>` url parameter to look up the comment we want to des
 
 As always, we start with what the users sees and does. So let's make a link to delete a comment.
 
-We can't set an `<a>` tag's method (it is always GET) so we are going to use a form to submit a DELETE request to our delete action path.
+We can't set an `<a>` tag's method (it is always GET by default) so we are going to use a form to submit a DELETE request to our delete action path.
 
 > [action]
 >
-> Let's add this link to the comments partial at: `templates/partials/comment.html`.
->
-```HTML
-<!-- templates/partials/comment.html -->
->
-<div class='card'>
-    <div class='card-block'>
-        <h4 class='card-title'>{{ comment.title }}</h4>
-        <p class='card-text'>{{ comment.content }}</p>
-        <!-- Add this Delete link -->
-        <p><form method='POST' action='/playlists/comments/{{ comment._id }}'>
-            <button class='btn btn-link' type='submit'>Delete</button>
-        </form></p>
-    </div>
-</div>
-```
+> Let's add a link to the comments partial at: `templates/partials/comment.html` so that we can delete a comment.
 
 # Adding the Destroy Route
 
@@ -57,17 +44,6 @@ Now we need a delete action route. After deleting the comment, it should redirec
 > [action]
 >
 > Add a delete route for comments in `app.py`:
->
-```python
-# app.py
-...
-@app.route('/playlists/comments/<comment_id>', methods=['POST'])
-def comments_delete(comment_id):
-    """Action to delete a comment."""
-    comment = comments.find_one({'_id': ObjectId(comment_id)})
-    comments.delete_one({'_id': ObjectId(comment_id)})
-    return redirect(url_for('playlists_show', playlist_id=comment.get('playlist_id')))
-```
 
 Ok, so now try deleting a comment.
 

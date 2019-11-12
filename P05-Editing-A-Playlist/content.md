@@ -21,9 +21,15 @@ Normally in a site like YouTube, we would only want authors of playlists to have
 
 We want people to be able to edit and update playlists, so let's again start from the user's perspective. Edit and Update are similar to New and Create. First we need a link to the edit route that renders the `playlists_edit` template, and then we submit that edit form to the update route which will redirect to the show action.
 
+Try this one on your own!
+
 > [action]
 >
-> So let's make the edit link in `templates/playlists_show.html`:
+> So let's make the edit link in `templates/playlists_show.html`. After the `{% endfor %}`, add a `<p>` element that contains an `<a>` element. The `<a>` should link to the edit URL (consult the above table) and should have the text "Edit":
+
+If you get stuck, check the solution below:
+
+> [solution]
 >
 ```html
 <!-- templates/playlists_show.html -->
@@ -45,70 +51,26 @@ We want people to be able to edit and update playlists, so let's again start fro
 
 Ok, now if we click that edit link, we'll see that the route is not found. So let's make our edit action. The edit action is like the show action because we look up the `playlist` by its `_id` in the url parameter, but then we render the information in a template as editable form elements.
 
+Try this on your own as well!
+
 > [action]
 >
-> Add an edit route in `app.py`:
->
-```python
-# app.py
->
-...
->
-@app.route('/playlists/<playlist_id>/edit')
-def playlists_edit(playlist_id):
-    """Show the edit form for a playlist."""
-    playlist = playlists.find_one({'_id': ObjectId(playlist_id)})
-    return render_template('playlists_edit.html', playlist=playlist)
-```
+> Add an edit route in `app.py`. Remember it should behave just like the `show` route, but we want to render `playlists_edit.html`:
 
-And of course we'll need that `playlists_edit` template. This template is a bit weird for three reasons:
+And of course, now we'll need to make that `playlists_edit` template. This template is a bit weird for three reasons:
 
 1. **PUT vs. POST** - Although our update action will be expecting a PUT HTTP action, HTML forms cannot take an action attribute of `PUT`. Therefore, we'll make it a `POST` action instead.
 1. **`value=''`** - we are using the `value` html attribute to pass in the values of the playlist we are trying to edit.
 1. **`<textarea>{{}}</textarea>`** - the `<textarea>` HTML tag does not have a `value` attribute, so its contents must go between its open and close tags.
 
-
-Remember that `video_ids` property we saved from earlier? We'll use it now to make sure our `videos` field is populated by only the video IDs. Otherwise if we just used the `videos` property, the full links will be displayed instead of just the IDs, and then the user would have to manually edit those links to just be the IDs. Let's save them some trouble with just one line of code!
+Try building this out yourself! It will be very similar to `playlists_new.html`
 
 > [action]
 >
-> Add a `templates/playlists_edit.html` template:
+> Add a `templates/playlists_edit.html` template. It should be identical to `playlists_new.html`, except for the following changes:
 >
-```html
-<!-- templates/playlists_edit.html -->
-{% extends 'base.html' %}
->
-{% block content %}
-<form method='POST' action='/playlists/{{playlist._id}}'>
-    <fieldset>
-        <legend>Edit Playlist</legend>
-        <!-- TITLE -->
-        <p>
-            <label for='playlist-title'>Title</label><br>
-            <input id='playlist-title' type='text' name='title' value='{{ playlist.title }}'/>
-        </p>
->
-        <!-- DESCRIPTION -->
-        <p>
-            <label for='description'>Description</label><br>
-            <input id='description' type='text' name='description' value='{{ playlist.description }}' />
-        </p>
->
-        <!-- VIDEO IDS -->
-        <p>
-            <label for='playlist-video-ids'>Videos</label><br>
-            <p>Add the ID of the videos you want to include in your playlist. Separate with a newline.</p>
-            <textarea id='playlist-video-ids' name='video_ids' rows='10'>{{ "\n".join(playlist.video_ids) }}</textarea>
-        </p>
-    </fieldset>
->
-    <!-- BUTTON -->
-    <p>
-        <button type='submit'>Save Playlist</button>
-    </p>
-</form>
-{% endblock %}
-```
+> 1. Our `POST` action is to `'/playlists/{{playlist._id}}'`
+> 1. The button should have the text "Save Playlist"
 
 # Update Route
 
@@ -128,15 +90,18 @@ def playlists_update(playlist_id):
     """Submit an edited playlist."""
     video_ids = request.form.get('video_ids').split()
     videos = video_url_creator(video_ids)
+    # create our updated playlist
     updated_playlist = {
         'title': request.form.get('title'),
         'description': request.form.get('description'),
         'videos': videos,
         'video_ids': video_ids
     }
+    # set the former playlist to the new one we just updated/edited
     playlists.update_one(
         {'_id': ObjectId(playlist_id)},
         {'$set': updated_playlist})
+    # take us back to the playlist's show page
     return redirect(url_for('playlists_show', playlist_id=playlist_id))
 ```
 
@@ -196,35 +161,21 @@ And now we can use this partial to replace that information in both our new and 
 </form>
 {% endblock %}
 ```
+
+Now you try it for the `playlists_edit.html` template!
+
+> [action]
 >
-```html
-<!-- templates/playlists_edit.html -->
-{% extends 'base.html' %}
->
-{% block content %}
-<form method='POST' action='/playlists/{{playlist._id}}'>
-    <!-- Add this line instead of all the form code -->
-    {% include 'partials/playlists_form.html' %}
-</form>
-{% endblock %}
-```
+> Update `templates/playlists_edit.html` to use the partial
 
 Finally, notice how we included a `{{ title }}` in `templates/partials/playlists_form.html`. We need to ensure that gets populated correctly based on whether a user is editing a playlist or creating a new one.
 
 > [action]
 >
-> Update your `new` and `edit` routes in `app.py` to include the `title` parameter:
+> Update the `edit` route in `app.py` to include the `title` parameter:
 >
 ```python
 # app.py
-...
->
-@app.route('/playlists/new')
-def playlists_new():
-    """Create a new playlist."""
-    # Add the title parameter here
-    return render_template('playlists_new.html', playlist={}, title='New Playlist')
->
 ...
 >
 @app.route('/playlists/<playlist_id>/edit')
@@ -234,6 +185,13 @@ def playlists_edit(playlist_id):
     # Add the title parameter here
     return render_template('playlists_edit.html', playlist=playlist, title='Edit Playlist')
 ```
+
+Now you make the same change to the `new` route:
+
+> [action]
+>
+> Update the `new` route in `app.py` to include the `title` parameter:
+
 
 Triumph! DRY code. (Don't Repeat Yourself)
 

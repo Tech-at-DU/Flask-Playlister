@@ -3,13 +3,15 @@ title: "Bells and Whistles"
 slug: bells-and-whistles
 ---
 
-If you're looking for some extra challenges, there are a few more things we can do to tighten up our website and make it look more like the big leagues. Let's look at a few.
+If you're looking for some extra challenges, there are a few more things we can do to tighten up our website and make it look more like the big leagues. _For the first two challenges, you will have to write some or all of the code on your own._ Let's get started!
 
 # Displaying "Created At" Time
 
 Let's display a "timestamp" for when a Playlist was created that looks like this: "Created on August 18, 2019 at 2:03 PM".
 
-First we will need to add a 'created_at' field to our data model and store it in MongoDB when a playlist is created. Let's do that now.
+First we will need to add a `created_at` field to our data model and store it in MongoDB when a playlist is created. To do this, we can use the `datetime` library. Read the documentation for [the `now()` method](https://docs.python.org/3.8/library/datetime.html#datetime.datetime.now), as it should be able to help us here...
+
+Let's do that now.
 
 > [action]
 >
@@ -24,39 +26,22 @@ def playlists_submit():
     video_ids = request.form.get('video_ids').split()
     videos = video_url_creator(video_ids)
     playlist = {
-        'title': request.form.get('title'),
-        'description': request.form.get('description'),
-        'videos': videos,
-        'video_ids': video_ids,
-        # Add the following line:
-        'created_at': datetime.now()
+        # TODO: edit the fields here to include created_at
     }
     print(playlist)
     playlist_id = playlists.insert_one(playlist).inserted_id
     return redirect(url_for('playlists_show', playlist_id=playlist_id))
 ```
 
-Now we can display that `created_at` timestamp in our html:
+Now we can display that `created_at` timestamp in our html. But remember, not all of our playlists will have a `created_at` field. _How can we make sure that we only display the `created_at` field if it exists in the playlist?_:
 
 > [action]
 >
-> Update `templates/playlists_show.html` to include the `created_at` field right below the `title`:
->
-```HTML
-...
->
-<h1>{{ playlist.title }}</h1>
-<!--Add the following conditional and paragraph: -->
-{% if playlist.created_at %}
-    <p class='text-muted'>Created on: {{ playlist.created_at }}</p>
-{% endif %}
->
-...
-```
+> Update `templates/playlists_show.html` to include the `created_at` field right below the `title`. Make sure to use `<p class='text-muted'>` for the field:
 
 Now create a new playlist and see what is displayed.
 
-Uh-oh - what you see there is called a Unix timestamp.
+If the field is displaying, it shouldn't look exactly like what we want. What you see there is called a Unix timestamp.
 
 `2019-08-19 05:14:58.038000`
 
@@ -64,28 +49,22 @@ It *technically* says the date and time when the playlist was created, but it is
 
 # Formatting Timestamps
 
-To parse our `datetime` object into something more readable, let's use its `strftime` function. We can specify what format we want our datetime to be in using **format codes** such as `%Y`, `%m`, and `%d` to represent the year, month, and day respectively. Let's try it out now!
+To parse our `datetime` object into something more readable, let's use its `strftime` function. We can specify what format we want our datetime to be in using **format codes** such as `%Y`, `%m`, and `%d` to represent the year, month, and day respectively.
+
+Before continuing, make sure to read the [`strftime` documentation](https://docs.python.org/3.8/library/datetime.html#strftime-strptime-behavior), _especially around format codes_, as these will be key in order to make things human readable.
+
+Let's try it out now!
 
 > [action]
 >
-> Update the `playlists_show` template:
->
->
-```html
-<!-- templates/playlists_show.html -->
->
-<h1>{{playlist.title}}</h1>
-{% if playlist.created_at %}
-    <!-- Edit the paragraph to use the strftime formatting -->
-    <p class='text-muted'>Created on {{ playlist.created_at.strftime('%A, %d %B, %Y') }} at {{ playlist.created_at.strftime('%I:%M %p') }}</p>
-{% endif %}
-```
+> Update the `playlists_show` template to display a formatted `playlist.created_at` string:
+
 
 Reload your browser and check the timestamp. Pretty cool, huh?
 
 # Adding a Footer
 
-Now let's add a footer (brought to you by mdbootstrap.com). Add the following code after the `{% block content %}` tag but before the `</body>` tag or any `<script>` tags.
+Now let's add a footer (brought to you by [mdbootstrap.com](mdbootstrap.com)). Add the following code after the `{% block content %}` tag but before the `</body>` tag or any `<script>` tags.
 
 > [action]
 >

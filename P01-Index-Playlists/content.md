@@ -93,16 +93,11 @@ If you refresh `localhost:5000/playlists` now what do you see?
 
 # Setting the Root Route - '/'
 
+_For this next update, we want you to try it on your own!_
+
 > [action]
 >
 > Let's update the `/playlists` route to be our root route. Just change the path from `/playlists` to `/` and delete or comment out the hello world root route we made before.
->
-```python
-@app.route('/')
-def playlists_index():
-    """Show all playlists."""
-    return render_template('playlists_index.html', playlists=playlists)
-```
 
 Now navigate to `localhost:5000`. Do you see the mock playlists displayed?
 

@@ -78,7 +78,6 @@ Notice you used the same class names and markup used in the Playlists Form. This
         {% endfor %}
         <p><a href='/playlists/{{ playlist._id }}/edit'>Edit</a></p>
         <p><form method='POST' action='/playlists/{{playlist._id}}'>
-            <input type='hidden' name='_method' value='DELETE'>
             <button class='btn btn-primary' type='submit'>Delete</button>
         </form></p>
 >
