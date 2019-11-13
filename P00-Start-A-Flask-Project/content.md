@@ -305,7 +305,7 @@ __pycache__
 .DS_Store
 ```
 
-Now we can stage all the files to commit, then commit them adding a commit message, and then double check our status. We should see we have no files to commit because we just committed them all.
+Now we can stage all the files to commit, then commit them while also adding a commit message, and then double check our status. We should see we have no files to commit because we just committed them all.
 
 > [action]
 >
