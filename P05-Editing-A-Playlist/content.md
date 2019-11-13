@@ -71,6 +71,7 @@ Try building this out yourself! It will be very similar to `playlists_new.html`
 >
 > 1. Our `POST` action is to `'/playlists/{{playlist._id}}'`
 > 1. The button should have the text "Save Playlist"
+> 1. You need to pre-populate the `value` attributes with the appropriate content from the `playlist` object. **Hint:** to display the `video_ids`, use this line: `"\n".join(playlist.video_ids)`
 
 # Update Route
 
