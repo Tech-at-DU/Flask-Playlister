@@ -24,16 +24,16 @@ The Comment route uses the POST method since creating a Comment will be sending 
 
 # Setting the Action on the Comment Form
 
-Get the form to call the new route by adding an action. Make sure to set the method as `post`, use the route defined above.
+Get the form to call the new route by adding an action. Make sure to set the method as `POST`, use the route defined above.
 
 > [action]
 >
-> Set the method to `post` in the comment form on `templates/partials/comment_form.html`:
+> Set the method to `POST` in the comment form on `templates/partials/comment_form.html`:
 >
 ```HTML
 <!-- templates/partials/comment_form.html -->
 >
-<form action='/playlists/comments' method='post'>
+<form action='/playlists/comments' method='POST'>
     <fieldset>
         ...
 ```
@@ -67,7 +67,7 @@ Let's include the `_id` of the playlist with the form. One way you can accomplis
 
 The hidden field gets a value from the `playlist._id` and has a name of `playlist_id`.
 
-Submitting this form will include the id of the playlist along with the title and content input by the user writing the comment.
+Submitting this form will include the id of the playlist along with the title and content that was written by the user.
 
 # Define a Route  
 
@@ -85,7 +85,7 @@ def comments_new():
     return 'playlists comment'
 ```
 
-This should print the message 'playlists comment' to the browser when the form is submitted. This is a good test to check if everything is working so far.
+This should print the message "playlists comment" to the browser when the form is submitted. This is a good test to check if everything is working so far.
 
 # Create a Comments MongoDB Collection
 
@@ -108,7 +108,7 @@ comments = db.comments
 
 Every Comment will need to have reference to a Playlist. This reference is the `_id` of the Playlist. Remember, id's are unique so every Playlist can ask for all Comments that reference its id. Or conversely, any Comment will be able to refer to the Playlist the Comment was written for through the the playlist id it owns.
 
-You're going to build this next route on your own. It's going to be very similar to submit route you built for playlists, so refer to that if you need help! You got this!
+You're going to build this next route on your own. It's going to be very similar to the  submit route you built for playlists, so refer to that if you need help! You got this!
 
 > [action]
 >
@@ -132,7 +132,7 @@ Test your work. Write a comment and submit the form. The `console.log` call will
 
 You still can't see comments in the browser! Let's tackle that problem next.
 
-This is a chicken and egg problem. We'd like to see comments but can't see any if they don't exist in the database. For this reason we chose to write the code that create comments first. Now we will write the code to display comments.
+This is a chicken and egg problem. We'd like to see comments but can't see any if they don't exist in the database. For this reason we chose to write the code that creates comments first. Now we will write the code to display comments.
 
 > [action]
 >
@@ -178,7 +178,7 @@ Now display comments using this partial in `templates/playlists_show.html` Try t
 > [action]
 > Add comments to display in `templates/playlists_show.html`
 >
-> **Hint:** Use a `{% for %}` block to display one copy of the `comment.html` partial for **each** item in the comments array.
+> **Hint:** How would the `{% for %}` block be helpful?
 
 Test your work! Navigate to a single Playlist and add a comment. Submitting the comment should display a new comment below the Comment form.
 
