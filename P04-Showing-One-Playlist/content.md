@@ -14,13 +14,13 @@ We are building out all the **Resourceful Routes** for our `Playlist` resource.
 
 We've already completed the index, new, and create actions. Now you will add a show action that will display a single resource via its id.
 
-Now let's setup the **show** action so we give each single playlist its own page and unique url path.
+Now let's setup the **show** action so we give each single playlist its own page and unique url path. This way we can _actually_ view the playlists we create!
 
 # Show One Playlist
 
 Remember always start with what the user will see and do. To create the show action, you will want to start by making a link to the playlist from our index action template. Your route has to follow the `/playlists/:id` structure.
 
-MongoDB automatically creates an `_id` attribute on anything you save. So we can use that `_id` attribute for our `:id` in the route. This is called the **Url or Request Parameter** and we access it in Flask using a parameter inside of the controller route.
+MongoDB automatically creates an `_id` attribute on anything you save. So we can use that `_id` attribute for our `:id` in the route. This is called the **Url or Request Parameter** and we access it in Flask using a parameter inside of the route.
 
 > [action]
 >
@@ -51,7 +51,7 @@ Try this one yourself!
 >
 > Add the `/playlists/<playlist_id>` route to `app.py`. For now, we just want it to return the string "My ID is P_ID", but replace P_ID with the actual `playlist_id`:
 
-Now what happens if you go to that route?
+Now what happens if you go to that route? You should see the string stating the `playlist_id` in your logs!
 
 # Get a Single Playlist from MongoDB
 
@@ -115,7 +115,7 @@ Try this one on your own too!
 
 > [action]
 >
-> Change the create route (`'/playlists', methods=['POST']`) to redirect to the `playlists_show` path in `app.py`
+> Change the create route (`'/playlists', methods=['POST']`) to redirect to the `playlists_show` path in `app.py`. If you get stuck, think back to how we built our `submit` route
 
 # Now Commit
 
