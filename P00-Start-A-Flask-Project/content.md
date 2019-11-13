@@ -294,7 +294,7 @@ $ git status
 
 Before we commit our changes, we want to tell Git to ignore the `env` directory, since it's not necessary for anyone else who is reading or running our code. (That's what the `requirements.txt` file is for!) Let's add a **.gitignore** file, which will specify any file types, files, or folders that we do not want to include in our Git repository.
 
-We also want Git to ignore any Python **generated files**, which are contained in the `__pycache__` directory.
+We also want Git to ignore any Python **generated files**, which are contained in the `__pycache__` directory. We should also ignore the `.DS_Store` file, since it's just macOS metadata that is irrelevant to our project.
 
 > [action]
 > In your project directory, create a file called '.gitignore' with the following content:
@@ -302,6 +302,7 @@ We also want Git to ignore any Python **generated files**, which are contained i
 ```
 env
 __pycache__
+.DS_Store
 ```
 
 Now we can stage all the files to commit, then commit them adding a commit message, and then double check our status. We should see we have no files to commit because we just committed them all.
