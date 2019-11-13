@@ -171,7 +171,7 @@ client = MongoClient(host=f'{host}?retryWrites=false')
 
 # ... Hanging?
 
-Another error! This is a weird one. First it just hangs for a while, then times out, and then the error says "cannot bind on $PORT". This is because Heroku does not use port 5000. It uses another port available in production at the environment variable `PORT`, just like your mongoDB URI.
+Another error! This is a weird one. First it just hangs for a while, then times out, and then the error says `cannot bind on $PORT`. This is because Heroku does not use port 5000. It uses another port available in production at the environment variable `PORT`, just like your mongoDB URI.
 
 > [action]
 >
