@@ -146,7 +146,7 @@ Now run your tests!
 
 Let's test our helper function for creating YouTube URLs. The first thing we'll need to do is create some sample data. We don't want to use the actual data that's on our PyMongo server for our tests, because if the data were to change because someone deleted a playlist, it would break our tests! Instead, we'll be using a mock list of IDs.
 
-We'll also need to import the `video_url_creator` function, since `tests.py` has no idea  what that is
+We'll also need to import the `video_url_creator` function, since `tests.py` has no idea what that is unless we import it.
 
 > [action]
 > Modify your import statement to import the `video_url_creator` function into your test file, and add a sample list of ids at the top of the file, before the PlaylistsTests class.
@@ -177,7 +177,7 @@ Now run your test! Add a red-green refactor to make sure it's comprehensive.
 
 # Next Test: Show & Edit
 
-To test the rest of the tests, we'll need to create some more sample data. We don't want to use the actual data that's on our PyMongo server for our tests, because if the data were to change because someone deleted a playlist, it would break our tests! Instead, we'll be using `unittest.mock` to send mock data to our routes.
+To test the rest of the tests, we'll need to create some more sample data! We'll be using `unittest.mock` to send mock data to our routes.
 
 > [action]
 > Modify your import statement to import the mock object library into your test file, and add a sample playlist at the top of the file, before the PlaylistsTests class.
@@ -225,8 +225,12 @@ class PlaylistsTest(TestCase):
         self.assertEqual(result.status, '200 OK')
         self.assertIn(b'Cat Videos', result.data)
 ```
+
+The edit route will be the same as the show test, but with a different function name (`test_edit_playlist`), and the client needs to get the `/playlists/{sample_playlist_id}/edit` route.
+
+> [action]
 >
-> The edit route will be the same as the show test, but with a different function name (`test_edit_playlist`), and the client needs to get the `/playlists/{sample_playlist_id}/edit` route. Try making the Edit test on your own!
+> Try making the Edit test on your own!
 
 # Next Test: Create
 
