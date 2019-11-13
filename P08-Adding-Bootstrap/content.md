@@ -54,9 +54,9 @@ Just after doing that, refresh your page. The typography and layout should chang
 
 > [info]
 >
-> For ease of linkage in this tutorial, we will be using version 4.3.1 of Bootstrap, and the appropriate resources that are needed to support that version of Bootstrap.
+> For ease of linkage in this tutorial, we will be using **version 4.3.1 of Bootstrap**, and the appropriate resources that are needed to support that version of Bootstrap.
 >
-> If you would like to use the latest version of Bootstrap, visit their [website](https://getbootstrap.com) to find the latest version and the resources that it needs to use the BootstrapCDN.
+> If you would like to use the latest version of Bootstrap, visit their [website](https://getbootstrap.com) to find the latest version and the resources that it needs to use the BootstrapCDN. Make sure you update all the links in the appropriate places.
 
 # Adding a Navbar
 
@@ -126,7 +126,7 @@ Now that you have a container, style your `playlists_index` template to have eac
 
 > [action]
 >
-> Add the class to the following `div` in `templates/playlists_index.html`:
+> Add the class to the following `div`s in `templates/playlists_index.html`:
 >
 ```html
 <!-- templates/playlists_index.html -->
