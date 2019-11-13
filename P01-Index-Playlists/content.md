@@ -60,6 +60,14 @@ def playlists_index():
 
 Notice how we are making a mock array of playlists, and sending that in as an object into the template `playlists=playlists`. So the variable `playlists` will be available in our template.
 
+## Stretch Challenge
+
+Throughout Make School tutorials, you'll see sections designated by a green box with a trophy symbol. These are **stretch challenges**, and are provided for those who want to dive deeper on a topic, or get more practice. They are not required to complete the tutorial, but we encourage you to try them! More practice is always beneficial!
+
+> [challenge]
+>
+> Can you make changes to your `playlists` array in `app.py` and see it reflected in your `playlists_index` template?
+
 # Errors are Your Friends!
 
 If you refresh `localhost:5000/playlists` right now what do you see? An error! **That's ok!** Errors are our friends. What does the error say? I bet it says something like "I can't find the template 'playlists_index'". That makes sense because we haven't made it yet! It's ok to complete coding tasks in an order that throws a predictable error.
@@ -108,11 +116,3 @@ $ git add .
 $ git commit -m 'Users can see all playlists'
 $ git push
 ```
-
-# Stretch Challenge
-
-Throughout Make School tutorials, you'll see sections designated by a green box with a trophy symbol. These are **stretch challenges**, and are provided for those who want to dive deeper on a topic, or get more practice. They are not required to complete the tutorial, but we encourage you to try them! More practice is always beneficial!
-
-> [challenge]
->
-> Can you make changes to your `playlists` array in `app.py` and see it reflected in your `playlists_index` template?
