@@ -146,7 +146,7 @@ def playlists_index():
     return render_template('playlists_index.html', playlists=playlists.find())
 ```
 
-The `find()` method returns an iterable of all playlists in our database.
+The `find()` method returns an [iterable](https://stackoverflow.com/questions/9884132/what-exactly-are-iterator-iterable-and-iteration) of all playlists in our database.
 
 Refresh your browser at `localhost:5000`. What do you see?
 
