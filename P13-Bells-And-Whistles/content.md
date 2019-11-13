@@ -7,7 +7,7 @@ If you're looking for some extra challenges, there are a few more things we can 
 
 # Displaying "Created At" Time
 
-Let's display a "timestamp" for when a Playlist was created that looks like this: "Created on August 18, 2019 at 2:03 PM".
+Let's display a "timestamp" for when a Playlist was created that looks like this: `Created on August 18, 2019 at 2:03 PM`.
 
 First we will need to add a `created_at` field to our data model and store it in MongoDB when a playlist is created. To do this, we can use the `datetime` library. Read the documentation for [the `now()` method](https://docs.python.org/3.8/library/datetime.html#datetime.datetime.now), as it should be able to help us here...
 
@@ -41,17 +41,19 @@ Now we can display that `created_at` timestamp in our html. But remember, not al
 
 Now create a new playlist and see what is displayed.
 
-If the field is displaying, it shouldn't look exactly like what we want. What you see there is called a Unix timestamp.
+If the field is displaying, it shouldn't look exactly like what we want. What you see there is called a **Unix timestamp.**
 
 `2019-08-19 05:14:58.038000`
 
-It *technically* says the date and time when the playlist was created, but it isn't very readable for humans!
+It _technically_ says the date and time when the playlist was created, but it isn't very readable for humans!
 
 # Formatting Timestamps
 
-To parse our `datetime` object into something more readable, let's use its `strftime` function. We can specify what format we want our datetime to be in using **format codes** such as `%Y`, `%m`, and `%d` to represent the year, month, and day respectively.
+To parse our `datetime` object into something more readable, let's use its `strftime` function. We can specify what format we want our `datetime` to be in using **format codes** such as `%Y`, `%m`, and `%d` to represent the year, month, and day respectively.
 
-Before continuing, make sure to read the [`strftime` documentation](https://docs.python.org/3.8/library/datetime.html#strftime-strptime-behavior), _especially around format codes_, as these will be key in order to make things human readable.
+> [action]
+>
+> Before continuing, make sure to read the [`strftime` documentation](https://docs.python.org/3.8/library/datetime.html#strftime-strptime-behavior), _especially around format codes_, as these will be key in order to make things human readable.
 
 Let's try it out now!
 
@@ -107,7 +109,7 @@ Now let's add a footer (brought to you by [mdbootstrap.com](mdbootstrap.com)). A
 ...
 ```
 
-Beautiful. Make any visual changes you like.
+Beautiful. Make any visual changes you like!
 
 
 # Adding a Bootstrap Theme
