@@ -126,7 +126,7 @@ Now if you navigate to `/playlists/new` you should see our new form looking grea
 
 # Playlist Create Action
 
-If you try to submit our form now, we see the form sends a **POST** request to the url `/playlists`, but we have not made a route that detects post requests to that path. So we see our friendly error:
+If you try to submit our form now, we see the form sends a **POST** request to the url `/playlists`, but we have not made a route that detects `POST` requests to that path. We only have one for `GET` requests. So we see our friendly error:
 
 ```
 The requested URL was not found on the server.
@@ -158,7 +158,7 @@ def playlists_submit():
     return redirect(url_for('playlists_index'))
 ```
 
-`request.form` gives us a dictionary containing the data that was sent in the page's HTML form. When you submit your form, you should see it log in in your terminal like this:
+`request.form` gives us a dictionary containing the data that was sent in the page's HTML form. When you submit your form, you should see it log in in your terminal like this via the `print` statement we used:
 
 ```
 { 'title': 'Creating a Playlist',
@@ -261,7 +261,6 @@ def video_url_creator(id_lst):
 
 <!-- -->
 
-
 > [challenge]
 >
 > Is there a way to optimize the above function? How would you improve it?
@@ -289,7 +288,6 @@ def playlists_submit():
         'title': request.form.get('title'),
         'description': request.form.get('description'),
         'videos': videos,
-        # storing the IDs in here for now, we'll use them later!
         'video_ids': video_ids
     }
     playlists.insert_one(playlist)
@@ -301,12 +299,6 @@ You can create any attributes you like for your model and use various data types
 Can you resubmit the form? What happens now?
 
 If all went well, you should have created a playlist and can view it from the `playlists_index` page! Great work! Let's keep building this out by diving into showing individual playlists beyond the `playlists_index`page.
-
-> [info]
->
-> Confused why we added a `video_ids` field to the playlist? We'll come back to that in a couple chapters.
-
-<!-- -->
 
 > [challenge]
 >
