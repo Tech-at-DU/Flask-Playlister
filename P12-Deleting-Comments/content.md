@@ -61,7 +61,7 @@ So now we've completed all our user stories:
 
 You used **Resource Based Development** and **Resourceful Routing** to build a playlist app!
 
-Congrats! You got your Video Playlist app all set up! The following chapter has some extra challenges if you're looking to improve RP even more.
+Congrats! You got your Playlister app all set up! The following chapter has some extra challenges if you're looking to improve your app even more.
 
 > [action]
 >
