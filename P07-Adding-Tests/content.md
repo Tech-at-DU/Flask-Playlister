@@ -92,7 +92,9 @@ class PlaylistsTests(TestCase):
         """Test the playlists homepage."""
         result = self.client.get('/')
         self.assertEqual(result.status, '200 OK')
-        self.assertIn(b'Playlist', result.data)
+
+        page_content = result.get_data(as_text=True)
+        self.assertIn('Playlist', page_content)
 ```
 >
 > Now go to your terminal window and run your tests again.
@@ -137,7 +139,9 @@ class PlaylistsTests(TestCase):
         """Test the new playlist creation page."""
         result = self.client.get('/playlists/new')
         self.assertEqual(result.status, '200 OK')
-        self.assertIn(b'New Playlist', result.data)
+
+        page_content = result.get_data(as_text=True)
+        self.assertIn('New Playlist', page_content)
 ```
 
 Now run your tests!
@@ -223,7 +227,9 @@ class PlaylistsTest(TestCase):
 >
         result = self.client.get(f'/playlists/{sample_playlist_id}')
         self.assertEqual(result.status, '200 OK')
-        self.assertIn(b'Cat Videos', result.data)
+
+        page_content = result.get_data(as_text=True)
+        self.assertIn('Cat Videos', page_content)
 ```
 
 The edit route will be the same as the show test, but with a different function name (`test_edit_playlist`), and the client needs to get the `/playlists/{sample_playlist_id}/edit` route.
