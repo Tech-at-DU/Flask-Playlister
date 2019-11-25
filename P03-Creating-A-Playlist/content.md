@@ -247,7 +247,7 @@ We'll have to change the `playlists_submit` route as well so that it takes in ou
 
 > [action]
 >
-> at the top of `app.py` (after we've defined what `app` is), write a helper function called `video_url_creator` that takes in a list of IDs as input and outputs a list of YouTube embed links:
+> At the top of `app.py` (after we've defined what `app` is), write a helper function called `video_url_creator` that takes in a list of IDs as input and outputs a list of YouTube embed links:
 >
 ```py
 def video_url_creator(id_lst):
