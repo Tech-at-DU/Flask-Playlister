@@ -36,7 +36,6 @@ MongoDB automatically creates an `_id` attribute on anything you save. So we can
 <a href='/playlists/new'>New Playlist</a>
 >
 {% for playlist in playlists %}
-    # Edit this line to include a link
     <h2><a href='/playlists/{{ playlist._id }}'>{{ playlist.title }}</a></h2>
     <small>{{ playlist.description }}</small>
 {% endfor %}
@@ -65,7 +64,7 @@ Ok, time to add a template with an actual `playlist` object! To get the playlist
 # Add this with the rest of your import statements
 from bson.objectid import ObjectId
 >
-...
+# ...
 >
 @app.route('/playlists/<playlist_id>')
 def playlists_show(playlist_id):
