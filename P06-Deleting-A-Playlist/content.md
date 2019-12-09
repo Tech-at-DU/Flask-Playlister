@@ -39,7 +39,7 @@ We can't set an `<a>` tag's method (it is always GET) so we are going to use a f
 {% endfor %}
 >
 <p><a href='/playlists/{{ playlist._id }}/edit'>Edit</a></p>
-
+>
 <!-- New code to add below -->
 <!-- Delete button -->
 <p><form method='POST' action='/playlists/{{ playlist._id }}/delete'>
