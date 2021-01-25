@@ -71,6 +71,14 @@ Submitting this form will include the id of the playlist along with the title an
 
 # Define a Route  
 
+> [info]
+>
+> You should have done this in chapter 4, but here's a quick reminder to make sure you've added the below import at the top of `app.py`, otherwise you'll run into issues!
+>
+```python
+from flask import Flask, render_template, request, redirect, url_for
+```
+
 Define a new route in express to handle this new form. We can do this inside of `app.py`.
 
 > [action]
