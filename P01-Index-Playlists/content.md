@@ -1,7 +1,4 @@
----
-title: "See All Playlists"
-slug: index-playlists
----
+# See All Playlists
 
 Following our **User Stories** we are going to define a single **Resource** in this app called a `Playlist` so that we have something to CRUD:
 
@@ -19,10 +16,8 @@ Resources can also be related to each other. For example, articles may have comm
 
 All resources have a few actions in common that are called **Resourceful Routes**.
 
-> [action]
->
-> Review this table of routes, as we'll be referencing it frequently in this tutorial, and you should be familiar with what each route does:
->
+Review this table of routes, as we'll be referencing it frequently in this tutorial, and you should be familiar with what each route does:
+
 | URL              | HTTP Verb | Action  | What it Does |
 |------------------|-----------|---------|---------------|
 | /playlists          | GET       | index   | See all playlists |
@@ -41,10 +36,8 @@ We're going to start with the index action and then show, and then we'll look at
 
 Let's make a route to `/playlists` for the index action where we can see all the playlists that we've created. Eventually this will be on our root route, but we can start making it its own separate path.
 
-> [action]
->
-> Add the following to `app.py` after the '/' route:
->
+Add the following to `app.py` after the '/' route:
+
 ```python
 # OUR MOCK ARRAY OF PROJECTS
 playlists = [
@@ -62,25 +55,20 @@ Notice how we are making a mock array of playlists, and sending that in as an ob
 
 ## Stretch Challenge
 
-Throughout Make School tutorials, you'll see sections designated by a green box with a trophy symbol. These are **stretch challenges**, and are provided for those who want to dive deeper on a topic, or get more practice. They are not required to complete the tutorial, but we encourage you to try them! More practice is always beneficial!
+Throughout these tutorials, you'll see sections designated as **stretch challenges**. Stretch Challenges are provided for those who want to dive deeper on a topic, or get more practice. They are not required to complete the tutorial, but we encourage you to try them! More practice is always beneficial!
 
-> [challenge]
->
-> Can you make changes to your `playlists` array in `app.py` and see it reflected in your `playlists_index` template?
+Can you make changes to your `playlists` array in `app.py` and see it reflected in your `playlists_index` template?
 
 # Errors are Your Friends!
 
 If you refresh `localhost:5000/playlists` right now what do you see? An error! **That's ok!** Errors are our friends. What does the error say? I bet it says something like "I can't find the template 'playlists_index'". That makes sense because we haven't made it yet! It's ok to complete coding tasks in an order that throws a predictable error.
 
-> [info]
 > Errors often tell you the next step you need to take. In this case the error is telling you that the template does not exist. Let's make it!
 
 So to fix this error, let's add the template `templates/playlists_index.html`. We're going to use the Jinja2 `{% for %}` iterator to loop over our array of playlists and display each one's title.
 
-> [action]
->
-> Create the `templates/playlists_index.html` template and add the following to it:
->
+Create the `templates/playlists_index.html` template and add the following to it:
+
 ```html
 <!-- templates/playlists_index.html -->
 {% extends 'base.html' %}
@@ -96,16 +84,17 @@ So to fix this error, let's add the template `templates/playlists_index.html`. W
 
 If you refresh `localhost:5000/playlists` now what do you see?
 
-> [solution]
-> You should see the mock playlists we wrote into code. Can you add to them or change them?
+<details>
+<summary>Solution</summary>
+<br>
+You should see the mock playlists we wrote into code. Can you add to them or change them?
+</details>
 
 # Setting the Root Route - '/'
 
 _For this next update, we want you to try it on your own!_
 
-> [action]
->
-> Let's update the `/playlists` route to be our root route. Just change the path from `/playlists` to `/` and delete or comment out the hello world root route we made before.
+Let's update the `/playlists` route to be our root route. Just change the path from `/playlists` to `/` and delete or comment out the hello world root route we made before.
 
 Now navigate to `localhost:5000`. Do you see the mock playlists displayed?
 
@@ -116,3 +105,7 @@ $ git add .
 $ git commit -m 'Users can see all playlists'
 $ git push
 ```
+
+# Next
+
+Click [here](../P02-Adding-MongoDB/content.md) to move onto the next section about adding MongoDB.

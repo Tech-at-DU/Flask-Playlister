@@ -1,7 +1,4 @@
----
-title: "Adding Tests"
-slug: adding-tests
----
+# Adding Tests
 
 Automated testing is an important part of any professional coder's life. Writing automated tests slow you down to start, but then they speed you way up as your project gets more complex and large.
 
@@ -19,29 +16,28 @@ So the tests you write today for your new feature will eventually become regress
 
 We'll start by setting up a `TestCase` class and adding a method to test the index route of our Playlist resource.
 
-> [action]
-> Create a file in your project folder called `tests.py` to put the test code in.
->
-> Next, we'll need to create a test class to hold the unit tests.
->
+Create a file in your project folder called `tests.py` to put the test code in.
+
+Next, we'll need to create a test class to hold the unit tests.
+
 ```python
 # tests.py
->
+
 from unittest import TestCase, main as unittest_main
 from app import app
->
+
 class PlaylistsTests(TestCase):
     """Flask tests."""
->
+
     def setUp(self):
         """Stuff to do before every test."""
->
+
         # Get the Flask test client
         self.client = app.test_client()
->
+
         # Show Flask errors that happen during tests
         app.config['TESTING'] = True
->        
+      
 if __name__ == '__main__':
     unittest_main()
 ```
@@ -55,9 +51,8 @@ Let's run through a quick overview of what this code does:
 
 To verify that our file is set up correctly, let's try running it!
 
-> [action]
-> Go to your terminal window inside the project directory, and run the following:
->
+Go to your terminal window inside the project directory, and run the following:
+
 ```bash
 (env) $ python3 tests.py
 ```
@@ -81,9 +76,8 @@ To check whether we receive data correctly from the test Flask client, we will b
 
 In our case, we want to see that the index page loads with 1) a status of 200 and 2) the data - in this case, text - that we expect to see. We can use asserts to do that!
 
-> [action]
-> Add the following to `tests.py` after the `setUp` method, inside of the `PlaylistsTests` class:
->
+Add the following to `tests.py` after the `setUp` method, inside of the `PlaylistsTests` class:
+
 ```python
 # tests.py
 class PlaylistsTests(TestCase):
@@ -96,9 +90,8 @@ class PlaylistsTests(TestCase):
         page_content = result.get_data(as_text=True)
         self.assertIn('Playlist', page_content)
 ```
->
-> Now go to your terminal window and run your tests again.
->
+
+Now go to your terminal window and run your tests again.
 
 You should now see something like:
 
@@ -114,9 +107,7 @@ OK
 
 Before moving on, we should double check to see if we can break the test and make it return false.
 
-> [action]
->
-> Set the test to expect the response to have a status of `404` and rerun your tests. Did it turn "Red"?
+Set the test to expect the response to have a status of `404` and rerun your tests. Did it turn "Red"?
 
 What was the error message?
 
@@ -128,10 +119,8 @@ If you don't do this step with tests, you might just be testing an **Identity** 
 
 Now that we have the Index route, let's use the same sort of testing logic for the New route.
 
-> [action]
->
-> Add the following test to `tests.py`:
->
+Add the following test to `tests.py`:
+
 ```python
 class PlaylistsTests(TestCase):
 ...
@@ -152,23 +141,20 @@ Let's test our helper function for creating YouTube URLs. The first thing we'll 
 
 We'll also need to import the `video_url_creator` function, since `tests.py` has no idea what that is unless we import it.
 
-> [action]
-> Modify your import statement to import the `video_url_creator` function into your test file, and add a sample list of ids at the top of the file, before the PlaylistsTests class.
->
+Modify your import statement to import the `video_url_creator` function into your test file, and add a sample list of ids at the top of the file, before the PlaylistsTests class.
+
 ```python
 from unittest import TestCase, main as unittest_main
 # Add an additional import here
 from app import app, video_url_creator
->
+
 sample_id_list = ['hY7m5jjJ9mM','CQ85sUNBK7w']
 ```
 
 Now that we have our sample IDs, let's write our test!
 
-> [action]
->
-> Create a test for your `video_url_creator` function:
->
+Create a test for your `video_url_creator` function:
+
 ```python
 def test_video_url_creator(self):
     """Test the video_url_creator function"""
@@ -183,16 +169,15 @@ Now run your test! Add a red-green refactor to make sure it's comprehensive.
 
 To test the rest of the tests, we'll need to create some more sample data! We'll be using `unittest.mock` to send mock data to our routes.
 
-> [action]
-> Modify your import statement to import the mock object library into your test file, and add a sample playlist at the top of the file, before the PlaylistsTests class.
->
+Modify your import statement to import the mock object library into your test file, and add a sample playlist at the top of the file, before the PlaylistsTests class.
+
 ```python
 # We add the mock import
 from unittest import TestCase, main as unittest_main, mock
 # Add this new import
 from bson.objectid import ObjectId
 from app import app, video_url_creator
->
+
 sample_id_list = ['hY7m5jjJ9mM','CQ85sUNBK7w']
 # All of these are new mock data that we'll use
 sample_playlist_id = ObjectId('5d55cffc4a3d4031f42827a3')
@@ -214,9 +199,8 @@ sample_form_data = {
 
 Now we can use the mock **decorator** to tell our test function that we'll be using a fake version of PyMongo's `find_one` operation. We can set its return value to our sample playlist, and voila! We'll see that sample data in the Flask result for the `playlists_show` route.
 
-> [action]
-> Add a show test to `tests.py`:
->
+Add a show test to `tests.py`:
+
 ```python
 class PlaylistsTest(TestCase):
 ...
@@ -224,7 +208,7 @@ class PlaylistsTest(TestCase):
     def test_show_playlist(self, mock_find):
         """Test showing a single playlist."""
         mock_find.return_value = sample_playlist
->
+
         result = self.client.get(f'/playlists/{sample_playlist_id}')
         self.assertEqual(result.status, '200 OK')
 
@@ -234,9 +218,7 @@ class PlaylistsTest(TestCase):
 
 The edit route will be the same as the show test, but with a different function name (`test_edit_playlist`), and the client needs to get the `/playlists/{sample_playlist_id}/edit` route.
 
-> [action]
->
-> Try making the Edit test on your own!
+Try making the Edit test on your own!
 
 # Next Test: Create
 
@@ -244,16 +226,14 @@ Now we'll do the create route test. We'll send in the `sample_playlist` as JSON 
 
 We can also verify that the data we send is inserted into PyMongo with `assert_called_with`.
 
-> [action]
->
-> Add a create test to 'tests.py':
->
+Add a create test to 'tests.py':
+
 ```python
     @mock.patch('pymongo.collection.Collection.insert_one')
     def test_submit_playlist(self, mock_insert):
         """Test submitting a new playlist."""
         result = self.client.post('/playlists', data=sample_form_data)
->
+
         # After submitting, should redirect to that playlist's page
         self.assertEqual(result.status, '302 FOUND')
         mock_insert.assert_called_with(sample_playlist)
@@ -265,15 +245,13 @@ Run your tests again! Your line of green dots should be getting longer. Can you 
 
 For update we have to create the sample playlist, then send in a PUT message with a change and see if it response with a 200.
 
-> [action]
->
-> Add an update test to 'tests.py':
->
+Add an update test to 'tests.py':
+
 ```python
     @mock.patch('pymongo.collection.Collection.update_one')
     def test_update_playlist(self, mock_update):
         result = self.client.post(f'/playlists/{sample_playlist_id}', data=sample_form_data)
->
+
         self.assertEqual(result.status, '302 FOUND')
         mock_update.assert_called_with({'_id': sample_playlist_id}, {'$set': sample_playlist})
 ```
@@ -282,10 +260,8 @@ For update we have to create the sample playlist, then send in a PUT message wit
 
 Finally we have to see if we can test deleting a playlist. We'll create the sample playlist, then send in a delete message to see if we can destroy it and get a 302 status back.
 
-> [action]
->
-> Add a delete test to `tests.py`:
->
+Add a delete test to `tests.py`:
+
 ```python
     @mock.patch('pymongo.collection.Collection.delete_one')
     def test_delete_playlist(self, mock_delete):
@@ -301,11 +277,12 @@ Good work adding your Resourceful Routes test sweet. Your product currently has 
 
 Now commit these changes and push them to github:
 
-> [action]
->
->
 ```bash
 $ git add .
 $ git commit -m 'Added tests'
 $ git push
 ```
+
+# Next
+
+Click [here](../P08-Adding-Bootstrap/content.md) to move onto the next section about adding bootstrap.

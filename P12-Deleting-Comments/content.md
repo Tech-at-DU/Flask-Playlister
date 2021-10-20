@@ -1,7 +1,4 @@
----
-title: "Deleting Comments"
-slug: deleting-comments
----
+# Deleting Comments
 
 Finally, since we are creating comments, we should also be able to delete them.
 
@@ -33,17 +30,13 @@ As always, we start with what the users sees and does. So let's make a link to d
 
 We can't set an `<a>` tag's method (it is always GET by default) so we are going to use a form to submit a DELETE request to our delete action path.
 
-> [action]
->
-> Let's add a link to the comments partial at: `templates/partials/comment.html` so that we can delete a comment.
+Let's add a link to the comments partial at: `templates/partials/comment.html` so that we can delete a comment.
 
 # Adding the Destroy Route
 
 Now we need a delete action route. After deleting the comment, it should redirect back to the parent playlist (`playlists_show`).
 
-> [action]
->
-> Add a delete route for comments in `app.py`:
+Add a delete route for comments in `app.py`:
 
 Ok, so now try deleting a comment.
 
@@ -63,12 +56,14 @@ You used **Resource Based Development** and **Resourceful Routing** to build a p
 
 Congrats! You got your Playlister app all set up! The following chapter has some extra challenges if you're looking to improve your app even more.
 
-> [action]
->
-> Reflect on what you've learned so far. How does it relate to the content in the rest of the course? What will you take with you?
+Reflect on what you've learned so far. How does it relate to the content in the rest of the course? What will you take with you?
 
 # Feedback and Review - 2 minutes
 
 **We promise this won't take longer than 2 minutes!**
 
 Please take a moment to rate your understanding of learning outcomes from this tutorial, and how we can improve it via our [tutorial feedback form](https://forms.gle/kXt4Y8w2LpWSN6eU6)
+
+# Next
+
+Click [here](../P12-Bells-And-Whistles/content.md) to move onto the next section about adding the bells and whistles.

@@ -1,15 +1,4 @@
----
-title: "Making A Plan & Starting a Flask Project"
-slug: start-a-flask-project
----
-
-You might have heard of the video site [YouTube](https://youtube.com) where millions of people have watched billions of hours of music, vlogs, how-tos, and of course, cats... acting like cats. We are going to piggyback on their success and create a **YouTube Video Playlist app**, aka **Playlister**, so that you can keep track of your favorites and share with your friends.
-
-# Why is this important?
-
-By finishing this tutorial you will continue to deepen your knowledge of Flask as well as master the internet-wide paradigms of RESTful and Resourceful routing. You will be Creating, Reading, Updating, and Deleting (CRUD) a single resource (in this case, a `Playlist`). You will also learn how to use a MongoDB document-based database with PyMongo.
-
-# Learning Outcomes
+<!-- # Learning Outcomes
 
 By the end of this tutorial, you should be able to...
 
@@ -17,7 +6,7 @@ By the end of this tutorial, you should be able to...
 1. Utilize a NoSQL database (MongoDB) for your web app
 1. Integrate RESTful and Resourceful routing in your web app
 1. CRUD a single resource
-1. Understand how to use Bootstrap for basic styling
+1. Understand how to use Bootstrap for basic styling -->
 
 # How to Plan a Coding Project: User Stories
 
@@ -60,15 +49,10 @@ Open your computer's terminal and then...
 
 If you don't already have Python installed, install that first.
 
-> [info]
 > Whenever you see the `$` in a command, that means it should be called in your computer's terminal. Remember: Don't include the `$` in your command.
 
-<!-- -->
+If you haven't installed Python on your computer, go ahead and install the latest version from the [Python official website](https://www.python.org/downloads/). To check if the Python installation is functional, you can type `python3` into a terminal window. You should see something like:
 
-> [action]
->
-> If you haven't installed Python on your computer, go ahead and install the latest version from the [Python official website](https://www.python.org/downloads/). To check if the Python installation is functional, you can type `python3` into a terminal window. You should see something like:
->
 ```bash
 $ python3
 Python 3.5.2 (default, Nov 17 2016, 17:05:23)
@@ -77,7 +61,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> _
 ```
 
-> This brings up the Python interpreter, which is waiting for you to enter a command. To exit the prompt, you can type `exit()` and press Enter, or press Ctrl-D.
+This brings up the Python interpreter, which is waiting for you to enter a command. To exit the prompt, you can type `exit()` and press Enter, or press Ctrl-D.
 
 # Creating a Virtual Environment
 
@@ -85,10 +69,8 @@ Next, we need to set up a Python **virtual environment**. This is kind of like a
 
 Make a new directory called 'playlister', then navigate into that directory, and finally create a new virtual environment.
 
-> [action]
->
-> Use the terminal commands below to execute the above instructions:
->
+Use the terminal commands below to execute the above instructions:
+
 ```bash
 $ mkdir playlister
 $ cd playlister
@@ -99,39 +81,34 @@ Virtual environment support is included with Python3, so by running `python3 -m 
 
 When you open the 'playlister' directory in Atom, you will see a directory called 'env' which contains several sub-directories. No need to worry about these for now!
 
-> [action]
->
-> We still need to **activate** our newly created virtual environment so that we can use it to install our Python packages. Go ahead and do so now.
->
+We still need to **activate** our newly created virtual environment so that we can use it to install our Python packages. Go ahead and do so now.
+
 ```bash
 $ source env/bin/activate
 (env) $ _
 ```
-> Finally, we can install Flask in our virtual environment so that we can get started with our project.
->
+
+Finally, we can install Flask in our virtual environment so that we can get started with our project.
+
 ```bash
 (env) $ pip3 install flask
 ```
 
-<!-- -->
-
-> [info]
 > If you ever want to deactivate your virtual environment, just type `deactivate` in your terminal window.
 
 # Freeze Your Dependencies with Pip Freeze
 
 Using a virtual environment also makes it easy for someone reading your code to see what packages your project depends on. To make this information visible in our code, let's use the `pip freeze` command to get a list of all of the dependencies we have so far.
 
-> [action]
-> In your project directory, create a `requirements.txt` file by entering the following in your terminal window:
->
+In your project directory, create a `requirements.txt` file by entering the following in your terminal window:
+
 ```bash
 (env) $ pip3 freeze > requirements.txt
 ```
 
 If you open up the `requirements.txt` file we generated, you should see something like:
 
-```
+```txt
 Click==7.0
 Flask==1.1.1
 itsdangerous==1.1.0
@@ -140,11 +117,11 @@ MarkupSafe==1.1.1
 Werkzeug==0.15.5
 ```
 
-> [info]
 > It's good to re-run the `pip freeze` command whenever you add or upgrade your packages. That way, others reading your code can re-install your dependencies without too much pain! If you ever want to install packages from a `requirements.txt` file, you can do so with:
-```
-$ pip3 install -r requirements.txt
-```
+>
+> ```bash
+> $ pip3 install -r requirements.txt
+> ```
 
 # Adding a Flask server
 
@@ -152,29 +129,24 @@ Now we are going to make a "Hello World" rendered with Flask and the templating 
 
 Let's write our main file of the whole application, which we will call `app.py`.
 
-> [action]
-> Create the main file using the "touch" command.
->
+Create the main file using the "touch" command.
+
 ```bash
 (env) $ touch app.py
 ```
 
 Now your project should have two files and a folder: `app.py`, `requirements.txt`, and `env`.
 
-> [action]
-> Now open your project's code base using the Atom text editor by typing:
->
+Now open your project's code base using the Atom text editor by typing:
+
 ```bash
 $ atom .
 ```
->
 
 And let's add some code to `app.py` to show a hello world.
 
-> [action]
->
-> Add the following to `app.py`:
->
+Add the following to `app.py`:
+
 ```python
 from flask import Flask
 >
@@ -191,10 +163,8 @@ if __name__ == '__main__':
 
 At this point, you can now try running your project!
 
-> [action]
->
-> Go to your terminal and enter:
->
+Go to your terminal and enter:
+
 ```bash
 (env) $ export FLASK_ENV=development; flask run
 ```
@@ -207,10 +177,8 @@ Hello there code!
 
 For templating, we will be using Jinja2, which is automatically included with Flask.
 
-> [action]
->
-> Extend your **root route** ('/') to render `index.html`.
->
+Extend your **root route** ('/') to render `index.html`.
+
 ```python
 from flask import Flask, render_template
 >
@@ -225,14 +193,10 @@ def index():
 
 Refresh your browser now and _read the error you get carefully_. This error tells us that our application can't find a `home.html` template yet (because we haven't made it!).
 
-> [info]
 > It is useful to try to predict what error you might get as you are coding, and see if you get the error you expected. Errors can be a great way to check your work as you go and not go too far before checking your work.
 
-<!-- -->
+Create the `templates` folder and `base.html` and `home.html` files.
 
-> [action]
-> Create the `templates` folder and `base.html` and `home.html` files.
->
 ```bash
 $ mkdir templates
 $ touch templates/base.html
@@ -243,10 +207,8 @@ So now we have our **templates** folder set up with a template called `home`. Gr
 
 Now we'll add some boilerplate code to the `base.html` template. Having a base template means that we can put things that go on *every* page in just one file of code. To make our templates for the website pages, we will be **extending** `base.html`.
 
-> [action]
->
-> Add the following into `templates/base.html`:
->
+Add the following into `templates/base.html`:
+
 ```html
 <!-- templates/base.html -->
 <!doctype html>
@@ -264,9 +226,9 @@ Now we'll add some boilerplate code to the `base.html` template. Having a base t
 </body>
 </html>
 ```
->
-> Add the following to `templates/home.html` so that it will render the message from our root route:
->
+
+Add the following to `templates/home.html` so that it will render the message from our root route:
+
 ```html
 <!-- templates/home.html -->
 {% extends 'base.html' %}
@@ -282,10 +244,8 @@ Now when you visit `localhost:5000` you now should see "Flask is Cool!" inside o
 
 Let's start by installing git if you don't already have it installed. And then initializing our project folder as a git repository. Then we can check the git status. We should see all our files as uncommitted and unstaged to commit.
 
-> [action]
->
-> Install git if you haven't, and then initialize it:
->
+Install git if you haven't, and then initialize it:
+
 ```bash
 $ brew install git
 $ git init
@@ -296,9 +256,8 @@ Before we commit our changes, we want to tell Git to ignore the `env` directory,
 
 We also want Git to ignore any Python **generated files**, which are contained in the `__pycache__` directory. We should also ignore the `.DS_Store` file, since it's just macOS metadata that is irrelevant to our project.
 
-> [action]
-> In your project directory, create a file called '.gitignore' with the following content:
->
+In your project directory, create a file called '.gitignore' with the following content:
+
 ```
 env
 __pycache__
@@ -307,21 +266,23 @@ __pycache__
 
 Now we can stage all the files to commit, then commit them while also adding a commit message, and then double check our status. We should see we have no files to commit because we just committed them all.
 
-> [action]
->
-> Add and commit what we have so far:
->
+Add and commit what we have so far:
+
 ```bash
 $ git add .
 $ git commit -m 'init'
 $ git status
 ```
->
-> Now go to GitHub and create a public repository called `Playlister-Tutorial`.
->
-> Once you've done that, associate it as a remote for your local git project and then push to it:
->
+
+Now go to GitHub and create a public repository called `Playlister-Tutorial`.
+
+Once you've done that, associate it as a remote for your local git project and then push to it:
+
 ```bash
 $ git remote add origin GITHUB-REPO-URL
 $ git push origin master -u
 ```
+
+# Next
+
+Click [here](../P01-Index-Playlists/content.md) to move onto the next section about indexing playlists.

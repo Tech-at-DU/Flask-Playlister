@@ -1,7 +1,4 @@
----
-title: "Bells and Whistles"
-slug: bells-and-whistles
----
+# Bells and Whistles
 
 If you're looking for some extra challenges, there are a few more things we can do to tighten up our website and make it look more like the big leagues. _For the first two challenges, you will have to write some or all of the code on your own._ Let's get started!
 
@@ -13,10 +10,8 @@ First we will need to add a `created_at` field to our data model and store it in
 
 Let's do that now.
 
-> [action]
->
-> Update the 'show' route in `app.py` to add a timestamp indicating when the playlist was created:
->
+Update the 'show' route in `app.py` to add a timestamp indicating when the playlist was created:
+
 ```python
 from datetime import datetime
 ...
@@ -35,9 +30,7 @@ def playlists_submit():
 
 Now we can display that `created_at` timestamp in our html. But remember, not all of our playlists will have a `created_at` field. _How can we make sure that we only display the `created_at` field if it exists in the playlist?_:
 
-> [action]
->
-> Update `templates/playlists_show.html` to include the `created_at` field right below the `title`. Make sure to use `<p class='text-muted'>` for the field:
+Update `templates/playlists_show.html` to include the `created_at` field right below the `title`. Make sure to use `<p class='text-muted'>` for the field:
 
 Now create a new playlist and see what is displayed.
 
@@ -51,16 +44,11 @@ It _technically_ says the date and time when the playlist was created, but it is
 
 To parse our `datetime` object into something more readable, let's use its `strftime` function. We can specify what format we want our `datetime` to be in using **format codes** such as `%Y`, `%m`, and `%d` to represent the year, month, and day respectively.
 
-> [action]
->
-> Before continuing, make sure to read the [`strftime` documentation](https://docs.python.org/3.8/library/datetime.html#strftime-strptime-behavior), _especially around format codes_, as these will be key in order to make things human readable.
+Before continuing, make sure to read the [`strftime` documentation](https://docs.python.org/3.8/library/datetime.html#strftime-strptime-behavior), _especially around format codes_, as these will be key in order to make things human readable.
 
 Let's try it out now!
 
-> [action]
->
-> Update the `playlists_show` template to display a formatted `playlist.created_at` string:
-
+Update the `playlists_show` template to display a formatted `playlist.created_at` string:
 
 Reload your browser and check the timestamp. Pretty cool, huh?
 
@@ -68,14 +56,12 @@ Reload your browser and check the timestamp. Pretty cool, huh?
 
 Now let's add a footer (brought to you by [mdbootstrap.com](mdbootstrap.com)). Add the following code after the `{% block content %}` tag but before the `</body>` tag or any `<script>` tags.
 
-> [action]
->
-> Add the following code after the `{% block content %}` tag, but before the `</body>` tag or any `<script>` tags in `templates/base.html`.
->
+Add the following code after the `{% block content %}` tag, but before the `</body>` tag or any `<script>` tags in `templates/base.html`.
+
 ```html
 <!-- templates/base.html -->
 ...
->
+
 <!-- Footer -->
 <footer class='page-footer font-small blue pt-4'>
     <div class='container-fluid text-center'>
@@ -105,12 +91,11 @@ Now let's add a footer (brought to you by [mdbootstrap.com](mdbootstrap.com)). A
        <a href='https://mdbootstrap.com/education/bootstrap/'> MDBootstrap.com</a>
     </div>
 </footer>
->
+
 ...
 ```
 
 Beautiful. Make any visual changes you like!
-
 
 # Adding a Bootstrap Theme
 
@@ -118,18 +103,17 @@ Now if we want to customize our style a little bit, we can add a free bootstrap 
 
 You can pick whichever you like, but for these instructions we'll use the "flatly" theme.
 
-> [action]
-> Go to [Bootswatch](https://bootswatch.com/) and select a theme from the `Themes` dropdown
->
-> Select the dropdown of the name of the style you selected. For example, if you like the `Flatly` style, you should see a `Flatly` dropdown as the last nav bar item on the left
->
-> Select the `bootstrap.min.css` option in the dropdown
-> Copy the URL into your `<head>` tag to include the style you want. Make sure that this theme comes AFTER your link to bootstrap itself. Otherwise it won't work.
->
+Go to [Bootswatch](https://bootswatch.com/) and select a theme from the `Themes` dropdown
+
+Select the dropdown of the name of the style you selected. For example, if you like the `Flatly` style, you should see a `Flatly` dropdown as the last nav bar item on the left
+
+Select the `bootstrap.min.css` option in the dropdown
+Copy the URL into your `<head>` tag to include the style you want. Make sure that this theme comes AFTER your link to bootstrap itself. Otherwise it won't work.
+
 ```html
 <head>
   ...
->
+
     <link rel='stylesheet' href='https://bootswatch.com/4/flatly/bootstrap.min.css'>
 </head>
 ```
@@ -143,3 +127,5 @@ $ git add .
 $ git commit -m 'added created_at, footer, and bootstrap theme'
 $ git push
 ```
+
+Congrats! You've completed the tutorial :)

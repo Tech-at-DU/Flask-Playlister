@@ -1,7 +1,4 @@
----
-title: "Adding a Route for Comments"
-slug: adding-route-for-comments
----
+# Adding a Route for Comments
 
 Now it's time to add a route to handle comments.
 
@@ -26,13 +23,11 @@ The Comment route uses the POST method since creating a Comment will be sending 
 
 Get the form to call the new route by adding an action. Make sure to set the method as `POST`, use the route defined above.
 
-> [action]
->
-> Set the method to `POST` in the comment form on `templates/partials/comment_form.html`:
->
+Set the method to `POST` in the comment form on `templates/partials/comment_form.html`:
+
 ```HTML
 <!-- templates/partials/comment_form.html -->
->
+
 <form action='/playlists/comments' method='POST'>
     <fieldset>
         ...
@@ -51,13 +46,11 @@ We'll associate a comment with a playlist by attaching a `playlist_id` attribute
 
 Let's include the `_id` of the playlist with the form. One way you can accomplish this is using a **hidden form field**. A hidden field is an input tag that has a value that isn't visible in the browser.
 
-> [action]
->
-> Add a hidden field to the form and set the value to the id of the playlist in `templates/partials/comment_form.html`:
->
+Add a hidden field to the form and set the value to the id of the playlist in `templates/partials/comment_form.html`:
+
 ```HTML
 <!-- templates/partials/comment_form.html -->
->
+
 <form action='/playlists/comments' method='POST'>
     <!-- Add the hidden input -->
     <input type='hidden' value='{{ playlist._id }}' name='playlist_id'/>
@@ -71,22 +64,18 @@ Submitting this form will include the id of the playlist along with the title an
 
 # Define a Route  
 
-> [info]
->
 > You should have done this in chapter 4, but here's a quick reminder to make sure you've added the below import at the top of `app.py`, otherwise you'll run into issues!
 >
-```python
-from flask import Flask, render_template, request, redirect, url_for
-```
+> ```python
+> from flask import Flask, render_template, request, redirect, url_for
+> ```
 
 Define a new route in express to handle this new form. We can do this inside of `app.py`.
 
-> [action]
->
-> Create a submit route for comments in `app.py`:
->
+Create a submit route for comments in `app.py`:
+
 ```python
->
+
 @app.route('/playlists/comments', methods=['POST'])
 def comments_new():
     """Submit a new comment."""
@@ -99,10 +88,8 @@ This should print the message "playlists comment" to the browser when the form i
 
 So far, we only have one collection in our MongoDB database: the `playlists` collection. Let's add one for comments.
 
-> [action]
->
-> At the top of your `app.py` file, add another database collection after `playlists`:
->
+At the top of your `app.py` file, add another database collection after `playlists`:
+
 ```python
 # app.py
 ...
@@ -118,14 +105,12 @@ Every Comment will need to have reference to a Playlist. This reference is the `
 
 You're going to build this next route on your own. It's going to be very similar to the  submit route you built for playlists, so refer to that if you need help! You got this!
 
-> [action]
->
-> Open `app.py` and modify your Submit route for comments to actually submit a comment. We've given you the return statement, you need to fill in the rest to build the comment object and then insert it into the MongoDB `comments` collection:
->
+Open `app.py` and modify your Submit route for comments to actually submit a comment. We've given you the return statement, you need to fill in the rest to build the comment object and then insert it into the MongoDB `comments` collection:
+
 ```python
 # Add this header to distinguish Comment routes from Playlist routes
 ########## COMMENT ROUTES ##########
->
+
 @app.route('/playlists/comments', methods=['POST'])
 def comments_new():
     """Submit a new comment."""
@@ -142,10 +127,8 @@ You still can't see comments in the browser! Let's tackle that problem next.
 
 This is a chicken and egg problem. We'd like to see comments but can't see any if they don't exist in the database. For this reason we chose to write the code that creates comments first. Now we will write the code to display comments.
 
-> [action]
->
-> Open `app.py` and make these changes to a playlist's show route, so that it also shows comments for a single playlist:
->
+Open `app.py` and make these changes to a playlist's show route, so that it also shows comments for a single playlist:
+
 ```python
 # app.py
 @app.route('/playlists/<playlist_id>')
@@ -166,13 +149,11 @@ Now that you have an array of comments, we need to display them.
 
 A partial will be a good way to keep your code clean and organized.
 
-> [action]
->
-> Create a new file `templates/partials/comment.html`.
->
+Create a new file `templates/partials/comment.html`.
+
 ```HTML
 <!-- templates/partials/comment.html -->
->
+
 <div class='card'>
     <div class='card-block'>
         <h4 class='card-title'>{{ comment.title }}</h4>
@@ -183,18 +164,14 @@ A partial will be a good way to keep your code clean and organized.
 
 Now display comments using this partial in `templates/playlists_show.html` Try this one on your own, refer to how you used partials before! Your solution shouldn't be more than 3 lines:
 
-> [action]
-> Add comments to display in `templates/playlists_show.html`
->
-> **Hint:** How would the `{% for %}` block be helpful?
+Add comments to display in `templates/playlists_show.html`
+
+**Hint:** How would the `{% for %}` block be helpful?
 
 Test your work! Navigate to a single Playlist and add a comment. Submitting the comment should display a new comment below the Comment form.
 
 # Now Commit
 
-> [action]
->
->
 ```bash
 $ git add .
 $ git commit -m 'Users can see comments'
@@ -206,3 +183,7 @@ $ git push
 You created a relationship between two different document/records in your database. Playlists each have a unique id. By saving the id of a Playlist with a Comment, comments can find the Playlist that they are are associated with. Playlists can also find all of the Comments that are associated with their id.
 
 This is a **one to many relationship**. This an important concept in database design, and an important tool you will use when managing data.
+
+# Next
+
+Click [here](../P12-Deleting-Comments/content.md) to move onto the next section about deleting comments.

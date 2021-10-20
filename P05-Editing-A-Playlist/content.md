@@ -1,7 +1,4 @@
----
-title: "Edit Route: Editing and Updating a Resource"
-slug: editing-and-deleting-a-playlist
----
+# Edit Route: Editing and Updating a Resource
 
 Now we're checking off the seven **Resourceful Routes**. But we're not done until all of them are complete.
 
@@ -23,39 +20,39 @@ We want people to be able to edit and update playlists, so let's again start fro
 
 Try this one on your own!
 
-> [action]
->
-> So let's make the edit link in `templates/playlists_show.html`. After the `{% endfor %}`, add a `<p>` element that contains an `<a>` element. The `<a>` should link to the edit URL (consult the above table) and should have the text "Edit":
+So let's make the edit link in `templates/playlists_show.html`. After the `{% endfor %}`, add a `<p>` element that contains an `<a>` element. The `<a>` should link to the edit URL (consult the above table) and should have the text "Edit":
 
 If you get stuck, check the solution below:
 
-> [solution]
->
+<details>
+<summary>Solution</summary>
+<br>
+
 ```html
 <!-- templates/playlists_show.html -->
 {% extends 'base.html' %}
->
+
 {% block content %}
 <a href='/'>Back to Home</a>
->
+
 <h1>{{ playlist.title }}</h1>
 <h2>{{ playlist.description }}</h2>
 {% for video in playlist.videos %}
     <iframe width='420' height='315' src='{{ video }}'></iframe>
 {% endfor %}
->
-# Add this link
+
+<!-- Add this link -->
 <p><a href='/playlists/{{ playlist._id }}/edit'>Edit</a></p>
 {% endblock %}
 ```
+
+</details>
 
 Ok, now if we click that edit link, we'll see that the route is not found. So let's make our edit action. The edit action is like the show action because we look up the `playlist` by its `_id` in the url parameter, but then we render the information in a template as editable form elements.
 
 Try this on your own as well!
 
-> [action]
->
-> Add an edit route in `app.py`. Remember it should behave just like the `show` route, but we want to render `playlists_edit.html`:
+Add an edit route in `app.py`. Remember it should behave just like the `show` route, but we want to render `playlists_edit.html`:
 
 And of course, now we'll need to make that `playlists_edit` template. This template is a bit weird for three reasons:
 
@@ -65,27 +62,23 @@ And of course, now we'll need to make that `playlists_edit` template. This templ
 
 Try building this out yourself! It will be very similar to `playlists_new.html`
 
-> [action]
->
-> Add a `templates/playlists_edit.html` template. It should be identical to `playlists_new.html`, except for the following changes:
->
-> 1. Our `POST` action is to `'/playlists/{{playlist._id}}'`
-> 1. The button should have the text "Save Playlist"
-> 1. You need to pre-populate the `value` attributes with the appropriate content from the `playlist` object. **Hint:** to display the `video_ids`, use this line: `"\n".join(playlist.video_ids)`
+Add a `templates/playlists_edit.html` template. It should be identical to `playlists_new.html`, except for the following changes:
+
+1. Our `POST` action is to `'/playlists/{{playlist._id}}'`
+1. The button should have the text "Save Playlist"
+1. You need to pre-populate the `value` attributes with the appropriate content from the `playlist` object. **Hint:** to display the `video_ids`, use this line: `"\n".join(playlist.video_ids)`
 
 # Update Route
 
 We can now add our `update` route:
 
-> [action]
->
-> Add the update route to `app.py`:
->
+Add the update route to `app.py`:
+
 ```python
 # app.py
->
+
 ...
->
+
 @app.route('/playlists/<playlist_id>', methods=['POST'])
 def playlists_update(playlist_id):
     """Submit an edited playlist."""
@@ -110,13 +103,11 @@ def playlists_update(playlist_id):
 
 Did you notice that the code of our `playlists_new` and `playlists_edit` have a lot of similarities? Pretty much everything inside the `form` tag is the same. Let's use a **Partial Template** to pull that code out into its own template.
 
-> [action]
->
-> First make a folder called `partials` inside the `templates` folder. Now in that `partials` folder create the `playlists_form.html`.
->
+First make a folder called `partials` inside the `templates` folder. Now in that `partials` folder create the `playlists_form.html`.
+
 ```html
 <!-- templates/partials/playlists_form.html -->
->
+
 <fieldset>
     <legend>{{ title }}</legend>
     <!-- TITLE -->
@@ -124,13 +115,13 @@ Did you notice that the code of our `playlists_new` and `playlists_edit` have a 
         <label for='playlist-title'>Title</label><br>
         <input id='playlist-title' type='text' name='title' value='{{ playlist.title }}'/>
     </p>
-    >
+    
     <!-- DESCRIPTION -->
     <p>
       <label for='description'>Description</label><br>
       <input id='description' type='text' name='description' value='{{ playlist.description }}' />
     </p>
-    >
+    
     <!-- VIDEO IDS -->
     <p>
       <label for='playlist-video-ids'>Videos</label><br>
@@ -138,7 +129,7 @@ Did you notice that the code of our `playlists_new` and `playlists_edit` have a 
       <textarea id='playlist-video-ids' name='video_ids' rows='10'>{{ "\n".join(playlist.video_ids) }}</textarea>
     </p>
 </fieldset>
->
+
 <!-- BUTTON -->
 <p>
     <button type='submit'>Save Playlist</button>
@@ -147,14 +138,12 @@ Did you notice that the code of our `playlists_new` and `playlists_edit` have a 
 
 And now we can use this partial to replace that information in both our new and edit templates.
 
-> [action]
->
-> Update `templates/playlists_new.html` and `templates/playlists_edit.html` to use the partial:
->
+Update `templates/playlists_new.html` and `templates/playlists_edit.html` to use the partial:
+
 ```html
 <!-- templates/playlists_new.html -->
 {% extends 'base.html' %}
->
+
 {% block content %}
 <form method='POST' action='/playlists'>
     <!-- Add this line instead of all the form code -->
@@ -165,20 +154,16 @@ And now we can use this partial to replace that information in both our new and 
 
 Now you try it for the `playlists_edit.html` template!
 
-> [action]
->
-> Update `templates/playlists_edit.html` to use the partial
+Update `templates/playlists_edit.html` to use the partial
 
 Finally, notice how we included a `{{ title }}` in `templates/partials/playlists_form.html`. We need to ensure that gets populated correctly based on whether a user is editing a playlist or creating a new one.
 
-> [action]
->
-> Update the `edit` route in `app.py` to include the `title` parameter:
->
+Update the `edit` route in `app.py` to include the `title` parameter:
+
 ```python
 # app.py
 ...
->
+
 @app.route('/playlists/<playlist_id>/edit')
 def playlists_edit(playlist_id):
     """Show the edit form for a playlist."""
@@ -189,26 +174,22 @@ def playlists_edit(playlist_id):
 
 Now you make the same change to the `new` route:
 
-> [action]
->
-> Update the `new` route in `app.py` to include the `title` parameter:
-
+Update the `new` route in `app.py` to include the `title` parameter:
 
 Triumph! DRY code. (Don't Repeat Yourself)
 
 # Now Commit
 
-> [action]
->
->
 ```bash
 $ git add .
 $ git commit -m 'Users can edit, update, and destroy playlists'
 $ git push
 ```
 
-# Stretch Challenge: "Cancel" buttons
-
-> [challenge]
+> Stretch Challenge:
 >
 > Sometimes people might start making a resource and then want to cancel. Can you add a "Cancel" button next to the "Save Playlist" button? What will it do? Where will it link to?
+
+# Next
+
+Click [here](../P06-Deleting-A-Playlist/content.md) to move onto the next section about deleting a playlist.

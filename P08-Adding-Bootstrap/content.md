@@ -1,7 +1,4 @@
----
-title: "Styling with Bootstrap"
-slug: adding-bootstrap
----
+# Styling with Bootstrap
 
 Now that you have the user's experience mapped out and the functionality built, you can style your pages using Twitter's project [Bootstrap](http://getbootstrap.com/). Bootstrap is the web's most popular **CSS Framework**.
 
@@ -21,13 +18,11 @@ It is easy to get started with bootstrap quickly by using the CDN links bootstra
 
 We'll add the `<link>` to bootstrap's css in our `<head>` tag in the `base.html` file. And although we aren't going to use any of bootstrap's JavaScript's components, for completeness's sake, we'll put the JavaScript `<script>` tag just before the closing `</body>` tag.
 
-> [action]
->
-> Add the bootstrap links to `templates/base.html`:
->
+Add the bootstrap links to `templates/base.html`:
+
 ```html
 <!-- templates/base.html -->
->
+
 <!doctype html>
 <html>
 <head>
@@ -37,9 +32,9 @@ We'll add the `<link>` to bootstrap's css in our `<head>` tag in the `base.html`
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
->
+
     {% block content %}{% endblock %}
->
+
     <!-- We'll use jquery version 3.3.1 for this tutorial -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <!-- We'll use popper.js version 1.14.7 for this tutorial -->
@@ -52,8 +47,6 @@ We'll add the `<link>` to bootstrap's css in our `<head>` tag in the `base.html`
 
 Just after doing that, refresh your page. The typography and layout should change just a tiny bit if it worked.
 
-> [info]
->
 > For ease of linkage in this tutorial, we will be using **version 4.3.1 of Bootstrap**, and the appropriate resources that are needed to support that version of Bootstrap.
 >
 > If you would like to use the latest version of Bootstrap, visit their [website](https://getbootstrap.com) to find the latest version and the resources that it needs to use the BootstrapCDN. Make sure you update all the links in the appropriate places.
@@ -62,13 +55,11 @@ Just after doing that, refresh your page. The typography and layout should chang
 
 Add the most common navigational component - a top navbar. We'll have it have a button to create a new playlist so that anywhere a user navigates to they can always make a new playlist.
 
-> [action]
->
-> Make a new partial. Create a new file `navbar.html` in the `templates/partials` directory.
->
+Make a new partial. Create a new file `navbar.html` in the `templates/partials` directory.
+
 ```html
 <!-- templates/partials/navbar.html -->
->
+
 <nav class='navbar navbar-default'>
     <div class='container-fluid'>
         <div class='navbar-header'>
@@ -82,16 +73,16 @@ Add the most common navigational component - a top navbar. We'll have it have a 
     </div>
 </nav>
 ```
->
->Include this in `templates/base.html`
->
+
+Include this in `templates/base.html`
+
 ```html
 ...
 <body>
->
+
     <!-- add in the navbar -->
     {% include 'partials/navbar.html' %}
->
+
     {% block content %}
  ...
 ```
@@ -100,10 +91,8 @@ Add the most common navigational component - a top navbar. We'll have it have a 
 
 People argue about the usefulness of some of the more complex parts of Bootstrap, but everyone agrees that to build websites you need a grid system. Bootstrap ships with a 12-column grid. Meaning you can break up the whole page, or any element into 12 columns and that way construct an appealing layout.
 
-> [action]
->
-> We'll start by wrapping the `{% block content %}` with a `container` class. In `templates/base.html`:
->
+We'll start by wrapping the `{% block content %}` with a `container` class. In `templates/base.html`:
+
 ```html
 <!-- templates/base.html -->
 ...
@@ -124,17 +113,15 @@ Now that you have a container, style your `playlists_index` template to have eac
 
 `col-sm-3` means: On screens larger than a tablet, have this element take up three cells out of twelve that are the whole width of its parent element. Since 3/12 = 1/4 this will give us each playlist taking up one quarter of the `container`'s width.
 
-> [action]
->
-> Add the class to the following `div`s in `templates/playlists_index.html`:
->
+Add the class to the following `div`s in `templates/playlists_index.html`:
+
 ```html
 <!-- templates/playlists_index.html -->
 {% extends 'base.html' %}
->
+
 {% block content %}
 <h1>Playlists</h1>
->
+
 <!-- Add the following classes to their appropriate elements  -->
 <div class='row'>
     {% for playlist in playlists %}
@@ -147,9 +134,7 @@ Now that you have a container, style your `playlists_index` template to have eac
 {% endblock %}
 ```
 
-<!-- -->
-
-> [challenge]
+> Stretch Challenge:
 >
 > Can you wrap each of the playlists in a `card` class? Use the [Cards Documentation](https://getbootstrap.com/docs/4.3/components/card/) for help. Again this  is the 4.3.1 specific documentation, but you can get the latest version by visiting  the [Bootstrap website](https://getbootstrap.com) and clicking  on their **Documentation** (the documentation URL changes with each version, so we can't link the latest here).
 
@@ -157,14 +142,12 @@ Now that you have a container, style your `playlists_index` template to have eac
 
 The show template should make the text relatively narrow, because people don't like reading all the way across the screen. Use an `offset` grid class to push a column over to the right.
 
-> [action]
->
-> Add the following classes to `templates/playlists_show.html`:
->
+Add the following classes to `templates/playlists_show.html`:
+
 ```html
 <!-- templates/playlists_show.html -->
 {% extends 'base.html' %}
->
+
 {% block content %}
 <a href='/'>Back to Home</a>
 <div class='row'>
@@ -187,14 +170,12 @@ The show template should make the text relatively narrow, because people don't l
 
 # Styling the Forms
 
-> [action]
->
-> Now let's add some bootstrap styling to `templates/playlists_new.html` Add the following classes to the file:
->
+Now let's add some bootstrap styling to `templates/playlists_new.html` Add the following classes to the file:
+
 ```html
 <!-- templates/playlists_new.html -->
 {% extends 'base.html' %}
->
+
 {% block content %}
 <div class='row'>
     <div class='col-sm-6 col-sm-offset-3'>
@@ -209,13 +190,13 @@ The show template should make the text relatively narrow, because people don't l
 </div>
 {% endblock %}
 ```
->
-> Make the same changes (adding classes) to `templates/playlists_edit.html`:
->
+
+Make the same changes (adding classes) to `templates/playlists_edit.html`:
+
 ```html
 <!-- templates/playlists_edit.html -->
 {% extends 'base.html' %}
->
+
 {% block content %}
 <div class='row'>
     <div class='col-sm-6 col-sm-offset-3'>
@@ -234,10 +215,8 @@ The show template should make the text relatively narrow, because people don't l
 
 Now add some Bootstrap classes to the `playlists-form.handlebars` partial. These class will make your form and form elements look better. Notice that each form element is wrapped in a `div` with the class `form-group` and form elements, like `input` get the class `form-control`.
 
-> [action]
->
-> Update `templates/partials/playlists_form.html` to have the following classes:
->
+Update `templates/partials/playlists_form.html` to have the following classes:
+
 ```html
 <fieldset>
     <legend>Edit Playlist</legend>
@@ -246,13 +225,13 @@ Now add some Bootstrap classes to the `playlists-form.handlebars` partial. These
         <label for='playlist-title'>Title</label><br>
         <input class='form-control' id='playlist-title' type='text' name='title' value='{{ playlist.title }}'/>
     </div>
->
+
     <!-- DESCRIPTION -->
     <div class='form-group'>
         <label for='description'>Description</label><br>
         <input class='form-control' id='description' type='text' name='description' value='{{ playlist.description }}' />
     </div>
->
+
     <!-- VIDEO IDS -->
     <div class='form-group'>
         <label for='playlist-video-ids'>Videos</label><br/>
@@ -266,9 +245,6 @@ Looking pretty good now, huh?
 
 # Now Commit
 
-> [action]
->
->
 ```bash
 $ git add .
 $ git commit -m 'Added vanilla bootstrap'
@@ -276,3 +252,7 @@ $ git push
 ```
 
 Almost done! Let's finish it off.
+
+# Next
+
+Click [here](../P09-Push-To-Heroku/content.md) to move onto the next section about pushing to Heroku.

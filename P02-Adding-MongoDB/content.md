@@ -1,7 +1,4 @@
----
-title: "Adding a MongoDB Database to Your App"
-slug: adding-mongodb
----
+# Adding a MongoDB Database to Your App
 
 ## MongoDB - A NoSQL Database
 
@@ -43,38 +40,28 @@ Then it will save something like this:
 
 Our web server is going to save documents in MongoDB, but MongoDB itself has to run on our computer's operating system - it isn't a module we install with Python's package manager.
 
-> [action]
->
-> Let's install mongodb using homebrew!
->
+Let's install mongodb using homebrew!
+
 ```bash
 $ brew update
 $ brew tap mongodb/brew
 $ brew install mongodb-community@4.2
 ```
->
-> You also need to create a folder to save your databases on your computer.
->
+
+You also need to create a folder to save your databases on your computer.
+
 ```bash
 $ sudo mkdir -p /data/db
 ```
 
-<!-- -->
-
-> [info]
->
 > If you have problems with permissions with this folder you can "change owner" of the directory using this command:
 >
-```bash
-sudo chown -R $USER /data/db
-```
+> ```bash
+> sudo chown -R $USER /data/db
+> ```
 
-<!-- -->
+Now you need to start the MongoDB daemon in order to use MongoDB:
 
-> [action]
->
-> Now you need to start the MongoDB daemon in order to use MongoDB:
->
 ```bash
 $ mongod # SHORT FOR "MONGO DAEMON"
 ```
@@ -87,10 +74,8 @@ The command `mongod` should start MongoDB and now it will be accessible from you
 
 To read from MongoDB in our server code, we'll be using PyMongo. Let's install it now.
 
-> [action]
->
-> First, install the PyMongo library using pip:
->
+First, install the PyMongo library using pip:
+
 ```bash
 (env) $ pip3 install pymongo
 ```
@@ -99,24 +84,18 @@ Remember to run `pip freeze > requirements.txt` to update your list of installed
 
 Now initialize MongoDB in `app.py` and connect to our database that we'll name after our app.
 
-> [action]
->
-> Add the following to the beginning of `app.py`:
->
+Add the following to the beginning of `app.py`:
+
 ```python
 from pymongo import MongoClient
->
+
 client = MongoClient()
 db = client.Playlister
 playlists = db.playlists
->
+
 ...
->
 ```
 
-<!-- -->
-
-> [info]
 > Whenever you see a `...` in a code snippet, that means that the rest of your code should be contained below! Be sure **not** to type the `...`.
 
 Voila, you are connected to your database! But wait, you haven't written or read from it yet! To do that, we'll have to make a database query.
@@ -127,18 +106,16 @@ Let's return to our root path that displays our `playlists_index` template.
 
 First let's comment out our `playlists` variable that we hard coded. We're gonna use the database now instead with the model `Playlist` we instantiated.
 
-> [action]
->
-> Comment out the mock data and update the root route in `app.py` to the following:
->
+Comment out the mock data and update the root route in `app.py` to the following:
+
 ```python
 # app.py
->
+
 # playlists = [
 #   { 'title': 'Great Playlist' },
 #   { 'title': 'Next Playlist' }
 # ]
->
+
 @app.route('/')
 def playlists_index():
     """Show all playlists."""
@@ -150,18 +127,22 @@ The `find()` method returns an [iterable](https://stackoverflow.com/questions/98
 
 Refresh your browser at `localhost:5000`. What do you see?
 
-> [solution]
-> You shouldn't see anything! :D - that's because there are no playlists in your database right now.
+<details>
+<summary>Solution</summary>
+<br>
+You shouldn't see anything! :D - that's because there are no playlists in your database right now.
+</details>
 
 In the next lesson we will save a new playlist to our database. Onward!
 
 # Now Commit
 
-> [action]
->
->
 ```bash
 $ git add .
 $ git commit -m 'Added MongoDB and Playlist model'
 $ git push
 ```
+
+# Next
+
+Click [here](../P03-Creating-A-Playlist/content.md) to move onto the next section about creating a playlist.

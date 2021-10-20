@@ -1,7 +1,4 @@
----
-title: "Adding Comments"
-slug: adding-comments
----
+# Adding Comments
 
 At this point you should have a functioning site that creates and saves Playlists to a database! This system manages a *single resource*, which we've called a `Playlist`. In this section you will add a new resource which will represent comments that visitors can add to Playlists.
 
@@ -13,13 +10,11 @@ Follow the same approach used in the tutorial, start with what users will see. U
 
 Putting the comment form in a partial will make your code modular and help keep it organized.
 
-> [action]
->
-> Make a new file `templates/partials/comment_form.html`:
->
-```HTML
+Make a new file `templates/partials/comment_form.html`:
+
+```html
 <!-- templates/partials/comment_form.html -->
->
+
 <form>
     <fieldset>
         <legend>Add a Comment</legend>
@@ -32,7 +27,7 @@ Putting the comment form in a partial will make your code modular and help keep 
                 name='title'
                 placeholder='Title'/>
         </div>
->
+
         <!-- DESCRIPTION -->
         <div class='form-group'>
             <label for='comment-content'>Description</label><br>
@@ -43,7 +38,7 @@ Putting the comment form in a partial will make your code modular and help keep 
                 placeholder='Your comment...'></textarea>
         </div>
     </fieldset>
->
+
     <!-- BUTTON -->
     <div class='form-group'>
         <button class='btn btn-primary' type='submit'>Save Comment</button>
@@ -59,13 +54,11 @@ Notice you used the same class names and markup used in the Playlists Form. This
 
 # Display the Comment
 
-> [action]
->
-> Add the partial to the bottom of `templates/playlists_show.html`.
->
-```HTML
+Add the partial to the bottom of `templates/playlists_show.html`.
+
+```html
 <!-- templates/playlists_show.html -->
->
+
 <a href='/'>Back to Home</a>
 <div class='row'>
     <div class='col-sm-6 col-sm-offset-3'>
@@ -80,13 +73,13 @@ Notice you used the same class names and markup used in the Playlists Form. This
         <p><form method='POST' action='/playlists/{{playlist._id}}'>
             <button class='btn btn-primary' type='submit'>Delete</button>
         </form></p>
->
+
         <hr>
->
+
     <!-- Add your new partial here: -->
     <!-- Comment form -->
     {% include 'partials/comment_form.html' %}
->
+
     </div>
 </div>
 ```
@@ -95,11 +88,12 @@ For now the form action is empty. You should be able to see the form but, nothin
 
 # Now Commit
 
-> [action]
->
->
 ```bash
 $ git add .
 $ git commit -m 'Comment form added'
 $ git push
 ```
+
+# Next
+
+Click [here](../P11-Adding-Route-For-Comments/content.md) to move onto the next section about adding a route for the comments.
