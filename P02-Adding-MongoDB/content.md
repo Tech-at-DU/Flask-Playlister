@@ -40,35 +40,51 @@ Then it will save something like this:
 
 Our web server is going to save documents in MongoDB, but MongoDB itself has to run on our computer's operating system - it isn't a module we install with Python's package manager.
 
-Let's install mongodb using homebrew!
+Let's install MongoDB using homebrew!
 
 ```bash
 $ brew update
 $ brew tap mongodb/brew
-$ brew install mongodb-community@4.2
+$ brew install mongodb-community@5.0
 ```
 
-You also need to create a folder to save your databases on your computer.
+To run MongoDB, execute the following command:
 
 ```bash
-$ sudo mkdir -p /data/db
+$ brew services start mongodb-community@5.0
 ```
 
-> If you have problems with permissions with this folder you can "change owner" of the directory using this command:
+Verify that it is running with:
+
+```bash
+$ brew services list
+```
+
+You should see the service `mongodb-community` listed as `started`.
+
+> If you want to stop MongoDB, you can do so with:
 >
 > ```bash
-> sudo chown -R $USER /data/db
+> $ brew services stop mongodb-community@5.0
 > ```
 
-Now you need to start the MongoDB daemon in order to use MongoDB:
+In order to begin using MongoDb, we need to connect `mongosh` to the running instance with:
 
 ```bash
-$ mongod # SHORT FOR "MONGO DAEMON"
+$ mongosh
 ```
 
-Once you turn on mongod you can close the terminal tab you used to do that.
+> macOS may prevent `mongod` and/or `mongosh` from running after installation. If you receive a security error when starting `mongod` and/or `mongosh` indicating that the developer could not be identified or verified, do the following to grant `mongod` and/or `mongosh` access to run:
+>
+> * Open System Preferences
+> * Select the Security and Privacy pane.
+> * Under the General tab, click the button to the right of the message about `mongod` and/or `mongosh`, labelled either **Open Anyway** or **Allow Anyway** depending on your version of macOS.
 
-The command `mongod` should start MongoDB and now it will be accessible from your web server. Let's configure Flask to write to MongoDB using the Python library `PyMongo`.
+> MongoDB updates frequently; if you are having trouble during the installation process, try referring to the official docs [here](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#std-label-osx-prereq) for the most up to date procedure.
+
+Once done, you can close the terminal tab you used to do that.
+
+The command `mongosh` should enable MongoDB to be accessible from your web server. Let's configure Flask to write to MongoDB using the Python library `PyMongo`.
 
 # PyMongo - A MongoDB Library
 
