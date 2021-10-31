@@ -84,7 +84,7 @@ class PlaylistsTests(TestCase):
     ...
     def test_index(self):
         """Test the playlists homepage."""
-        result = self.client.get('/')
+        result = self.client.get('/playlists')
         self.assertEqual(result.status, '200 OK')
 
         page_content = result.get_data(as_text=True)
