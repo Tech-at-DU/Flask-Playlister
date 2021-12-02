@@ -10,6 +10,7 @@ By the end of this tutorial, you should be able to...
 
 # How to Plan a Coding Project: User Stories
 
+
 Software development these days is usually organized into **Agile Sprints** that are usually two weeks long. You'll notice evidence of this if you ever update your apps and read the update text. Sometimes it just says:
 
 ```
@@ -149,14 +150,14 @@ Add the following to `app.py`:
 
 ```python
 from flask import Flask
->
+
 app = Flask(__name__)
->
+
 @app.route('/')
 def index():
     """Return homepage."""
     return 'Hello, world!'
->
+
 if __name__ == '__main__':
     app.run(debug=True)
 ```
@@ -181,9 +182,9 @@ Extend your **root route** ('/') to render `index.html`.
 
 ```python
 from flask import Flask, render_template
->
+
 app = Flask(__name__)
->
+
 @app.route('/')
 def index():
     """Return homepage."""
@@ -218,11 +219,11 @@ Add the following into `templates/base.html`:
   <title>Playlister</title>
 </head>
 <body>
->
+
     {% block content %}
         BODY CONTENT GOES HERE
     {% endblock %}
->
+
 </body>
 </html>
 ```
@@ -232,7 +233,7 @@ Add the following to `templates/home.html` so that it will render the message fr
 ```html
 <!-- templates/home.html -->
 {% extends 'base.html' %}
->
+
 {% block content %}
     <h1>{{ msg }}</h1>
 {% endblock %}
