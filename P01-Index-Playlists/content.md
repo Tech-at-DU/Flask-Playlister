@@ -44,7 +44,7 @@ playlists = [
     { 'title': 'Cat Videos', 'description': 'Cats acting weird' },
     { 'title': '80\'s Music', 'description': 'Don\'t stop believing!' }
 ]
->
+
 @app.route('/playlists')
 def playlists_index():
     """Show all playlists."""
@@ -72,7 +72,7 @@ Create the `templates/playlists_index.html` template and add the following to it
 ```html
 <!-- templates/playlists_index.html -->
 {% extends 'base.html' %}
->
+
 {% block content %}
     <h1>Playlists</h1>
     {% for playlist in playlists %}
