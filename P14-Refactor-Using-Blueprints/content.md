@@ -25,7 +25,7 @@ Rather than having 1 large file named `app.py` why don't we turn that into a fol
 
 If you follow along with me, then by the end of this section your project directory will probably look something more like this:
 
-<img src="https://i.postimg.cc/qMHpxP7x/woohoo-final-folder-strucute.png" height=450 alt="initial project structure">
+<img src="https://i.postimg.cc/qMHpxP7x/woohoo-final-folder-strucute.png" height=450 alt="final project structure">
 
 Notice how `app.py` has turned into a folder named `app/`? That's a special kind of folder, called a Python *package* - because it contains an `__init__.py` module, we can use it to conveniently instaniate objects in one, modular piece of our application, and import them to be used in other modules!
 
@@ -72,7 +72,7 @@ For background, `util.py` is a name commonly used by Python developers when they
 
 > [action] Double check that your `app` package has both an `__init__.py` and `util.py` files (just like below) before moving to the next steps!
 
-<img src="https://i.postimg.cc/ryxksf90/end-of-step1-init-app-pakage.png" height=300 alt="initial project structure">
+<img src="https://i.postimg.cc/ryxksf90/end-of-step1-init-app-pakage.png" height=300 alt=" project structure after step 1">
 
 
 # Re-Run the Application
@@ -148,6 +148,7 @@ playlists_bp = Blueprint("playlists", __name__)
 Now, you're finally ready to moving your routes into the `routes.py` module. Please note that instead of using `@app.route` to decorate each of our controller functions, we will now need to use the name of our `Blueprint` object, `@playlist_bp` - an example is shown below:
 
 > [action] Before doing anything else, move the `templates` folder into the `app` package (on the same level as the `playlists` folder). This will make our HTML templates discoverable to our routes again.
+
 > [action] Next, bring the route for `playlists_index` into `routes.py`, along with all the relevant imports:
 
 ```python
@@ -169,7 +170,7 @@ def playlists_index():
 
 ```
 
-Great work so far my friend. But, you may notice that if you go to [http://localhost:5000/](http://localhost:5000/), you still don't see your playlists. What gives?
+Great work so far my friend. But, you may notice that if you go to [http://localhost:5000/](http://localhost:5000/), you still don't see the playlists. What gives?
 
 A couple more steps remain: now that we've tied the routes to our `Blueprint` object rather than our Flask application, our `app` variable doesn't actually know about them, until we tell it programmatically. This is an example of *loose coupling*. 
 
@@ -191,16 +192,191 @@ def create_app():
 
 ```
 
+See anything different when you go to [http://localhost:5000/](http://localhost:5000/)?
+
+Now, we are ready to add all our old playlist routes back into the application:
+
+> [action] For this next step, feel free to copy over the rest of your playlist routes from the ol' `app.py` file to `app/playlists/routes.py`. Just as before, make sure to add all the relevant imports, and change all the decorators from `@app.route` to `@playlists_bp.route`!
+
+Finally, there's one final thing I should advise you to do - is to *namespace* your templates in the `routes.py` module. What does this mean?
+
+In any controller function where you return using the `render_template()` function, there is no issue, because Flask can find the HTML template you pass in. But, some of routes return a `redirect`, which uses the `url_for()` function. This is basically telling our application to go find the controller for another route; yet, at the same time remember, our `app` doesn't know about any of the routes - just the blueprints that encapsulate them.
+
+So how do we properly use the `url_for()` function now? We need to prepend the name of the controller function, with the name of the `Blueprint` that has that controller function (e.g. `"my_blueprint.controller_func"`). Let's see how this is done:
+
+> [action] Namespace the controller function that we pass into the `url_for()` function in `routes.py`. This change only affects the `playlists_submit`, `playlists_update`, and `playlist_delete` controller functions:
+
+```python
+# app/playlists/routes.py
+from flask import Blueprint, render_template, request, redirect, url_for
+from bson.objectid import ObjectId
+
+from app.util import get_db_collections
+...
+
+@playlists_bp.route("/playlists", methods=["POST"])
+def playlists_submit():
+    """Submit a new playlist."""
+    playlist = {
+        "title": request.form.get("title"),
+        "description": request.form.get("description"),
+        "videos": request.form.get("videos").split(),
+    }
+    print(playlist)
+    playlist_id = playlists.insert_one(playlist).inserted_id
+    return redirect(
+        url_for("playlists.playlists_show", playlist_id=playlist_id)
+    )
+
+...
+
+@playlists_bp.route("/playlists/<playlist_id>", methods=["POST"])
+def playlists_update(playlist_id):
+    """Submit an edited playlist."""
+    updated_playlist = {
+        "title": request.form.get("title"),
+        "description": request.form.get("description"),
+        "videos": request.form.get("videos").split(),
+    }
+    playlists.update_one({"_id": ObjectId(playlist_id)}, {"$set": updated_playlist})
+    return redirect(
+        url_for("playlists.playlists_show", playlist_id=playlist_id)
+    )
+
+@playlists_bp.route("/playlists/<playlist_id>/delete", methods=["POST"])
+def playlist_delete(playlist_id):
+    """Delete one playlist."""
+    playlists.delete_one({"_id": ObjectId(playlist_id)})
+    return redirect(url_for("playlists.playlists_index"))
+
+```
+
+Excelsior! Double-check that your app still works manually. Then, you are free to continue.
+
 # Create a Blueprint for Comments
-still don't forget to namespace
+This section will be a piece of cake - we'll mainly just repeat what we did for the playlist-related routes, for our comments-related ones.
 
+> [action] Go ahead and make a new `comments` package in the `app` folder, with an `__init__.py` and `routes.py`.
+
+> [action] In `comments/routes.py`, instantiate your `Blueprint` for the comments resource. It should like something similar to the following:
+
+```python
+# app/comments/routes.py
+from flask import Blueprint
+
+
+comments_bp = Blueprint("comments", __name__)
+
+```
+
+> [action] As before, register the new `Blueprint` object in the Flask application:
+
+```python
+# app/__init__.py
+from flask import Flask
+from app.comments.routes import comments_bp
+from app.playlists.routes import playlists_bp
+
+
+def create_app():
+    """Init the app, and all the same routes as we had before."""
+    app = Flask(__name__)
+    app.register_blueprint(playlists_bp)
+    app.register_blueprint(comments_bp)
+    return app
+```
+
+> [action] Onward - let's now connect to our database, and add the comments-related routes to our blueprint. Remember to namespace the routes that return a `redirect`, as well:
+
+```python
+# app/comments/routes.py
+from flask import Blueprint, request, redirect, url_for
+from bson.objectid import ObjectId
+
+from app.util import get_db_collections
+
+playlists, comments = get_db_collections()
+
+comments_bp = Blueprint("comments", __name__)
+
+
+@comments_bp.route("/playlists/comments", methods=["POST"])
+def comments_new():
+    """Submit a new comment."""
+    comment = {
+        "title": request.form.get("title"),
+        "content": request.form.get("content"),
+        "playlist_id": ObjectId(request.form.get("playlist._id")),
+    }
+    comment_id = comments.insert_one(comment).inserted_id
+    return redirect(
+        url_for("playlists.playlists_show", playlist_id=request.form.get("playlist._id"))
+    )
+
+
+@comments_bp.route("/playlists/comments/<comment_id>", methods=["POST"])
+def comments_delete(comment_id):
+    """Action to delete a comment."""
+    if request.form.get("_method") == "DELETE":
+        comment = comments.find_one({"_id": ObjectId(comment_id)})
+        playlist_id = comment.get("playlist_id")
+        comments.delete_one({"_id": ObjectId(comment_id)})
+        return redirect(
+            url_for("playlists.playlists_show", playlist_id=playlist_id)
+        )
+
+```
+
+Try out the refactored routes for the comments-related blueprint, as an extra check. By this point, your folder structure should look something like the following:
+
+<img src="https://i.postimg.cc/52n11jSs/end-of-step4.png" height=475 alt="project structure after step 4">
+
+
+# Remove `app.py`
+You will no longer need it for the rest of this tutorial.
 # Refactor the Tests
+Alrighty then! Our project is now more modular, but refactoring does not stop there - let's also modify the `tests.py`, so we don't need to keep manually testing out all our routes.
 
+We're only going to make 1 small change, to how we import the `app` variable. As opposed to importing it from `app.py` (which no longer exists), we'll use the `create_app()` function. Let's do the following:
+
+> [action] In `tests.py`, change the import statement `from app import app` to say `from app import create_app`
+
+> [action] Next, change the `setUp()` method in the `PlaylistsTests` test suite to use `create_app()`:
+
+```python
+# tests.py
+from unittest import TestCase, main as unittest_main, mock
+from app import create_app
+...
+
+class PlaylistsTests(TestCase):
+    """Flask tests."""
+
+    def setUp(self):
+        """Stuff to do before every test."""
+
+        # Get the FLask test client
+        app = create_app()
+        self.client = app.test_client()
+
+# rest of file
+```
+
+Run your tests again my friend - do you still get a line of green dots?
 
 # Redeploy to Heroku
+> [action] Since we no longer have the `app.py`, you will also need to refactor your `Procfile` to the following. 
+> This is so that your deployment server on Heroku can still call `app.run()`:
 
-# Resources
-my repo
-video
+```
+web: gunicorn run:app
+```
 
 Congrats! You've completed the tutorial :)
+
+# Resources
+Please see the following links or ask an instructor if you run into blockers in this section:
+
+1. [Zain's Example Repo](https://github.com/UPstartDeveloper/Playlister-Tutorial) for a finished project.
+2. [Flask documentation](https://exploreflask.com/en/latest/blueprints.html) on blueprints.
+3. [Another video](https://youtu.be/Wfx4YBzg16s) that goes through using blueprints in a Flask project.
