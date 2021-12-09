@@ -75,6 +75,14 @@ For background, `util.py` is a name commonly used by Python developers when they
 <img src="https://i.postimg.cc/ryxksf90/end-of-step1-init-app-pakage.png" height=300 alt=" project structure after step 1">
 
 
+# Now Commit
+
+```bash
+$ git add .
+$ git commit -m 'init app package'
+$ git push
+```
+
 # Re-Run the Application
 Alright - so how do run the application now, since we've started refactoring?
 
@@ -103,6 +111,15 @@ With that, you may use this command to see if your app can now run (at least wit
 
 ```
 (env) $ export FLASK_ENV=development; python run.py
+```
+
+
+# Now Commit
+
+```bash
+$ git add .
+$ git commit -m 'add run.py'
+$ git push
 ```
 
 # Create a Blueprint for Playlists
@@ -253,6 +270,15 @@ def playlist_delete(playlist_id):
 
 Excelsior! Double-check that your app still works manually. Then, you are free to continue.
 
+
+# Now Commit
+
+```bash
+$ git add .
+$ git commit -m 'add blueprint for playlists'
+$ git push
+```
+
 # Create a Blueprint for Comments
 This section will be a piece of cake - we'll mainly just repeat what we did for the playlist-related routes, for our comments-related ones.
 
@@ -331,6 +357,13 @@ Try out the refactored routes for the comments-related blueprint, as an extra ch
 
 <img src="https://i.postimg.cc/52n11jSs/end-of-step4.png" height=475 alt="project structure after step 4">
 
+# Now Commit
+
+```bash
+$ git add .
+$ git commit -m 'add blueprint for comments'
+$ git push
+```
 
 # Remove `app.py`
 You will no longer need it for the rest of this tutorial.
@@ -372,7 +405,17 @@ Run your tests again my friend - do you still get a line of green dots?
 web: gunicorn run:app
 ```
 
+
+# Now Commit
+
+```bash
+$ git add .
+$ git commit -m 'refactor tests + Procfile'
+$ git push
+```
+
 Congrats! You've completed the tutorial :)
+
 
 # Resources
 Please see the following links or ask an instructor if you run into blockers in this section:
