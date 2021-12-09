@@ -273,7 +273,7 @@ Add a delete test to `tests.py`:
 
 # Now Commit
 
-Good work adding your Resourceful Routes test sweet. Your product currently has **100% Test Coverage** because each route has a corresponding test.
+Good work adding your Resourceful Routes test suite. Your product currently has **100% Test Coverage** because each route has a corresponding test.
 
 Now commit these changes and push them to github:
 
