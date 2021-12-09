@@ -128,4 +128,6 @@ $ git commit -m 'added created_at, footer, and bootstrap theme'
 $ git push
 ```
 
-Congrats! You've completed the tutorial :)
+# Next
+
+Look at that great UI you've built! Now, click [here](../P14-Refactor-Using-Blueprints/content.md) to organize your codebase just like a professional software engineer.
