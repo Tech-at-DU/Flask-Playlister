@@ -34,3 +34,4 @@ Read and complete these chapters in order.
 1. [Adding a Route for Comments](P11-Adding-Route-For-Comments/content.md)
 1. [Deleting Comments](P12-Deleting-Comments/content.md)
 1. [Bells and Whistles](P13-Bells-And-Whistles/content.md)
+1. [Refactoring Using Blueprints](P14-Refactor-Using-Blueprints/content.md)

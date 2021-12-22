@@ -2,7 +2,7 @@
 
 Good work on completing the tutorial up to this point!
 
-Earlier on [in this tutorial](https://github.com/MakeSchool-Tutorials/Flask-Playlister/tree/master/P03-Creating-A-Playlist), you may recall reading the following:
+Earlier [in this tutorial](https://github.com/MakeSchool-Tutorials/Flask-Playlister/tree/master/P03-Creating-A-Playlist), you may recall reading the following:
 
 >
 "For this app it is so simple, that we'll just leave all that logic in the `app.py` file."
@@ -25,7 +25,8 @@ Rather than having 1 large file named `app.py` why don't we turn that into a fol
 
 If you follow along with me, then by the end of this section your project directory will probably look something more like this:
 
-<img src="https://i.postimg.cc/qMHpxP7x/woohoo-final-folder-strucute.png" height=450 alt="final project structure">
+<img src="https://i.postimg.cc/XvjPdvbQ/Screen-Shot-2021-12-17-at-9-49-31-PM.png" height=450 alt="final project structure">
+
 
 Notice how `app.py` has turned into a folder named `app/`? That's a special kind of folder, called a Python *package* - because it contains an `__init__.py` module, we can use it to conveniently instaniate objects in one, modular piece of our application, and import them to be used in other modules!
 
@@ -60,12 +61,12 @@ import os
 from pymongo import MongoClient
 
 
-def get_db_collections():
+def get_db():
     # point to the MongoDB URI (if it exists)
     host = os.environ.get("MONGODB", "mongodb://localhost:27017/Playlister")
     client = MongoClient(f"{host}?retryWrites=false")
-    # return the collections (use in routes)
-    return db.playlists, db.comments
+    # return the database object
+    return db
 
 ```
 For background, `util.py` is a name commonly used by Python developers when they want to make a module that's just for storing useful helper functions, or *utilities*. So, feel free to add any other functions in this `util.py` script as you go through this section!
@@ -86,7 +87,7 @@ $ git push
 # Re-Run the Application
 Alright - so how do run the application now, since we've started refactoring?
 
-Up to now, we've primarily used the `app.py` file to both 1) instantiate and 2) run our Flask application. While this approach works for simple projects, the downside is that as your code grows, we'll find it harder and harder to debug that `app.py` file, because there's so many tasks we're relying on it to do for us. When this happens, we can say that we've *tightly-coupled* that module to both making and running our `app` variable.
+Up to now, we've primarily used the `app.py` file to both 1) instantiate and 2) run our Flask application. While this approach works for simple projects, the downside is that as your code grows, we'll find it harder and harder to debug that `app.py` file, because there's multiple tasks we're relying on it to do for us. When this happens, we can say that we've *tightly-coupled* that module to both making and running our `app` variable.
 
 The good news is, our refactored codebase will fix that problem: just as we've created a separate `app` package to handle instantiating the Flask application, **we will now make a separate module to handle running that application!**
 
@@ -129,61 +130,84 @@ This concept is very tactical - simply put, a blueprint allows us to encapsulate
 
 We'll start with making the blueprint for the playlists. This will involve copying over the related routes in your `app.py`, with just a few small modifications. Let's get started!
 
-> [action] Inside of the `app` package, make another folder named `playlists`.
+> [action] Inside of the `app` package, make another folder named `controllers`.
 > Then, turn that folder into a package by creating an `__init__.py` file inside (you can leave it blank).
 
-> [action] Next, make another module inside the new `playlists` package named `routes.py`. Finally, go ahead and place this code inside to make the `Blueprint` object:
+> [action] Next, make another module inside the new `playlists` package named `playlists.py`. Finally, go ahead and place this code inside to make the `Blueprint` object:
 
 ```python
-# app/playlists/routes.py
+# app/controllers/playlists.py
 from flask import Blueprint
 
 
 # encapsulate the Playlist resource
-playlists_bp = Blueprint("playlists", __name__)
+playlists = Blueprint("playlists", __name__)
 
 ```
 
-With that done, we're now ready to add the routes for related to this resource:
+With this approach, we've now made it easier for other engineers to go through our code, and find the routes specifically for the `Playlist` resource. Let's add the controller functions for those routes now (in `playlists.py`):
 
 > [action] First, import the code we need to connect to our Mongo instance (which will be needed by our routes):
 
 ```python
-# app/playlists/routes.py
+# app/controllers/playlists.py
 from flask import Blueprint
 
-from app.util import get_db_collections
+from app.util import get_db
 
 
-# grab a reference to those db collections!
-playlists, comments = get_db_collections()
+# grab a reference to the db
+db = get_db()
 # encapsulate the Playlist resource
-playlists_bp = Blueprint("playlists", __name__)
+playlists = Blueprint("playlists", __name__)
 
 ```
 
-Now, you're finally ready to moving your routes into the `routes.py` module. Please note that instead of using `@app.route` to decorate each of our controller functions, we will now need to use the name of our `Blueprint` object, `@playlist_bp` - an example is shown below:
+Now, you're finally ready to moving your routes into the `playlists.py` module. Please note that instead of using `@app.route` to decorate each of our controller functions, we will now need to use the name of our `Blueprint` object, `@playlist` - an example is shown below:
 
 > [action] Before doing anything else, move the `templates` folder into the `app` package (on the same level as the `playlists` folder). This will make our HTML templates discoverable to our routes again.
 
-> [action] Next, bring the route for `playlists_index` into `routes.py`, along with all the relevant imports:
+> [action] Next, bring the route for `playlists_index` into `playlists.py`, along with all the relevant imports.
 
 ```python
-# app/playlists/routes.py
+# app/controllers/playlists.py
 from flask import Blueprint, render_template
 
-from app.util import get_db_collections
+from app.util import get_db
 
 
-# grab a reference to those db collections!
-playlists, comments = get_db_collections()
+# grab a reference to the db
+db = get_db()
 # encapsulate the Playlist resource
-playlists_bp = Blueprint("playlists", __name__)
+playlists = Blueprint("playlists", __name__)
 
-@playlists_bp.route("/")
+@playlists.route("/")
 def playlists_index():
     """Show all playlists."""
     return render_template("playlists_index.html", playlists=playlists.find())
+```
+
+
+> [action] Finally, be aware that we need to rename the call to `playlists.find()` in this code, to `db.playlists.find()`. 
+
+This will avoid a namespace collision with our `Blueprint` object, which is now also called `playlists`. Note that as an alternative approach, it is also ok to just change a different name for the variable, e.g. `playlists_bp`.
+
+```python
+# app/controllers/playlists.py
+from flask import Blueprint, render_template
+
+from app.util import get_db
+
+
+# grab a reference to the db
+db = get_db()
+# encapsulate the Playlist resource
+playlists = Blueprint("playlists", __name__)
+
+@playlists.route("/")
+def playlists_index():
+    """Show all playlists."""
+    return render_template("playlists_index.html", playlists=db.playlists.find())
 
 ```
 
@@ -198,13 +222,13 @@ So, go ahead and let your `app` variable know about that playlist blueprint - fo
 ```python
 # app/__init__.py
 from flask import Flask
-from app.playlists.routes import playlists_bp
+from app.controllers.playlists import playlists
 
 
 def create_app():
     """Init the app and register all the Playlist/Comment routes."""
     app = Flask(__name__)
-    app.register_blueprint(playlists_bp)
+    app.register_blueprint(playlists)
     return app
 
 ```
@@ -213,9 +237,9 @@ See anything different when you go to [http://localhost:5000/](http://localhost:
 
 Now, we are ready to add all our old playlist routes back into the application:
 
-> [action] For this next step, feel free to copy over the rest of your playlist routes from the ol' `app.py` file to `app/playlists/routes.py`. Just as before, make sure to add all the relevant imports, and change all the decorators from `@app.route` to `@playlists_bp.route`!
+> [action] For this next step, feel free to copy over the rest of your playlist routes from the ol' `app.py` file to `app/controllers/playlists.py`. Just as before, make sure to 1) add all the relevant imports, 2) change all the decorators from `@app.route` to `@playlists.route`, and 3) use `db.playlists` and `db.comments` wherever you are calling PyMongo functions in the controllers!
 
-Finally, there's one final thing I should advise you to do - is to *namespace* your templates in the `routes.py` module. What does this mean?
+Finally, there's one final thing I should advise you to do - is to *namespace* your templates in the `playlists.py` module. What does this mean?
 
 In any controller function where you return using the `render_template()` function, there is no issue, because Flask can find the HTML template you pass in. But, some of routes return a `redirect`, which uses the `url_for()` function. This is basically telling our application to go find the controller for another route; yet, at the same time remember, our `app` doesn't know about any of the routes - just the blueprints that encapsulate them.
 
@@ -224,14 +248,14 @@ So how do we properly use the `url_for()` function now? We need to prepend the n
 > [action] Namespace the controller function that we pass into the `url_for()` function in `routes.py`. This change only affects the `playlists_submit`, `playlists_update`, and `playlist_delete` controller functions:
 
 ```python
-# app/playlists/routes.py
+# app/controllers/playlists.py
 from flask import Blueprint, render_template, request, redirect, url_for
 from bson.objectid import ObjectId
 
-from app.util import get_db_collections
+from app.util import get_db
 ...
 
-@playlists_bp.route("/playlists", methods=["POST"])
+@playlists.route("/playlists", methods=["POST"])
 def playlists_submit():
     """Submit a new playlist."""
     playlist = {
@@ -240,14 +264,14 @@ def playlists_submit():
         "videos": request.form.get("videos").split(),
     }
     print(playlist)
-    playlist_id = playlists.insert_one(playlist).inserted_id
+    playlist_id = db.playlists.insert_one(playlist).inserted_id
     return redirect(
         url_for("playlists.playlists_show", playlist_id=playlist_id)
     )
 
 ...
 
-@playlists_bp.route("/playlists/<playlist_id>", methods=["POST"])
+@playlists.route("/playlists/<playlist_id>", methods=["POST"])
 def playlists_update(playlist_id):
     """Submit an edited playlist."""
     updated_playlist = {
@@ -255,15 +279,15 @@ def playlists_update(playlist_id):
         "description": request.form.get("description"),
         "videos": request.form.get("videos").split(),
     }
-    playlists.update_one({"_id": ObjectId(playlist_id)}, {"$set": updated_playlist})
+    db.playlists.update_one({"_id": ObjectId(playlist_id)}, {"$set": updated_playlist})
     return redirect(
         url_for("playlists.playlists_show", playlist_id=playlist_id)
     )
 
-@playlists_bp.route("/playlists/<playlist_id>/delete", methods=["POST"])
+@playlists.route("/playlists/<playlist_id>/delete", methods=["POST"])
 def playlist_delete(playlist_id):
     """Delete one playlist."""
-    playlists.delete_one({"_id": ObjectId(playlist_id)})
+    db.playlists.delete_one({"_id": ObjectId(playlist_id)})
     return redirect(url_for("playlists.playlists_index"))
 
 ```
@@ -282,16 +306,16 @@ $ git push
 # Create a Blueprint for Comments
 This section will be a piece of cake - we'll mainly just repeat what we did for the playlist-related routes, for our comments-related ones.
 
-> [action] Go ahead and make a new `comments` package in the `app` folder, with an `__init__.py` and `routes.py`.
+> [action] Go ahead and make a new module in the `controllers` package, named `comments.py`.
 
-> [action] In `comments/routes.py`, instantiate your `Blueprint` for the comments resource. It should like something similar to the following:
+> [action] In `comments.py`, instantiate your `Blueprint` for the comments resource. It should like something similar to the following:
 
 ```python
-# app/comments/routes.py
+# app/controllers/comments.py
 from flask import Blueprint
 
 
-comments_bp = Blueprint("comments", __name__)
+comments = Blueprint("comments", __name__)
 
 ```
 
@@ -300,33 +324,38 @@ comments_bp = Blueprint("comments", __name__)
 ```python
 # app/__init__.py
 from flask import Flask
-from app.comments.routes import comments_bp
-from app.playlists.routes import playlists_bp
+from app.controllers.comments import comments
+from app.controllers.playlists import playlists
 
 
 def create_app():
     """Init the app, and all the same routes as we had before."""
     app = Flask(__name__)
-    app.register_blueprint(playlists_bp)
-    app.register_blueprint(comments_bp)
+    app.register_blueprint(playlists)
+    app.register_blueprint(comments)
     return app
 ```
 
-> [action] Onward - let's now connect to our database, and add the comments-related routes to our blueprint. Remember to namespace the routes that return a `redirect`, as well:
+> [action] Onward - let's now connect to our database, and add the comments-related routes to our blueprint. You can start on this by just copying over code from `app.py`. However, remember you will still need to make all the following changes too: 
+1. Use `@comments.route` in place of `@app.route`.
+2. Avoid namespace collisions by using `db.comments.some_mongo_function()`, wherever you currently are using PyMongo functions.
+3. Namespace the routes that return a `redirect`.
+
+By the end, your code should look something like similar to the following:
 
 ```python
-# app/comments/routes.py
+# app/controllers/comments.py
 from flask import Blueprint, request, redirect, url_for
 from bson.objectid import ObjectId
 
-from app.util import get_db_collections
+from app.util import get_db
 
-playlists, comments = get_db_collections()
+playlists, comments = get_db()
 
-comments_bp = Blueprint("comments", __name__)
+comments = Blueprint("comments", __name__)
 
 
-@comments_bp.route("/playlists/comments", methods=["POST"])
+@comments.route("/playlists/comments", methods=["POST"])
 def comments_new():
     """Submit a new comment."""
     comment = {
@@ -334,19 +363,19 @@ def comments_new():
         "content": request.form.get("content"),
         "playlist_id": ObjectId(request.form.get("playlist._id")),
     }
-    comment_id = comments.insert_one(comment).inserted_id
+    comment_id = db.comments.insert_one(comment).inserted_id
     return redirect(
         url_for("playlists.playlists_show", playlist_id=request.form.get("playlist._id"))
     )
 
 
-@comments_bp.route("/playlists/comments/<comment_id>", methods=["POST"])
+@comments.route("/playlists/comments/<comment_id>", methods=["POST"])
 def comments_delete(comment_id):
     """Action to delete a comment."""
     if request.form.get("_method") == "DELETE":
-        comment = comments.find_one({"_id": ObjectId(comment_id)})
+        comment = db.comments.find_one({"_id": ObjectId(comment_id)})
         playlist_id = comment.get("playlist_id")
-        comments.delete_one({"_id": ObjectId(comment_id)})
+        db.comments.delete_one({"_id": ObjectId(comment_id)})
         return redirect(
             url_for("playlists.playlists_show", playlist_id=playlist_id)
         )
@@ -355,7 +384,7 @@ def comments_delete(comment_id):
 
 Try out the refactored routes for the comments-related blueprint, as an extra check. By this point, your folder structure should look something like the following:
 
-<img src="https://i.postimg.cc/52n11jSs/end-of-step4.png" height=475 alt="project structure after step 4">
+<img src="https://i.postimg.cc/d0MT77cT/Screen-Shot-2021-12-17-at-10-24-50-PM.png" height=475 alt="project structure after step 4">
 
 # Now Commit
 
