@@ -31,7 +31,7 @@ If you follow along with me, then by the end of this section your project direct
 Notice how `app.py` has turned into a folder named `app/`? That's a special kind of folder, called a Python *package* - because it contains an `__init__.py` module, we can use it to conveniently instaniate objects in one, modular piece of our application, and import them to be used in other modules!
 
 > [action]
-> Start by creating a new folder named `app` in th root your project directory. Then, inside that folder create a file named `__init__.py`. Inside, place the following code:
+> Start by creating a new folder named `app` in the root your project directory. Then, inside that folder create a file named `__init__.py`. Inside, place the following code:
 > 
 
 ```python
