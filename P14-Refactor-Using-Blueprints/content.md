@@ -92,7 +92,7 @@ Up to now, we've primarily used the `app.py` file to both 1) instantiate and 2) 
 The good news is, our refactored codebase will fix that problem: just as we've created a separate `app` package to handle instantiating the Flask application, **we will now make a separate module to handle running that application!**
 
 > [action] Outside of the `app` package, make a new file called `run.py` in the root of your project.
-> In that file, place the following (it should look very similar to the bottom of your previous `app.py`) file:
+> In that file, place the following (it should look very similar to the bottom of your previous `app.py` file):
 
 ```python
 # run.py
