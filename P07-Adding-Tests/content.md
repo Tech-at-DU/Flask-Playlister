@@ -193,7 +193,7 @@ sample_playlist = {
 sample_form_data = {
     'title': sample_playlist['title'],
     'description': sample_playlist['description'],
-    'videos': '\n'.join(sample_playlist['video_ids'])
+    'video_ids': '\n'.join(sample_playlist['video_ids'])
 }
 ```
 
