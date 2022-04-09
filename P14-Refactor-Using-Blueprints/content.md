@@ -384,7 +384,7 @@ def comments_delete(comment_id):
 
 Try out the refactored routes for the comments-related blueprint, as an extra check. By this point, your folder structure should look something like the following:
 
-<img src="https://i.postimg.cc/d0MT77cT/Screen-Shot-2021-12-17-at-10-24-50-PM.png" height=475 alt="project structure after step 4">
+<img src="https://i.postimg.cc/d0MT77cT/Screen-Shot-2021-12-17-at-10-24-50-PM.png" alt="project structure after step 4">
 
 # Now Commit
 
